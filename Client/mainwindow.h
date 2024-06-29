@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <QTimer>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -16,8 +16,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+public slots:
+    void ChangetabHandle();
+private slots:
+    void on_SignUp_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QTimer* changetab;
 };
 #endif // MAINWINDOW_H
