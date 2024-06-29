@@ -20,16 +20,64 @@
    <widget class="QStackedWidget" name="GameControl">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>-10</x>
+      <y>10</y>
       <width>701</width>
       <height>571</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
-    <widget class="QWidget" name="FLoading"/>
+    <widget class="QWidget" name="FLoading">
+     <widget class="QLabel" name="SunFlow">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>220</y>
+        <width>71</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>230</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 25pt &quot;Tw Cen MT Condensed&quot;;
+color: rgb(255, 48, 11);</string>
+      </property>
+      <property name="text">
+       <string>Loading</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="points">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>230</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 25pt &quot;Tw Cen MT Condensed&quot;;
+color: rgb(255, 48, 11);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="LoginPage">
      <widget class="QLineEdit" name="lineEdit">
       <property name="geometry">
@@ -154,6 +202,19 @@ background-color: rgb(104, 101, 91);</string>
        <string>SignUp</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="eye_login">
+      <property name="geometry">
+       <rect>
+        <x>570</x>
+        <y>400</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="Signup">
      <widget class="QPushButton" name="SignupCheck">
@@ -182,7 +243,7 @@ background-color: rgb(104, 101, 91);</string>
        <string>Back</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>320</x>
@@ -278,7 +339,7 @@ color: rgb(255, 255, 255);</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>120</x>

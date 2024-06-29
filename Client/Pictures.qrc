@@ -3,5 +3,8 @@
         <file>Images/LoginBG.png</file>
         <file>Images/LoadingBG.png</file>
         <file>Images/SignUpBG.png</file>
+        <file>Images/Sunflower.png</file>
+        <file>Images/open-eye.png</file>
+        <file>Images/close-eye.png</file>
     </qresource>
 </RCC>
