@@ -37,6 +37,9 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
     if (fields[0] == "11") {
         signUp(fields[1], fields[2], fields[3], fields[4], fields[5], clientSocket);
     }
+    if (fields[0] == "12") {
+        signIn(fields[1], fields[2], clientSocket);
+    }
 }
 
 void Server::onDisconnected(QTcpSocket *clientSocket)
@@ -57,6 +60,7 @@ void Server::signUp(const QString &_name, const QString &_username, const QStrin
         out << _username << "," << passwordHash << "," << _name << "," << _phoneNumber << "," << _email << "\n";
         accFile.close();
     }
+    client->write("112");
 }
 
 bool Server::checkExistingAccounts(const QString &_username) {
@@ -75,4 +79,32 @@ bool Server::checkExistingAccounts(const QString &_username) {
         accFile.close();
     }
     return result;
+}
+
+void Server::signIn(const QString &_username, const QString &_password, QTcpSocket *client)
+{
+    QByteArray passwordHash = QCryptographicHash::hash(_password.toUtf8(), QCryptographicHash::Sha256);
+    if (validateCredentials(_username, passwordHash.toHex())){
+        client->write("113");
+    }
+    else{
+        client->write("114");
+    }
+}
+
+bool Server::validateCredentials(const QString &_username, const QByteArray &_password)
+{
+    QFile accFile(":/Files/Accounts.txt");
+    if (accFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&accFile);
+        while(!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            if (fields[0] == _username && fields[1] == _password){
+                return true;
+            }
+        }
+        accFile.close();
+    }
+    return false;
 }
