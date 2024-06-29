@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>792</width>
-    <height>598</height>
+    <width>813</width>
+    <height>723</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,9 +21,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>10</y>
+      <y>0</y>
       <width>701</width>
-      <height>611</height>
+      <height>571</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -156,125 +156,205 @@ background-color: rgb(104, 101, 91);</string>
      </widget>
     </widget>
     <widget class="QWidget" name="Signup">
-     <widget class="QLineEdit" name="lineEdit_3">
+     <widget class="QPushButton" name="SignupCheck">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>140</y>
-        <width>211</width>
-        <height>31</height>
+        <x>330</x>
+        <y>530</y>
+        <width>80</width>
+        <height>22</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>SWIsot3</family>
-        <pointsize>16</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+      <property name="text">
+       <string>Sign up</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_4">
+     <widget class="QPushButton" name="Back">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>210</y>
-        <width>211</width>
-        <height>31</height>
+        <x>50</x>
+        <y>540</y>
+        <width>80</width>
+        <height>22</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>SWIsot3</family>
-        <pointsize>16</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+      <property name="text">
+       <string>Back</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_5">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>280</y>
-        <width>211</width>
-        <height>31</height>
+        <x>320</x>
+        <y>180</y>
+        <width>263</width>
+        <height>361</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>SWIsot3</family>
-        <pointsize>16</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(104, 101, 91);
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_3">
+         <property name="font">
+          <font>
+           <family>SWIsot3</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(104, 101, 91);
 color: rgb(255, 255, 255);</string>
-      </property>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_4">
+         <property name="font">
+          <font>
+           <family>SWIsot3</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(104, 101, 91);
+color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_5">
+         <property name="font">
+          <font>
+           <family>SWIsot3</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(104, 101, 91);
+color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_6">
+         <property name="font">
+          <font>
+           <family>SWIsot3</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(104, 101, 91);
+color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_7">
+         <property name="font">
+          <font>
+           <family>SWIsot3</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(104, 101, 91);
+color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_8">
+         <property name="font">
+          <font>
+           <family>SWIsot3</family>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(104, 101, 91);
+color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_6">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>340</y>
-        <width>211</width>
-        <height>31</height>
+        <x>120</x>
+        <y>190</y>
+        <width>202</width>
+        <height>331</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>SWIsot3</family>
-        <pointsize>16</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_7">
-      <property name="geometry">
-       <rect>
-        <x>340</x>
-        <y>400</y>
-        <width>211</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>SWIsot3</family>
-        <pointsize>16</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_8">
-      <property name="geometry">
-       <rect>
-        <x>340</x>
-        <y>460</y>
-        <width>211</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>SWIsot3</family>
-        <pointsize>16</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 249);
+font: 18pt &quot;SimSun-ExtB&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Full-Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 249);
+font: 18pt &quot;SimSun-ExtB&quot;;</string>
+         </property>
+         <property name="text">
+          <string>username : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 249);
+font: 18pt &quot;SimSun-ExtB&quot;;</string>
+         </property>
+         <property name="text">
+          <string>PhoneNumber : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 249);
+font: 18pt &quot;SimSun-ExtB&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Email_Address : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 249);
+font: 18pt &quot;SimSun-ExtB&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Password : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 255, 249);
+font: 18pt &quot;SimSun-ExtB&quot;;</string>
+         </property>
+         <property name="text">
+          <string>confirm password : </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
@@ -284,7 +364,7 @@ color: rgb(255, 255, 255);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>792</width>
+     <width>813</width>
      <height>20</height>
     </rect>
    </property>

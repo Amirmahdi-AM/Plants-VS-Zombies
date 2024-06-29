@@ -21,6 +21,10 @@ public slots:
 private slots:
     void on_SignUp_clicked();
 
+    void on_SignupCheck_clicked();
+
+    void on_Back_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer* changetab;

@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QCoreApplication>
 #include <QTimer>
+#include <QRegularExpression>
+#include <QMessageBox>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -49,5 +51,39 @@ void MainWindow::on_SignUp_clicked()
     ui->Signup->setPalette(palette3);
     ui->Signup->setAutoFillBackground(true);
     ui->GameControl->setCurrentIndex(2);
+}
+
+
+void MainWindow::on_SignupCheck_clicked()
+{
+    if(ui->lineEdit_3->text().isEmpty()||ui->lineEdit_4->text().isEmpty()||ui->lineEdit_6->text().isEmpty()
+            ||ui->lineEdit_7->text().isEmpty()||ui->lineEdit_8->text().isEmpty()){
+        QMessageBox::warning(this,"Error", "pleas fill in all the blanks\n");
+        return;
+    }
+    QString output="";
+    output+=ui->lineEdit_3->text()+","+ui->lineEdit_4->text()+",";
+    QRegularExpression emailRegex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
+    if (!emailRegex.match(ui->lineEdit_6->text()).hasMatch()) {
+        QMessageBox::warning(this,"Error", "Invalid email format\n");
+        return;
+    }
+    output+=ui->lineEdit_6->text()+",";
+    if(ui->lineEdit_7->text().length()<8){
+        QMessageBox::warning(this,"Error", "Password is weak!!\n");
+        return;
+    }
+    if(ui->lineEdit_7->text()!=ui->lineEdit_8->text()){
+        QMessageBox::warning(this,"Error", "Password confirmation failed\n");
+        return;
+    }
+    output+=ui->lineEdit_7->text()+"\n";
+
+}
+
+
+void MainWindow::on_Back_clicked()
+{
+    ui->GameControl->setCurrentIndex(1);
 }
 
