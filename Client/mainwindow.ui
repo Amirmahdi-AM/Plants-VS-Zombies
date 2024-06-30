@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>813</width>
-    <height>723</height>
+    <width>827</width>
+    <height>748</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,14 +20,14 @@
    <widget class="QStackedWidget" name="GameControl">
     <property name="geometry">
      <rect>
-      <x>-10</x>
-      <y>10</y>
+      <x>0</x>
+      <y>0</y>
       <width>701</width>
       <height>571</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <widget class="QLabel" name="SunFlow">
@@ -48,13 +48,14 @@
        <rect>
         <x>360</x>
         <y>230</y>
-        <width>91</width>
+        <width>121</width>
         <height>31</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">font: 700 25pt &quot;Tw Cen MT Condensed&quot;;
-color: rgb(255, 48, 11);</string>
+color: rgb(80, 121, 37);
+font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;</string>
       </property>
       <property name="text">
        <string>Loading</string>
@@ -63,15 +64,16 @@ color: rgb(255, 48, 11);</string>
      <widget class="QLabel" name="points">
       <property name="geometry">
        <rect>
-        <x>450</x>
+        <x>490</x>
         <y>230</y>
-        <width>91</width>
+        <width>111</width>
         <height>31</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">font: 700 25pt &quot;Tw Cen MT Condensed&quot;;
-color: rgb(255, 48, 11);</string>
+color: rgb(80, 121, 37);
+font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;</string>
       </property>
       <property name="text">
        <string/>
@@ -90,13 +92,16 @@ color: rgb(255, 48, 11);</string>
       </property>
       <property name="font">
        <font>
-        <family>SWIsot3</family>
+        <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+color: rgb(255, 255, 255);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit_2">
@@ -110,12 +115,16 @@ color: rgb(255, 255, 255);</string>
       </property>
       <property name="font">
        <font>
-        <family>SWIsot3</family>
+        <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(104, 101, 91);color: rgb(255, 255, 255);</string>
+       <string notr="true">background-color: rgb(104, 101, 91);
+color: rgb(255, 255, 255);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
       </property>
      </widget>
      <widget class="QLabel" name="label">
@@ -134,7 +143,8 @@ color: rgb(255, 255, 255);</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: rgb(24, 255, 59);</string>
+       <string notr="true">color: rgb(4, 101, 3);
+color: rgb(80, 121, 37);</string>
       </property>
       <property name="text">
        <string>Username : </string>
@@ -156,7 +166,8 @@ color: rgb(255, 255, 255);</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: rgb(24, 255, 59);</string>
+       <string notr="true">color: rgb(4, 101, 3);
+color: rgb(80, 121, 37);</string>
       </property>
       <property name="text">
        <string>Password :</string>
@@ -206,9 +217,9 @@ background-color: rgb(104, 101, 91);</string>
       <property name="geometry">
        <rect>
         <x>570</x>
-        <y>400</y>
+        <y>410</y>
         <width>41</width>
-        <height>41</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -217,19 +228,6 @@ background-color: rgb(104, 101, 91);</string>
      </widget>
     </widget>
     <widget class="QWidget" name="Signup">
-     <widget class="QPushButton" name="SignupCheck">
-      <property name="geometry">
-       <rect>
-        <x>330</x>
-        <y>530</y>
-        <width>80</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Sign up</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="Back">
       <property name="geometry">
        <rect>
@@ -246,7 +244,7 @@ background-color: rgb(104, 101, 91);</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>330</x>
         <y>180</y>
         <width>263</width>
         <height>361</height>
@@ -257,13 +255,17 @@ background-color: rgb(104, 101, 91);</string>
         <widget class="QLineEdit" name="lineEdit_3">
          <property name="font">
           <font>
-           <family>SWIsot3</family>
+           <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">background-color: rgb(8, 199, 46);
+background-color: rgb(80, 121, 37);
+color: rgb(5, 5, 255);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
          </property>
         </widget>
        </item>
@@ -271,13 +273,17 @@ color: rgb(255, 255, 255);</string>
         <widget class="QLineEdit" name="lineEdit_4">
          <property name="font">
           <font>
-           <family>SWIsot3</family>
+           <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">background-color: rgb(8, 199, 46);
+background-color: rgb(80, 121, 37);
+color: rgb(5, 5, 255);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
          </property>
         </widget>
        </item>
@@ -285,13 +291,17 @@ color: rgb(255, 255, 255);</string>
         <widget class="QLineEdit" name="lineEdit_5">
          <property name="font">
           <font>
-           <family>SWIsot3</family>
+           <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">background-color: rgb(8, 199, 46);
+background-color: rgb(80, 121, 37);
+color: rgb(5, 5, 255);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
          </property>
         </widget>
        </item>
@@ -299,13 +309,17 @@ color: rgb(255, 255, 255);</string>
         <widget class="QLineEdit" name="lineEdit_6">
          <property name="font">
           <font>
-           <family>SWIsot3</family>
+           <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">background-color: rgb(8, 199, 46);
+background-color: rgb(80, 121, 37);
+color: rgb(5, 5, 255);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
          </property>
         </widget>
        </item>
@@ -313,13 +327,17 @@ color: rgb(255, 255, 255);</string>
         <widget class="QLineEdit" name="lineEdit_7">
          <property name="font">
           <font>
-           <family>SWIsot3</family>
+           <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">background-color: rgb(8, 199, 46);
+background-color: rgb(80, 121, 37);
+color: rgb(5, 5, 255);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
          </property>
         </widget>
        </item>
@@ -327,13 +345,17 @@ color: rgb(255, 255, 255);</string>
         <widget class="QLineEdit" name="lineEdit_8">
          <property name="font">
           <font>
-           <family>SWIsot3</family>
+           <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(104, 101, 91);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">background-color: rgb(8, 199, 46);
+background-color: rgb(80, 121, 37);
+color: rgb(5, 5, 255);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
          </property>
         </widget>
        </item>
@@ -342,7 +364,7 @@ color: rgb(255, 255, 255);</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>110</x>
         <y>190</y>
         <width>202</width>
         <height>331</height>
@@ -352,8 +374,9 @@ color: rgb(255, 255, 255);</string>
        <item>
         <widget class="QLabel" name="label_3">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 249);
-font: 18pt &quot;SimSun-ExtB&quot;;</string>
+          <string notr="true">color: rgb(3, 218, 211);
+font: 700 24pt &quot;Tw Cen MT Condensed&quot;;
+background-color: rgb(12, 48, 2);</string>
          </property>
          <property name="text">
           <string>Full-Name:</string>
@@ -363,8 +386,9 @@ font: 18pt &quot;SimSun-ExtB&quot;;</string>
        <item>
         <widget class="QLabel" name="label_5">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 249);
-font: 18pt &quot;SimSun-ExtB&quot;;</string>
+          <string notr="true">color: rgb(3, 218, 211);
+font: 700 24pt &quot;Tw Cen MT Condensed&quot;;
+background-color: rgb(12, 48, 2);</string>
          </property>
          <property name="text">
           <string>username : </string>
@@ -374,8 +398,9 @@ font: 18pt &quot;SimSun-ExtB&quot;;</string>
        <item>
         <widget class="QLabel" name="label_4">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 249);
-font: 18pt &quot;SimSun-ExtB&quot;;</string>
+          <string notr="true">color: rgb(3, 218, 211);
+font: 700 24pt &quot;Tw Cen MT Condensed&quot;;
+background-color: rgb(12, 48, 2);</string>
          </property>
          <property name="text">
           <string>PhoneNumber : </string>
@@ -385,8 +410,9 @@ font: 18pt &quot;SimSun-ExtB&quot;;</string>
        <item>
         <widget class="QLabel" name="label_6">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 249);
-font: 18pt &quot;SimSun-ExtB&quot;;</string>
+          <string notr="true">color: rgb(3, 218, 211);
+font: 700 24pt &quot;Tw Cen MT Condensed&quot;;
+background-color: rgb(12, 48, 2);</string>
          </property>
          <property name="text">
           <string>Email_Address : </string>
@@ -396,8 +422,9 @@ font: 18pt &quot;SimSun-ExtB&quot;;</string>
        <item>
         <widget class="QLabel" name="label_7">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 249);
-font: 18pt &quot;SimSun-ExtB&quot;;</string>
+          <string notr="true">color: rgb(3, 218, 211);
+font: 700 24pt &quot;Tw Cen MT Condensed&quot;;
+background-color: rgb(12, 48, 2);</string>
          </property>
          <property name="text">
           <string>Password : </string>
@@ -407,8 +434,9 @@ font: 18pt &quot;SimSun-ExtB&quot;;</string>
        <item>
         <widget class="QLabel" name="label_9">
          <property name="styleSheet">
-          <string notr="true">color: rgb(85, 255, 249);
-font: 18pt &quot;SimSun-ExtB&quot;;</string>
+          <string notr="true">color: rgb(3, 218, 211);
+font: 700 24pt &quot;Tw Cen MT Condensed&quot;;
+background-color: rgb(12, 48, 2);</string>
          </property>
          <property name="text">
           <string>confirm password : </string>
@@ -416,6 +444,19 @@ font: 18pt &quot;SimSun-ExtB&quot;;</string>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QPushButton" name="SignupCheck">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>550</y>
+        <width>80</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sign up</string>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -425,7 +466,7 @@ font: 18pt &quot;SimSun-ExtB&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>813</width>
+     <width>827</width>
      <height>20</height>
     </rect>
    </property>
