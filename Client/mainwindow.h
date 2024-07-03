@@ -26,11 +26,19 @@ private slots:
 
     void on_Back_clicked();
 
-
-
-    void on_SunFlow_linkActivated(const QString &link);
-
     void on_eye_login_clicked();
+
+    void on_eye_signup_clicked();
+
+    void on_forgot_pass_clicked();
+
+    void on_Ok_RPass_clicked();
+
+    void on_Ok_newpass_2_clicked();
+
+    void on_Ok_newpass_3_clicked();
+
+    void on_Ok_newpass_clicked();
 
 private:
     Ui::MainWindow *ui;

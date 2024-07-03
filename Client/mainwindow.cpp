@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap OEyepic(":/Images/open-eye.png");
     ui->eye_login->setIcon(QIcon(OEyepic));
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);
+    ///
+
 }
 
 
@@ -49,8 +51,12 @@ void MainWindow::on_SignUp_clicked()
     ui->Signup->setPalette(palette3);
     ui->Signup->setAutoFillBackground(true);
     ui->GameControl->setCurrentIndex(2);
-}
 
+    QPixmap OEyepic2(":/Images/open-eye.png");
+    ui->eye_signup->setIcon(QIcon(OEyepic2));
+    ui->lineEdit_7->setEchoMode(QLineEdit::Password);
+    ui->lineEdit_8->setEchoMode(QLineEdit::Password);
+}
 
 void MainWindow::on_SignupCheck_clicked()
 {
@@ -61,6 +67,12 @@ void MainWindow::on_SignupCheck_clicked()
     }
     QString output="";
     output+=ui->lineEdit_3->text()+","+ui->lineEdit_4->text()+",";
+    QRegularExpression phonenumRegex(R"(\b09\d{9}\b)");
+    if (!phonenumRegex.match(ui->lineEdit_5->text()).hasMatch()) {
+        QMessageBox::warning(this,"Error", "Invalid phonenumber format\n");
+        return;
+    }
+    output+=ui->lineEdit_5->text()+",";
     QRegularExpression emailRegex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
     if (!emailRegex.match(ui->lineEdit_6->text()).hasMatch()) {
         QMessageBox::warning(this,"Error", "Invalid email format\n");
@@ -79,11 +91,6 @@ void MainWindow::on_SignupCheck_clicked()
 
 }
 
-
-void MainWindow::on_Back_clicked()
-{
-    ui->GameControl->setCurrentIndex(1);
-}
 int circle=0;
 int rotationAngle = 1;
 void MainWindow::Loading_rotation(){
@@ -126,8 +133,6 @@ void MainWindow::Loading_rotation(){
     rotationAngle++;
 }
 
-
-
 int clickcount=0;
 void MainWindow::on_eye_login_clicked()
 {
@@ -145,5 +150,98 @@ void MainWindow::on_eye_login_clicked()
         clickcount=0;
         return;
     }
+}
+
+int clickcount2=0;
+void MainWindow::on_eye_signup_clicked()
+{
+    if(clickcount2==0){
+        QPixmap CEyepic(":/Images/close-eye.png");
+        ui->eye_signup->setIcon(QIcon(CEyepic));
+        ui->lineEdit_7->setEchoMode(QLineEdit::Normal);
+        clickcount2=1;
+        return;
+    }
+    if(clickcount2==1){
+        QPixmap OEyepic(":/Images/open-eye.png");
+        ui->eye_signup->setIcon(QIcon(OEyepic));
+        ui->lineEdit_7->setEchoMode(QLineEdit::Password);
+        clickcount2=0;
+        return;
+    }
+}
+
+void MainWindow::on_forgot_pass_clicked()
+{
+    QPixmap ResetPass(":/Images/PasswordReset.png");
+
+    QPalette palette;
+    palette.setBrush(QPalette::Window, QBrush(ResetPass));
+    ui->RestorePass->setPalette(palette);
+    ui->RestorePass->setAutoFillBackground(true);
+    ui->GameControl->setCurrentIndex(3);
+}
+
+void MainWindow::on_Back_clicked()
+{
+    ui->GameControl->setCurrentIndex(1);
+}
+
+void MainWindow::on_Ok_RPass_clicked()
+{
+    if(ui->lineEdit_9->text().isEmpty()||ui->lineEdit_10->text().isEmpty()){
+        QMessageBox::warning(this,"Error", "pleas fill in all the blanks\n");
+        return;
+    }
+    QString output="";
+    QRegularExpression phonenumRegex(R"(\b09\d{9}\b)");
+    if (!phonenumRegex.match(ui->lineEdit_9->text()).hasMatch()) {
+        QMessageBox::warning(this,"Error", "Invalid phonenumber format\n");
+        return;
+    }
+    output+=ui->lineEdit_9->text()+",";
+    QRegularExpression emailRegex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
+    if (!emailRegex.match(ui->lineEdit_10->text()).hasMatch()) {
+        QMessageBox::warning(this,"Error", "Invalid email format\n");
+        return;
+    }
+    output+=ui->lineEdit_10->text()+"\n";
+    //cheking in server if was true.go to set new password page
+    QPixmap ResetPass(":/Images/PasswordReset.png");
+
+    QPalette palette;
+    palette.setBrush(QPalette::Window, QBrush(ResetPass));
+    ui->SetnewPass->setPalette(palette);
+    ui->SetnewPass->setAutoFillBackground(true);
+    ui->GameControl->setCurrentIndex(4);
+}
+
+void MainWindow::on_Ok_newpass_2_clicked()
+{
+    ui->GameControl->setCurrentIndex(3);
+}
+
+void MainWindow::on_Ok_newpass_3_clicked()
+{
+
+    ui->GameControl->setCurrentIndex(1);
+}
+
+void MainWindow::on_Ok_newpass_clicked()
+{
+    if(ui->lineEdit_11->text().isEmpty()||ui->lineEdit_12->text().isEmpty()){
+        QMessageBox::warning(this,"Error", "pleas fill in all the blanks\n");
+        return;
+    }
+    QString output="";
+    if(ui->lineEdit_11->text().length()<8){
+        QMessageBox::warning(this,"Error", "Password is weak!!\n");
+        return;
+    }
+    if(ui->lineEdit_12->text()!=ui->lineEdit_11->text()){
+        QMessageBox::warning(this,"Error", "Password confirmation failed\n");
+        return;
+    }
+    output+=ui->lineEdit_11->text()+"\n";
 }
 

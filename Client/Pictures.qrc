@@ -6,5 +6,7 @@
         <file>Images/Sunflower.png</file>
         <file>Images/open-eye.png</file>
         <file>Images/close-eye.png</file>
+        <file>Images/server_connection.png</file>
+        <file>Images/PasswordReset.png</file>
     </qresource>
 </RCC>
