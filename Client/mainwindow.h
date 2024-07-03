@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QTcpSocket>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -40,9 +41,25 @@ private slots:
 
     void on_Ok_newpass_clicked();
 
+    void onReadyRead();
+
+    void on_connectButton_clicked();
+
+    void onConnected();
+
+    void onError(QTcpSocket::SocketError socketError);
+
+    void onConnectionTimeout();
+
+    void on_Ok_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     QTimer* Rotate;
+
+    QTcpSocket *socket;
+
+    QTimer *connectionTimer;
 };
 #endif // MAINWINDOW_H

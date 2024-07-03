@@ -11,6 +11,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , connectionTimer(new QTimer(this))
 {
     ui->setupUi(this);
     ui->GameControl->setFixedSize(800,800);
@@ -24,15 +25,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->FLoading->setAutoFillBackground(true);
     //////////////////////////////////////////////
 
-    ui->GameControl->setCurrentIndex(0);
+    ui->GameControl->setCurrentIndex(5);
     Rotate = new QTimer();
-    Rotate->start(10);
     connect(Rotate,&QTimer::timeout,this,&MainWindow::Loading_rotation);
     ///
     QPixmap OEyepic(":/Images/open-eye.png");
     ui->eye_login->setIcon(QIcon(OEyepic));
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);
     ///
+    socket = new QTcpSocket(this);
+    connect(socket, &QTcpSocket::readyRead, this, &MainWindow::onReadyRead);
+    connect(socket, &QTcpSocket::connected, this, &MainWindow::onConnected);
+    connect(socket, QOverload<QTcpSocket::SocketError>::of(&QTcpSocket::errorOccurred),
+            this, &MainWindow::onError);
+    connect(connectionTimer, &QTimer::timeout, this, &MainWindow::onConnectionTimeout);
 
 }
 
@@ -65,20 +71,20 @@ void MainWindow::on_SignupCheck_clicked()
         QMessageBox::warning(this,"Error", "pleas fill in all the blanks\n");
         return;
     }
-    QString output="";
-    output+=ui->lineEdit_3->text()+","+ui->lineEdit_4->text()+",";
+    QString output="11,";
+    //output+=ui->lineEdit_3->text()+","+ui->lineEdit_4->text()+",";
     QRegularExpression phonenumRegex(R"(\b09\d{9}\b)");
     if (!phonenumRegex.match(ui->lineEdit_5->text()).hasMatch()) {
         QMessageBox::warning(this,"Error", "Invalid phonenumber format\n");
         return;
     }
-    output+=ui->lineEdit_5->text()+",";
+    //output+=ui->lineEdit_5->text()+",";
     QRegularExpression emailRegex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
     if (!emailRegex.match(ui->lineEdit_6->text()).hasMatch()) {
         QMessageBox::warning(this,"Error", "Invalid email format\n");
         return;
     }
-    output+=ui->lineEdit_6->text()+",";
+    //output+=ui->lineEdit_6->text()+",";
     if(ui->lineEdit_7->text().length()<8){
         QMessageBox::warning(this,"Error", "Password is weak!!\n");
         return;
@@ -87,7 +93,14 @@ void MainWindow::on_SignupCheck_clicked()
         QMessageBox::warning(this,"Error", "Password confirmation failed\n");
         return;
     }
-    output+=ui->lineEdit_7->text()+"\n";
+    //output+=ui->lineEdit_7->text()+"\n";
+    output += ui->lineEdit_3->text() + ",";
+    output += ui->lineEdit_4->text() + ",";
+    output += ui->lineEdit_7->text() + ",";
+    output += ui->lineEdit_5->text() + ",";
+    output += ui->lineEdit_6->text();
+
+    socket->write(output.toUtf8());
 
 }
 
@@ -185,6 +198,12 @@ void MainWindow::on_forgot_pass_clicked()
 void MainWindow::on_Back_clicked()
 {
     ui->GameControl->setCurrentIndex(1);
+    ui->lineEdit_3->setText("");
+    ui->lineEdit_4->setText("");
+    ui->lineEdit_5->setText("");
+    ui->lineEdit_6->setText("");
+    ui->lineEdit_7->setText("");
+    ui->lineEdit_8->setText("");
 }
 
 void MainWindow::on_Ok_RPass_clicked()
@@ -243,5 +262,66 @@ void MainWindow::on_Ok_newpass_clicked()
         return;
     }
     output+=ui->lineEdit_11->text()+"\n";
+}
+
+
+void MainWindow::on_connectButton_clicked()
+{
+    socket->abort();
+    socket->connectToHost(ui->IPEdit->text(), ui->portEdit->text().toUShort());
+    connectionTimer->start(2000);
+}
+
+void MainWindow::onReadyRead()
+{
+    QByteArray data = socket->readAll();
+    QString response(data);
+
+    QStringList fields = response.split(",");
+    if (fields[0] == "112") {
+        QMessageBox::information(this, "Signup", "Signup successfully!");
+    }
+
+    if (fields[0] == "111"){
+        QMessageBox::critical(this, "Signup", "This username already token!");
+    }
+
+    if (fields[0] == "113"){
+        QMessageBox::information(this, "Signin", "Welcome!");
+    }
+
+    if (fields[0] == "114"){
+        QMessageBox::critical(this, "Signin", "Incorrect username/password!");
+    }
+}
+
+void MainWindow::onConnected() {
+    connectionTimer->stop();
+    ui->GameControl->setCurrentIndex(0);
+    Rotate->start(10);
+}
+
+void MainWindow::onError(QTcpSocket::SocketError socketError) {
+    Q_UNUSED(socketError);
+    if (connectionTimer->isActive()) {
+        connectionTimer->stop();
+        QMessageBox::warning(this, "Error", "Failed to connect");
+    }
+}
+
+void MainWindow::onConnectionTimeout() {
+    if (socket->state() != QTcpSocket::ConnectedState) {
+        socket->abort();
+        connectionTimer->stop();
+        QMessageBox::warning(this, "Error", "Failed to connect: Timeout");
+    }
+}
+
+void MainWindow::on_Ok_clicked()
+{
+    QString output = "12,";
+    output += ui->lineEdit->text() + ",";
+    output += ui->lineEdit_2->text();
+    socket->write(output.toUtf8());
 }
 

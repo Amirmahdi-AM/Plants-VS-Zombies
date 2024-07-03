@@ -6,6 +6,7 @@
 #include <QCryptographicHash>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
 
 Server::Server(QObject *parent) : QTcpServer(parent)
 {
@@ -54,17 +55,17 @@ void Server::signUp(const QString &_name, const QString &_username, const QStrin
     }
 
     QByteArray passwordHash = QCryptographicHash::hash(_password.toUtf8(), QCryptographicHash::Sha256);
-    QFile accFile(":/Files/Accounts.txt");
+    QFile accFile("Accounts.txt");
     if (accFile.open(QIODevice::Append | QIODevice::Text)){
         QTextStream out(&accFile);
-        out << _username << "," << passwordHash << "," << _name << "," << _phoneNumber << "," << _email << "\n";
+        out << _username << "," << passwordHash.toHex() << "," << _name << "," << _phoneNumber << "," << _email << "\n";
         accFile.close();
     }
     client->write("112");
 }
 
 bool Server::checkExistingAccounts(const QString &_username) {
-    QFile accFile(":/Files/Address.txt");
+    QFile accFile("Accounts.txt");
     bool result = false;
     if (accFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&accFile);
@@ -94,7 +95,7 @@ void Server::signIn(const QString &_username, const QString &_password, QTcpSock
 
 bool Server::validateCredentials(const QString &_username, const QByteArray &_password)
 {
-    QFile accFile(":/Files/Accounts.txt");
+    QFile accFile("Accounts.txt");
     if (accFile.open(QIODevice::ReadOnly | QIODevice::Text)){
         QTextStream in(&accFile);
         while(!in.atEnd()){

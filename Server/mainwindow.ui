@@ -36,7 +36,7 @@
             <item>
              <widget class="QLabel" name="serverLabel">
               <property name="text">
-               <string>Server</string>
+               <string>IP</string>
               </property>
              </widget>
             </item>
