@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>827</width>
+    <width>1193</width>
     <height>748</height>
    </rect>
   </property>
@@ -27,15 +27,21 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
-      <width>701</width>
-      <height>571</height>
+      <y>-20</y>
+      <width>1141</width>
+      <height>611</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="FLoading">
+     <property name="cursor">
+      <cursorShape>WaitCursor</cursorShape>
+     </property>
      <widget class="QLabel" name="SunFlow">
       <property name="geometry">
        <rect>
@@ -938,6 +944,36 @@ font: 14pt &quot;SWMono&quot;;</string>
       </layout>
      </widget>
     </widget>
+    <widget class="QWidget" name="Menu">
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>230</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Plants_map">
+     <widget class="QLabel" name="Ground">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>170</y>
+        <width>1131</width>
+        <height>311</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -945,7 +981,7 @@ font: 14pt &quot;SWMono&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>827</width>
+     <width>1193</width>
      <height>20</height>
     </rect>
    </property>

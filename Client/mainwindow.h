@@ -17,9 +17,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 public slots:
 
     void Loading_rotation();
+
 private slots:
     void on_SignUp_clicked();
 

@@ -8,5 +8,7 @@
         <file>Images/close-eye.png</file>
         <file>Images/server_connection.png</file>
         <file>Images/PasswordReset.png</file>
+        <file>Images/MenuBG.png</file>
+        <file>Images/field.png</file>
     </qresource>
 </RCC>

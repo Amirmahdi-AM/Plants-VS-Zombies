@@ -14,25 +14,26 @@ MainWindow::MainWindow(QWidget *parent)
     , connectionTimer(new QTimer(this))
 {
     ui->setupUi(this);
+    this->setFixedSize(800,800);
     ui->GameControl->setFixedSize(800,800);
-
+    ui->GameControl->setCurrentIndex(5);
     //////////////////////////////////////////////
     QPixmap server_page(":/Images/server_connection.png");
 
-    QPalette palette3;
-    palette3.setBrush(QPalette::Window, QBrush(server_page));
-    ui->server->setPalette(palette3);
+    QPalette palette100;
+    palette100.setBrush(QPalette::Window, QBrush(server_page));
+    ui->server->setPalette(palette100);
     ui->server->setAutoFillBackground(true);
-    ui->GameControl->setCurrentIndex(5);
+    /////////////////////////////////////////////////
+    //ui->GameControl->setFixedSize(1500,800);
+    //this->setFixedSize(1500,800);
     //////////////////////////////////////////////
 
 
     Rotate = new QTimer();
     connect(Rotate,&QTimer::timeout,this,&MainWindow::Loading_rotation);
     ///
-    QPixmap OEyepic(":/Images/open-eye.png");
-    ui->eye_login->setIcon(QIcon(OEyepic));
-    ui->lineEdit_2->setEchoMode(QLineEdit::Password);
+
     ///
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::onReadyRead);
@@ -105,7 +106,7 @@ void MainWindow::on_SignupCheck_clicked()
 
 }
 
-int circle=0;
+int circle=2;
 int rotationAngle = 1;
 void MainWindow::Loading_rotation(){
 
@@ -118,6 +119,11 @@ void MainWindow::Loading_rotation(){
         ui->LoginPage->setPalette(palette2);
         ui->LoginPage->setAutoFillBackground(true);
         ui->GameControl->setCurrentIndex(1);
+
+        QPixmap OEyepic(":/Images/open-eye.png");
+        ui->eye_login->setIcon(QIcon(OEyepic));
+        ui->lineEdit_2->setEchoMode(QLineEdit::Password);
+
     }
     if(rotationAngle==365){
         rotationAngle=0;
@@ -273,7 +279,12 @@ void MainWindow::on_connectButton_clicked()
     socket->connectToHost(ui->IPEdit->text(), ui->portEdit->text().toUShort());
     connectionTimer->start(2000);
 }
+void Plants_set(){
 
+}
+void Zombies_set(){
+
+}
 void MainWindow::onReadyRead()
 {
     QByteArray data = socket->readAll();
@@ -289,7 +300,22 @@ void MainWindow::onReadyRead()
     }
 
     if (fields[0] == "113"){
-        QMessageBox::information(this, "Signin", "Welcome!");
+        //QMessageBox::information(this, "Signin", "Welcome!");
+//        QPixmap MenuBackground(":/Images/MenuBG.png");
+
+//        QPalette palette;
+//        palette.setBrush(QPalette::Window, QBrush(MenuBackground));
+//        ui->Menu->setPalette(palette);
+//        ui->Menu->setAutoFillBackground(true);
+
+//        ui->GameControl->setCurrentIndex(6);
+
+        ui->GameControl->setCurrentIndex(7);
+        this->setFixedSize(1600,900);
+        ui->GameControl->setFixedSize(1600,1000);
+        QPixmap GroundPic(":/Images/field.png");
+        ui->Ground->setFixedSize(2000,743);
+        ui->Ground->setPixmap(GroundPic);
     }
 
     if (fields[0] == "114"){
@@ -305,7 +331,13 @@ void MainWindow::onConnected() {
     palette1.setBrush(QPalette::Window, QBrush(Loadingpic));
     ui->FLoading->setPalette(palette1);
     ui->FLoading->setAutoFillBackground(true);
+
+    ui->forgot_pass->setAutoFillBackground(false);
+    QPalette pal = ui->forgot_pass->palette();
+    pal.setColor(QPalette::Button, Qt::transparent);
+    ui->forgot_pass->setPalette(pal);
     ui->GameControl->setCurrentIndex(0);
+
     Rotate->start(10);
 }
 
