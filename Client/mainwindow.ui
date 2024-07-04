@@ -16,8 +16,14 @@
   <property name="styleSheet">
    <string notr="true">border-color: rgb(16, 255, 24);</string>
   </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QStackedWidget" name="GameControl">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -27,7 +33,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <widget class="QLabel" name="SunFlow">
@@ -95,7 +101,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <fontweight>DemiBold</fontweight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -118,7 +124,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <fontweight>DemiBold</fontweight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -285,7 +291,7 @@ background-color: rgb(85, 85, 85);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -303,7 +309,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -321,7 +327,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -339,7 +345,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -357,7 +363,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -375,7 +381,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -632,7 +638,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -649,7 +655,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -749,7 +755,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -766,7 +772,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -820,62 +826,114 @@ color: rgb(83, 255, 212);</string>
      </widget>
     </widget>
     <widget class="QWidget" name="server">
+     <widget class="QPushButton" name="connectButton">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>500</y>
+        <width>122</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(104, 101, 91);
+color: rgb(83, 255, 212);</string>
+      </property>
+      <property name="text">
+       <string>Connect</string>
+      </property>
+     </widget>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>190</y>
-        <width>251</width>
-        <height>71</height>
+        <x>250</x>
+        <y>260</y>
+        <width>301</width>
+        <height>91</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_7">
+        <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout">
-           <item>
-            <widget class="QLabel" name="label_16">
-             <property name="text">
-              <string>IP</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="IPEdit">
-             <property name="text">
-              <string>127.0.0.1</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="label_16">
+           <property name="font">
+            <font>
+             <family>Tw Cen MT Condensed Extra Bold</family>
+             <pointsize>22</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(4, 101, 3);
+color: rgb(80, 121, 37);</string>
+           </property>
+           <property name="text">
+            <string>IP : </string>
+           </property>
+          </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QLabel" name="label_17">
-             <property name="text">
-              <string>Port</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="portEdit">
-             <property name="text">
-              <string>8484</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QLabel" name="label_17">
+           <property name="font">
+            <font>
+             <family>Tw Cen MT Condensed Extra Bold</family>
+             <pointsize>22</pointsize>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(80, 121, 37);</string>
+           </property>
+           <property name="text">
+            <string>Port : </string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
        <item>
-        <widget class="QPushButton" name="connectButton">
-         <property name="text">
-          <string>Connect</string>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="QLineEdit" name="IPEdit">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 14pt &quot;SWMono&quot;;</string>
+           </property>
+           <property name="text">
+            <string>127.0.0.1</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="portEdit">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 14pt &quot;SWMono&quot;;</string>
+           </property>
+           <property name="text">
+            <string>8484</string>
+           </property>
+           <property name="frame">
+            <bool>false</bool>
+           </property>
+           <property name="clearButtonEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -888,7 +946,7 @@ color: rgb(83, 255, 212);</string>
      <x>0</x>
      <y>0</y>
      <width>827</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

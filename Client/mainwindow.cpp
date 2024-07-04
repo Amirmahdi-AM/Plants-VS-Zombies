@@ -17,15 +17,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->GameControl->setFixedSize(800,800);
 
     //////////////////////////////////////////////
-    QPixmap Loadingpic(":/Images/LoadingBG.png");
+    QPixmap server_page(":/Images/server_connection.png");
 
-    QPalette palette1;
-    palette1.setBrush(QPalette::Window, QBrush(Loadingpic));
-    ui->FLoading->setPalette(palette1);
-    ui->FLoading->setAutoFillBackground(true);
+    QPalette palette3;
+    palette3.setBrush(QPalette::Window, QBrush(server_page));
+    ui->server->setPalette(palette3);
+    ui->server->setAutoFillBackground(true);
+    ui->GameControl->setCurrentIndex(5);
     //////////////////////////////////////////////
 
-    ui->GameControl->setCurrentIndex(5);
+
     Rotate = new QTimer();
     connect(Rotate,&QTimer::timeout,this,&MainWindow::Loading_rotation);
     ///
@@ -298,6 +299,12 @@ void MainWindow::onReadyRead()
 
 void MainWindow::onConnected() {
     connectionTimer->stop();
+    QPixmap Loadingpic(":/Images/LoadingBG.png");
+
+    QPalette palette1;
+    palette1.setBrush(QPalette::Window, QBrush(Loadingpic));
+    ui->FLoading->setPalette(palette1);
+    ui->FLoading->setAutoFillBackground(true);
     ui->GameControl->setCurrentIndex(0);
     Rotate->start(10);
 }
