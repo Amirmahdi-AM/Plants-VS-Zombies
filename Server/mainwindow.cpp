@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include "server.h"
 #include "QDebug"
+#include <QPixmap>
+#include <QPalette>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +12,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setFixedSize(800, 600);
+
+    ///////////////////////////////
+    QPixmap server_page(":/images/serverBG.png");
+    QPalette palette;
+    palette.setBrush(QPalette::Window, QBrush(server_page));
+    ui->page->setPalette(palette);
+    ui->page->setAutoFillBackground(true);
+    //////////////////////////////
 }
 
 MainWindow::~MainWindow()
@@ -29,6 +40,11 @@ void MainWindow::on_connectButton_clicked()
     }
     else {
         ui->stackedWidget->setCurrentIndex(1);
+        QPixmap connected_page(":/images/connectedBG.png");
+        QPalette palette;
+        palette.setBrush(QPalette::Window, QBrush(connected_page));
+        ui->page_2->setPalette(palette);
+        ui->page_2->setAutoFillBackground(true);
     }
 }
 
