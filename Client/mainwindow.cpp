@@ -242,8 +242,9 @@ void MainWindow::on_Ok_newpass_2_clicked()
 
 void MainWindow::on_Ok_newpass_3_clicked()
 {
-
     ui->GameControl->setCurrentIndex(1);
+    ui->lineEdit_9->setText("");
+    ui->lineEdit_10->setText("");
 }
 
 void MainWindow::on_Ok_newpass_clicked()
