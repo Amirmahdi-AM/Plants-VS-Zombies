@@ -21,11 +21,10 @@ void MainWindow::on_connectButton_clicked()
 {
     ui->connectButton->setText("Connecting...");
 
-    QString _server = ui->serverEdit->text();
     QString _port = ui->portEdit->text();
 
     Server *server = new Server;
-    if (!server->listen(QHostAddress(_server), _port.toInt())) {
+    if (!server->listen(QHostAddress::Any, _port.toInt())) {
         qDebug() << "Failed to connect to server";
     }
     else {
