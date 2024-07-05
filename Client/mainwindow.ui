@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1270</width>
-    <height>982</height>
+    <width>1596</width>
+    <height>1071</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1261</width>
+      <width>1541</width>
       <height>891</height>
      </rect>
     </property>
@@ -42,7 +42,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <property name="cursor">
@@ -1050,7 +1050,7 @@ font: 14pt &quot;SWMono&quot;;</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>20</y>
+        <y>0</y>
         <width>141</width>
         <height>111</height>
        </rect>
@@ -1081,6 +1081,145 @@ font: 14pt &quot;SWMono&quot;;</string>
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1501</width>
+        <height>131</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(113, 57, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>1481</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(245, 123, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_24">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Peashooter_P_Card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_30">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/two_peashooter_P_card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_31">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Walnut_P_Card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_32">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Plum_Mine_P_Card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_33">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Jalapeno_P_Card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_34">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Boomerang_P_Card.png</pixmap>
+      </property>
+     </widget>
+     <zorder>Ground</zorder>
+     <zorder>Spawned_sun</zorder>
+     <zorder>label_19</zorder>
+     <zorder>label_20</zorder>
+     <zorder>Moving_sun</zorder>
+     <zorder>label_24</zorder>
+     <zorder>label_30</zorder>
+     <zorder>label_31</zorder>
+     <zorder>label_32</zorder>
+     <zorder>label_33</zorder>
+     <zorder>label_34</zorder>
     </widget>
     <widget class="QWidget" name="Waiting_Page">
      <property name="cursor">
@@ -1159,7 +1298,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>100</y>
+        <y>80</y>
         <width>1131</width>
         <height>311</height>
        </rect>
@@ -1173,45 +1312,178 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>171</width>
+        <width>151</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Spawned_brain">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>80</y>
+        <width>71</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>ClosedHandCursor</cursorShape>
+      </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">margin: 0px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1501</width>
+        <height>131</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(113, 57, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>1481</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(245, 123, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>10</y>
+        <width>91</width>
         <height>111</height>
        </rect>
       </property>
       <property name="text">
        <string/>
       </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Regular_Z_Card.png</pixmap>
+      </property>
      </widget>
-     <widget class="QPushButton" name="Spawned_brain">
+     <widget class="QLabel" name="label_25">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>80</y>
-        <width>101</width>
-        <height>101</height>
+        <x>340</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
        </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">#Spawned_brain{
-boder: none;
-background-color: transparent;
-}</string>
       </property>
       <property name="text">
        <string/>
       </property>
-      <property name="autoDefault">
-       <bool>true</bool>
-      </property>
-      <property name="default">
-       <bool>true</bool>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/LeafHead_Z_Card.png</pixmap>
       </property>
      </widget>
+     <widget class="QLabel" name="label_26">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Bucket_Z_Card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_27">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Austronut_Z_Card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_28">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Tall_Z_Card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_29">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/PurpleHead_Z_Card.png</pixmap>
+      </property>
+     </widget>
+     <zorder>Ground_2</zorder>
+     <zorder>Spawned_brain</zorder>
+     <zorder>label_21</zorder>
+     <zorder>label_22</zorder>
+     <zorder>label_23</zorder>
+     <zorder>label_25</zorder>
+     <zorder>label_26</zorder>
+     <zorder>label_27</zorder>
+     <zorder>label_28</zorder>
+     <zorder>label_29</zorder>
+     <zorder>Moving_brain</zorder>
     </widget>
    </widget>
   </widget>
@@ -1220,13 +1492,15 @@ background-color: transparent;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1270</width>
+     <width>1596</width>
      <height>20</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="Pictures.qrc"/>
+ </resources>
  <connections/>
 </ui>

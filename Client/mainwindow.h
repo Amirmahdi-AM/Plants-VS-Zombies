@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <QMouseEvent>
 #include <QMainWindow>
 #include <QTimer>
 #include <QTcpSocket>
@@ -70,9 +70,12 @@ private slots:
 
     void on_Start_Game_Botton_clicked();
 
-    void on_Spawned_brain_clicked();
 
+    void on_Spawned_brain_Lable_clicked();
+signals:
+    void brainClicked();
 private:
+
     Ui::MainWindow *ui;
 
     QTimer* Rotate;
@@ -96,5 +99,12 @@ private:
     QTimer *connectionTimer;
 
     int P_or_Z;
+
+    void mousePressEvent(QMouseEvent* event) override {
+            if (event->button() == Qt::LeftButton) {
+                emit brainClicked();
+            }
+            QWidget::mousePressEvent(event);
+        }
 };
 #endif // MAINWINDOW_H

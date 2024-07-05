@@ -15,5 +15,17 @@
         <file>Images/WaitingBG.jpg</file>
         <file>Images/FadeBrain.png</file>
         <file>Images/Brain.png</file>
+        <file>Images/Austronut_Z_Card.png</file>
+        <file>Images/Bucket_Z_Card.png</file>
+        <file>Images/LeafHead_Z_Card.png</file>
+        <file>Images/PurpleHead_Z_Card.png</file>
+        <file>Images/Regular_Z_Card.png</file>
+        <file>Images/Tall_Z_Card.png</file>
+        <file>Images/Boomerang_P_Card.png</file>
+        <file>Images/Jalapeno_P_Card.png</file>
+        <file>Images/Peashooter_P_Card.png</file>
+        <file>Images/Plum_Mine_P_Card.png</file>
+        <file>Images/two_peashooter_P_card.png</file>
+        <file>Images/Walnut_P_Card.png</file>
     </qresource>
 </RCC>

@@ -9,7 +9,7 @@
 #include <QTransform>
 #include <QPropertyAnimation>
 #include <stdlib.h>
-
+#include <QPainter>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -27,6 +27,11 @@ MainWindow::MainWindow(QWidget *parent)
     palette100.setBrush(QPalette::Window, QBrush(server_page));
     ui->server->setPalette(palette100);
     ui->server->setAutoFillBackground(true);
+    connect(this,&MainWindow::brainClicked, this, &MainWindow::on_Spawned_brain_Lable_clicked);
+//    ui->Spawned_brain->setContentsMargins(0, 0, 0, 0);
+//    ui->Spawned_brain->setStyleSheet("margin: 0px;");
+//    ui->Spawned_brain->setAutoFillBackground(true);
+//    ui->Spawned_brain->setAlignment(Qt::AlignCenter);
 
     /////////////////////////////////////////////////////////////////////////
     ///threads connection
@@ -543,18 +548,25 @@ void MainWindow::on_Start_Game_Botton_clicked()
 }
 
 
-void MainWindow::on_Spawned_brain_clicked()
+
+void MainWindow::on_Spawned_brain_Lable_clicked()
 {
     if (Brainfade->isActive()){
         Brainfade->stop();
     }
+
+
+
+     ui->Spawned_brain->setWindowFlags(Qt::FramelessWindowHint);
     QPropertyAnimation *animation = new QPropertyAnimation(ui->Spawned_brain, "geometry");
     animation->setDuration(1000);
     QPoint Spawned_brainPos = ui->Spawned_brain->pos();
     int x = Spawned_brainPos.x();
     int y = Spawned_brainPos.y();
-    animation->setStartValue(QRect(x, y, 80,74));
-    animation->setEndValue(QRect(13, 10, 80,74));
+    animation->setStartValue(QRect(x, y, 100,100));
+    //QRect(13, 10, 80,74
+    animation->setEndValue(QRect(13, 10, 100,100));
     animation->start();
-}
 
+
+}
