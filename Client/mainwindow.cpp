@@ -7,6 +7,8 @@
 #include <QPixmap>
 #include <QImage>
 #include <QTransform>
+#include <QPropertyAnimation>
+#include <stdlib.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,31 +17,37 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setFixedSize(800,800);
+    this->move(400,0);
     ui->GameControl->setFixedSize(800,800);
     ui->GameControl->setCurrentIndex(5);
-    //////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////
     QPixmap server_page(":/Images/server_connection.png");
 
     QPalette palette100;
     palette100.setBrush(QPalette::Window, QBrush(server_page));
     ui->server->setPalette(palette100);
     ui->server->setAutoFillBackground(true);
-    /////////////////////////////////////////////////
-    //ui->GameControl->setFixedSize(1500,800);
-    //this->setFixedSize(1500,800);
-    //////////////////////////////////////////////
 
-
+    /////////////////////////////////////////////////////////////////////////
+    ///threads connection
     Rotate = new QTimer();
     connect(Rotate,&QTimer::timeout,this,&MainWindow::Loading_rotation);
-    ///
+    Rotate2 = new QTimer();
+    connect(Rotate2,&QTimer::timeout,this,&MainWindow::waiting_rotation);
 
-    ///
+    Sun_Rotate = new QTimer();
+    connect(Sun_Rotate,&QTimer::timeout,this,&MainWindow::sun_rotation);
+    Sun_spawn = new QTimer();
+    connect(Sun_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_sun);
+    fade = new QTimer(this);
+    connect(fade,&QTimer::timeout,this,&MainWindow::Fade_sun);
+
+    ////////////////////////////////////////////////////////////////////////
+    /// socket connection
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::onReadyRead);
     connect(socket, &QTcpSocket::connected, this, &MainWindow::onConnected);
-    connect(socket, QOverload<QTcpSocket::SocketError>::of(&QTcpSocket::errorOccurred),
-            this, &MainWindow::onError);
+    connect(socket, QOverload<QTcpSocket::SocketError>::of(&QTcpSocket::errorOccurred), this, &MainWindow::onError);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::onConnectionTimeout);
 
 }
@@ -106,7 +114,7 @@ void MainWindow::on_SignupCheck_clicked()
 
 }
 
-int circle=2;
+int circle=0;
 int rotationAngle = 1;
 void MainWindow::Loading_rotation(){
 
@@ -150,6 +158,48 @@ void MainWindow::Loading_rotation(){
     transform.rotate(rotationAngle);
     QPixmap rotatedSunflower = Sunflower.transformed(transform);
     ui->SunFlow->setPixmap(rotatedSunflower);
+    rotationAngle++;
+}
+
+void MainWindow::waiting_rotation(){
+
+    if(rotationAngle==365){
+        rotationAngle=0;
+    }
+    if(rotationAngle%160==0){
+
+        ui->points_2->setText("");
+    }
+    if(rotationAngle%160==40){
+
+        ui->points_2->setText(".");
+    }
+    if(rotationAngle%160==80){
+
+        ui->points_2->setText(". .");
+    }
+    if(rotationAngle%160==120){
+
+        ui->points_2->setText(". . .");
+    }
+    QPixmap Sunflower(":/Images/Sunflower.png");
+    QTransform transform;
+    transform.rotate(rotationAngle);
+    QPixmap rotatedSunflower = Sunflower.transformed(transform);
+    ui->SunFlow_2->setPixmap(rotatedSunflower);
+    rotationAngle++;
+}
+
+void MainWindow::sun_rotation(){
+
+    if(rotationAngle==365){
+        rotationAngle=0;
+    }
+    QPixmap Sun(":/Images/sun.png");
+    QTransform transform;
+    transform.rotate(rotationAngle);
+    QPixmap rotatedSun = Sun.transformed(transform);
+    ui->Moving_sun->setPixmap(rotatedSun);
     rotationAngle++;
 }
 
@@ -272,19 +322,49 @@ void MainWindow::on_Ok_newpass_clicked()
     output+=ui->lineEdit_11->text()+"\n";
 }
 
-
 void MainWindow::on_connectButton_clicked()
 {
     socket->abort();
     socket->connectToHost(ui->IPEdit->text(), ui->portEdit->text().toUShort());
     connectionTimer->start(2000);
 }
-void Plants_set(){
 
+void MainWindow::Plants_set(){
+    ui->GameControl->setCurrentIndex(7);
+    this->setFixedSize(1600,900);
+    this->move(15,0);
+    ui->GameControl->setFixedSize(1600,1000);
+    /////////////////////////////////////////
+    QPixmap GroundPic(":/Images/field.png");
+    ui->Ground->setFixedSize(2000,743);
+    ui->Ground->setPixmap(GroundPic);
+    /////////////////////////////////////////
+    QPixmap Sun(":/Images/sun.png");
+    ui->Moving_sun->setFixedSize(105,99);
+    ui->Moving_sun->setPixmap(Sun);
+    Sun_Rotate->start(10);
+    Sun_spawn->start(6000);
+    /////////////////////////////////////////
 }
-void Zombies_set(){
 
+void MainWindow::Zombies_set(){
+    ui->GameControl->setCurrentIndex(9);
+    this->setFixedSize(1600,900);
+    this->move(15,0);
+    ui->GameControl->setFixedSize(1600,1000);
+    /////////////////////////////////////////
+    QPixmap GroundPic(":/Images/field.png");
+    ui->Ground->setFixedSize(2000,743);
+    ui->Ground->setPixmap(GroundPic);
+    /////////////////////////////////////////
+    QPixmap Sun(":/Images/brain.png");
+    ui->Moving_sun->setFixedSize(105,99);
+    ui->Moving_sun->setPixmap(Sun);
+    Sun_Rotate->start(10);
+    Sun_spawn->start(6000);
+    /////////////////////////////////////////
 }
+
 void MainWindow::onReadyRead()
 {
     QByteArray data = socket->readAll();
@@ -298,24 +378,31 @@ void MainWindow::onReadyRead()
     if (fields[0] == "111"){
         QMessageBox::critical(this, "Signup", "This username already token!");
     }
-
+    if (fields[0] == "0"){
+        P_or_Z = 1;
+        Plants_set();
+    }
+    if (fields[0] == "1"){
+        P_or_Z = -1;
+        Zombies_set();
+    }
     if (fields[0] == "113"){
         //QMessageBox::information(this, "Signin", "Welcome!");
-//        QPixmap MenuBackground(":/Images/MenuBG.png");
+        ui->GameControl->setCurrentIndex(6);
+        QPixmap MenuBackground(":/Images/MenuBG.png");
 
-//        QPalette palette;
-//        palette.setBrush(QPalette::Window, QBrush(MenuBackground));
-//        ui->Menu->setPalette(palette);
-//        ui->Menu->setAutoFillBackground(true);
+        QPalette palette;
+        palette.setBrush(QPalette::Window, QBrush(MenuBackground));
+        ui->Menu->setPalette(palette);
+        ui->Menu->setAutoFillBackground(true);
 
-//        ui->GameControl->setCurrentIndex(6);
 
-        ui->GameControl->setCurrentIndex(7);
-        this->setFixedSize(1600,900);
-        ui->GameControl->setFixedSize(1600,1000);
-        QPixmap GroundPic(":/Images/field.png");
-        ui->Ground->setFixedSize(2000,743);
-        ui->Ground->setPixmap(GroundPic);
+//        if(true){
+//            Plants_set();
+//        }
+//        else{
+//            Zombies_set();
+//        }
     }
 
     if (fields[0] == "114"){
@@ -363,5 +450,68 @@ void MainWindow::on_Ok_clicked()
     output += ui->lineEdit->text() + ",";
     output += ui->lineEdit_2->text();
     socket->write(output.toUtf8());
+}
+
+void MainWindow::Spawnning_sun(){
+    QPropertyAnimation *animation;
+    if(P_or_Z==1){
+        ui->Spawned_sun->setFixedSize(105,99);
+        ui->Spawned_sun->setStyleSheet("background-image: url(:/Images/sun.png);");
+        ui->Spawned_sun->setGeometry(-1, -1, 120, 99);
+       animation = new QPropertyAnimation(ui->Spawned_sun, "geometry");
+    }
+    if(P_or_Z==-1){
+        ui->Spawned_brain->setFixedSize(105,99);
+        ui->Spawned_brain->setStyleSheet("background-image: url(:/Images/brain.png);");
+        ui->Spawned_brain->setGeometry(-1, -1, 120, 99);
+        animation = new QPropertyAnimation(ui->Spawned_brain, "geometry");
+    }
+
+    fade->start(4000);
+
+    animation->setDuration(2000);
+    int x = rand() % 1200 + 200;
+    int y = rand() % 550 + 200;
+    animation->setStartValue(QRect(x, -1, 150, 30));
+    animation->setEndValue(QRect(x, y, 150, 30));
+    animation->start();
+}
+
+void MainWindow::Fade_sun(){
+    ui->Spawned_sun->setStyleSheet("background-image: url(:/Images/FadedSun.png);");
+            if (!fade->isActive()){
+                fade->stop();
+            }
+}
+
+void MainWindow::on_Spawned_sun_clicked()
+{
+    if (!fade->isActive()){
+        fade->stop();
+    }
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->Spawned_sun, "geometry");
+    animation->setDuration(1000);
+    QPoint Spawned_sunPos = ui->Spawned_sun->pos();
+    int x = Spawned_sunPos.x();
+    int y = Spawned_sunPos.y();
+    animation->setStartValue(QRect(x, y, 150, 30));
+    animation->setEndValue(QRect(13, 10, 150, 30));
+    animation->start();
+}
+
+
+void MainWindow::on_Start_Game_Botton_clicked()
+{
+    ui->GameControl->setCurrentIndex(8);
+    this->setFixedSize(1600,900);
+    this->move(15,0);
+    ui->GameControl->setFixedSize(1600,900);
+
+    QPixmap WaitingPic(":/Images/WaitingBG.jpg");
+    ui->Waiting_Lable->setFixedSize(1600,1000);
+    ui->Waiting_Lable->move(0,-50);
+    ui->Waiting_Lable->setPixmap(WaitingPic);
+    Rotate2->start(10);
+//    Plants_set();
 }
 
