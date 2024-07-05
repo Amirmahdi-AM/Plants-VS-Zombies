@@ -16,11 +16,14 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void Plants_set();
+    void Zombies_set();
     ~MainWindow();
 
 public slots:
 
     void Loading_rotation();
+    void waiting_rotation();
 
 private slots:
     void on_SignUp_clicked();
@@ -55,13 +58,33 @@ private slots:
 
     void on_Ok_clicked();
 
+    void sun_rotation();
+
+    void Spawnning_sun();
+
+    void Fade_sun();
+
+    void on_Spawned_sun_clicked();
+
+    void on_Start_Game_Botton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     QTimer* Rotate;
 
+    QTimer* Rotate2;
+
+    QTimer* Sun_spawn;
+
+    QTimer* fade;
+
+    QTimer* Sun_Rotate;
+
     QTcpSocket *socket;
 
     QTimer *connectionTimer;
+
+    int P_or_Z;
 };
 #endif // MAINWINDOW_H

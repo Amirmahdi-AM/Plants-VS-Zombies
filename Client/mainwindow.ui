@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1193</width>
-    <height>748</height>
+    <width>1270</width>
+    <height>982</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,16 +27,22 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>-20</y>
-      <width>1141</width>
-      <height>611</height>
+      <y>0</y>
+      <width>1261</width>
+      <height>891</height>
      </rect>
     </property>
     <property name="cursor">
-     <cursorShape>ArrowCursor</cursorShape>
+     <cursorShape>WaitCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <property name="cursor">
@@ -188,8 +194,8 @@ color: rgb(80, 121, 37);</string>
      <widget class="QPushButton" name="Ok">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>510</y>
+        <x>550</x>
+        <y>520</y>
         <width>91</width>
         <height>41</height>
        </rect>
@@ -204,15 +210,25 @@ color: rgb(83, 255, 212);</string>
       <property name="text">
        <string>Ok</string>
       </property>
+      <property name="shortcut">
+       <string>Enter</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="SignUp">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>510</y>
+        <x>390</x>
+        <y>480</y>
         <width>91</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <italic>true</italic>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
@@ -223,6 +239,9 @@ background-color: rgb(104, 101, 91);</string>
       </property>
       <property name="text">
        <string>SignUp</string>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="eye_login">
@@ -239,6 +258,9 @@ background-color: rgb(104, 101, 91);</string>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QPushButton" name="forgot_pass">
@@ -260,6 +282,9 @@ background-color: rgb(85, 85, 85);</string>
       </property>
       <property name="text">
        <string>Forgot your password?</string>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -499,6 +524,9 @@ background-color: rgb(12, 48, 2);</string>
       <property name="text">
        <string>Sign up</string>
       </property>
+      <property name="shortcut">
+       <string>Enter</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="eye_signup">
       <property name="geometry">
@@ -560,11 +588,14 @@ color: rgb(83, 255, 212);</string>
       <property name="text">
        <string>Ok</string>
       </property>
+      <property name="shortcut">
+       <string>Enter</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="Ok_newpass_3">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>150</x>
         <y>490</y>
         <width>91</width>
         <height>41</height>
@@ -579,6 +610,9 @@ color: rgb(83, 255, 212);</string>
       </property>
       <property name="text">
        <string>Back</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QWidget" name="layoutWidget">
@@ -668,6 +702,9 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
           <string notr="true">background-color: rgb(112, 112, 112);
 color:rgb(166, 255, 133);
 font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -809,6 +846,9 @@ color: rgb(83, 255, 212);</string>
       <property name="text">
        <string>Ok</string>
       </property>
+      <property name="shortcut">
+       <string>Enter</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="Ok_newpass_2">
       <property name="geometry">
@@ -835,11 +875,17 @@ color: rgb(83, 255, 212);</string>
      <widget class="QPushButton" name="connectButton">
       <property name="geometry">
        <rect>
-        <x>310</x>
-        <y>500</y>
+        <x>340</x>
+        <y>490</y>
         <width>122</width>
         <height>22</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Historic</family>
+        <pointsize>14</pointsize>
+       </font>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
@@ -850,6 +896,9 @@ color: rgb(83, 255, 212);</string>
       </property>
       <property name="text">
        <string>Connect</string>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QWidget" name="layoutWidget">
@@ -945,17 +994,35 @@ font: 14pt &quot;SWMono&quot;;</string>
      </widget>
     </widget>
     <widget class="QWidget" name="Menu">
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="Start_Game_Botton">
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>230</y>
-        <width>121</width>
-        <height>31</height>
+        <y>50</y>
+        <width>211</width>
+        <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Showcard Gothic</family>
+        <pointsize>26</pointsize>
+       </font>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 186, 101);</string>
+      </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Start Game</string>
+      </property>
+      <property name="autoDefault">
+       <bool>true</bool>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -973,6 +1040,160 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="Moving_sun">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>141</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Spawned_sun">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>40</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Waiting_Page">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <widget class="QLabel" name="Waiting_Lable">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>-40</y>
+        <width>1121</width>
+        <height>651</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>800</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 25pt &quot;Tw Cen MT Condensed&quot;;
+color: rgb(51, 255, 99);
+font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
+</string>
+      </property>
+      <property name="text">
+       <string>Waiting</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="SunFlow_2">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>790</y>
+        <width>71</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="points_2">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>800</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 25pt &quot;Tw Cen MT Condensed&quot;;
+color: rgb(51, 255, 99);
+font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Zombies_map">
+     <widget class="QLabel" name="Ground_2">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>280</y>
+        <width>1131</width>
+        <height>311</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Moving_brain">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>30</y>
+        <width>141</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Spawned_brain">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>80</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -981,7 +1202,7 @@ font: 14pt &quot;SWMono&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1193</width>
+     <width>1270</width>
      <height>20</height>
     </rect>
    </property>

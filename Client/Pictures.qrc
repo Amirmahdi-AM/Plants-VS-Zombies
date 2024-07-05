@@ -10,5 +10,10 @@
         <file>Images/PasswordReset.png</file>
         <file>Images/MenuBG.png</file>
         <file>Images/field.png</file>
+        <file>Images/sun.png</file>
+        <file>Images/FadedSun.png</file>
+        <file>Images/WaitingBG.jpg</file>
+        <file>Images/FadeBrain.png</file>
+        <file>Images/Brain.png</file>
     </qresource>
 </RCC>
