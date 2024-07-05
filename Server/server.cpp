@@ -7,6 +7,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <QtAlgorithms>
+#include <algorithm>
+#include <stdlib.h>
 
 Server::Server(QObject *parent) : QTcpServer(parent)
 {
@@ -19,8 +22,7 @@ void Server::incomingConnection(qintptr socketDescriptor)
     if (new_client->setSocketDescriptor(socketDescriptor)) {
         connect(new_client, &QTcpSocket::readyRead, this, [this, new_client]() { onReadyRead(new_client); });
         connect(new_client, &QTcpSocket::disconnected, this, [this, new_client]() { onDisconnected(new_client); });
-        clients.append(new_client);
-        numCli++;
+        clients.push_back(new_client);
 
     }
     else {
@@ -41,11 +43,20 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
     if (fields[0] == "12") {
         signIn(fields[1], fields[2], clientSocket);
     }
+    if (fields[0] == "13") {
+        if (clients.size() == 2) {
+            int player1 = rand () % 2;
+            int player2 = player1 - 1;
+            clients[0]->write(QString::number(player1).toUtf8());
+            clients[1]->write(QString::number(player2).toUtf8());
+        }
+    }
 }
 
 void Server::onDisconnected(QTcpSocket *clientSocket)
 {
     clientSocket->deleteLater();
+    clients.erase(std::find(clients.begin(), clients.end(), clientSocket));
 }
 
 void Server::signUp(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email, QTcpSocket *client) {

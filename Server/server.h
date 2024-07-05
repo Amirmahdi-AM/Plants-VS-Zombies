@@ -4,7 +4,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QObject>
-#include <QList>
+#include <QVector>
 
 class Server : public QTcpServer
 {
@@ -17,8 +17,7 @@ protected:
     void incomingConnection(qintptr socketDescriptor) override;
 
 private:
-    QList<QTcpSocket *> clients;
-    int numCli = 0;
+    QVector<QTcpSocket *> clients;
     void onReadyRead(QTcpSocket *clientSocket);
     void onDisconnected(QTcpSocket *clientSocket);
     void signUp(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email, QTcpSocket *client);
