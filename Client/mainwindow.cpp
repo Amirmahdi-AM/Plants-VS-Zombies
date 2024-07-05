@@ -395,14 +395,6 @@ void MainWindow::onReadyRead()
         palette.setBrush(QPalette::Window, QBrush(MenuBackground));
         ui->Menu->setPalette(palette);
         ui->Menu->setAutoFillBackground(true);
-
-
-//        if(true){
-//            Plants_set();
-//        }
-//        else{
-//            Zombies_set();
-//        }
     }
 
     if (fields[0] == "114"){
@@ -502,6 +494,7 @@ void MainWindow::on_Spawned_sun_clicked()
 
 void MainWindow::on_Start_Game_Botton_clicked()
 {
+    socket->write("13");
     ui->GameControl->setCurrentIndex(8);
     this->setFixedSize(1600,900);
     this->move(15,0);
