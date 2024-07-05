@@ -42,6 +42,12 @@ MainWindow::MainWindow(QWidget *parent)
     fade = new QTimer(this);
     connect(fade,&QTimer::timeout,this,&MainWindow::Fade_sun);
 
+    brain_Rotate = new QTimer();
+    connect(brain_Rotate,&QTimer::timeout,this,&MainWindow::brain_rotation);
+    brain_spawn = new QTimer();
+    connect(brain_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_sun);
+    Brainfade = new QTimer(this);
+    connect(Brainfade,&QTimer::timeout,this,&MainWindow::Fade_sun);
     ////////////////////////////////////////////////////////////////////////
     /// socket connection
     socket = new QTcpSocket(this);
@@ -49,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, &QTcpSocket::connected, this, &MainWindow::onConnected);
     connect(socket, QOverload<QTcpSocket::SocketError>::of(&QTcpSocket::errorOccurred), this, &MainWindow::onError);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::onConnectionTimeout);
-
+    ui->Spawned_brain->setStyleSheet("QPushButton { border: none; }");
 }
 
 
@@ -203,6 +209,19 @@ void MainWindow::sun_rotation(){
     rotationAngle++;
 }
 
+void MainWindow::brain_rotation(){
+
+    if(rotationAngle==365){
+        rotationAngle=0;
+    }
+    QPixmap brain(":/Images/Brain.png");
+    QTransform transform;
+    transform.rotate(rotationAngle);
+    QPixmap rotatedbrain = brain.transformed(transform);
+    ui->Moving_brain->setPixmap(rotatedbrain);
+    rotationAngle++;
+}
+
 int clickcount=0;
 void MainWindow::on_eye_login_clicked()
 {
@@ -331,16 +350,16 @@ void MainWindow::on_connectButton_clicked()
 
 void MainWindow::Plants_set(){
     ui->GameControl->setCurrentIndex(7);
-    this->setFixedSize(1600,900);
+    this->setFixedSize(1500,800);
     this->move(15,0);
-    ui->GameControl->setFixedSize(1600,1000);
+    ui->GameControl->setFixedSize(1500,800);
     /////////////////////////////////////////
     QPixmap GroundPic(":/Images/field.png");
-    ui->Ground->setFixedSize(2000,743);
+    ui->Ground->setFixedSize(1500,700);
     ui->Ground->setPixmap(GroundPic);
     /////////////////////////////////////////
     QPixmap Sun(":/Images/sun.png");
-    ui->Moving_sun->setFixedSize(105,99);
+    ui->Moving_sun->setFixedSize(90,74);
     ui->Moving_sun->setPixmap(Sun);
     Sun_Rotate->start(10);
     Sun_spawn->start(6000);
@@ -349,20 +368,21 @@ void MainWindow::Plants_set(){
 
 void MainWindow::Zombies_set(){
     ui->GameControl->setCurrentIndex(9);
-    this->setFixedSize(1600,900);
+    this->setFixedSize(1500,800);
     this->move(15,0);
-    ui->GameControl->setFixedSize(1600,1000);
+    ui->GameControl->setFixedSize(1500,800);
     /////////////////////////////////////////
     QPixmap GroundPic(":/Images/field.png");
-    ui->Ground->setFixedSize(2000,743);
-    ui->Ground->setPixmap(GroundPic);
+    ui->Ground_2->setFixedSize(1500,700);
+    ui->Ground_2->setPixmap(GroundPic);
     /////////////////////////////////////////
-    QPixmap Sun(":/Images/brain.png");
-    ui->Moving_sun->setFixedSize(105,99);
-    ui->Moving_sun->setPixmap(Sun);
-    Sun_Rotate->start(10);
-    Sun_spawn->start(6000);
+    QPixmap brain(":/Images/Brain.png");
+    ui->Moving_brain->setFixedSize(90,74);
+    ui->Moving_brain->setPixmap(brain);
+    brain_Rotate->start(10);
+    brain_spawn->start(6000);
     /////////////////////////////////////////
+    ui->Spawned_brain->setGeometry(-10,-10,80,74);
 }
 
 void MainWindow::onReadyRead()
@@ -378,23 +398,26 @@ void MainWindow::onReadyRead()
     if (fields[0] == "111"){
         QMessageBox::critical(this, "Signup", "This username already token!");
     }
-    if (fields[0] == "0"){
-        P_or_Z = 1;
-        Plants_set();
-    }
-    if (fields[0] == "1"){
-        P_or_Z = -1;
-        Zombies_set();
-    }
+//    if (fields[0] == "0"){
+//        P_or_Z = 1;
+//        Plants_set();
+//    }
+//    if (fields[0] == "1"){
+//        P_or_Z = -1;
+//        Zombies_set();
+//    }
     if (fields[0] == "113"){
         //QMessageBox::information(this, "Signin", "Welcome!");
-        ui->GameControl->setCurrentIndex(6);
-        QPixmap MenuBackground(":/Images/MenuBG.png");
+        //ui->GameControl->setCurrentIndex(6);
+        ui->GameControl->setCurrentIndex(9);
+        P_or_Z = -1;
+        Zombies_set();
+//        QPixmap MenuBackground(":/Images/MenuBG.png");
 
-        QPalette palette;
-        palette.setBrush(QPalette::Window, QBrush(MenuBackground));
-        ui->Menu->setPalette(palette);
-        ui->Menu->setAutoFillBackground(true);
+//        QPalette palette;
+//        palette.setBrush(QPalette::Window, QBrush(MenuBackground));
+//        ui->Menu->setPalette(palette);
+//        ui->Menu->setAutoFillBackground(true);
     }
 
     if (fields[0] == "114"){
@@ -447,38 +470,48 @@ void MainWindow::on_Ok_clicked()
 void MainWindow::Spawnning_sun(){
     QPropertyAnimation *animation;
     if(P_or_Z==1){
-        ui->Spawned_sun->setFixedSize(105,99);
+        ui->Spawned_sun->setFixedSize(80,74);
         ui->Spawned_sun->setStyleSheet("background-image: url(:/Images/sun.png);");
-        ui->Spawned_sun->setGeometry(-1, -1, 120, 99);
+        ui->Spawned_sun->setGeometry(-1, -1, 80,74);
        animation = new QPropertyAnimation(ui->Spawned_sun, "geometry");
+       fade->start(3000);
     }
     if(P_or_Z==-1){
-        ui->Spawned_brain->setFixedSize(105,99);
-        ui->Spawned_brain->setStyleSheet("background-image: url(:/Images/brain.png);");
-        ui->Spawned_brain->setGeometry(-1, -1, 120, 99);
+        ui->Spawned_brain->setFixedSize(80,74);
+        ui->Spawned_brain->setStyleSheet("background-image: url(:/Images/Brain.png);");
+        ui->Spawned_brain->setGeometry(-1, -1, 80,74);
         animation = new QPropertyAnimation(ui->Spawned_brain, "geometry");
+        Brainfade->start(3000);
     }
 
-    fade->start(4000);
+
 
     animation->setDuration(2000);
     int x = rand() % 1200 + 200;
     int y = rand() % 550 + 200;
-    animation->setStartValue(QRect(x, -1, 150, 30));
-    animation->setEndValue(QRect(x, y, 150, 30));
+    animation->setStartValue(QRect(x, -1, 80,74));
+    animation->setEndValue(QRect(x, y, 80,74));
     animation->start();
 }
 
 void MainWindow::Fade_sun(){
-    ui->Spawned_sun->setStyleSheet("background-image: url(:/Images/FadedSun.png);");
-            if (!fade->isActive()){
+    if(P_or_Z==1){
+        ui->Spawned_sun->setStyleSheet("background-image: url(:/Images/FadedSun.png);");
+            if (fade->isActive()){
                 fade->stop();
             }
+    }
+    if(P_or_Z==-1){
+        ui->Spawned_brain->setStyleSheet("background-image: url(:/Images/FadeBrain.png);");
+            if (Brainfade->isActive()){
+                Brainfade->stop();
+            }
+    }
 }
 
 void MainWindow::on_Spawned_sun_clicked()
 {
-    if (!fade->isActive()){
+    if (fade->isActive()){
         fade->stop();
     }
     QPropertyAnimation *animation = new QPropertyAnimation(ui->Spawned_sun, "geometry");
@@ -486,9 +519,10 @@ void MainWindow::on_Spawned_sun_clicked()
     QPoint Spawned_sunPos = ui->Spawned_sun->pos();
     int x = Spawned_sunPos.x();
     int y = Spawned_sunPos.y();
-    animation->setStartValue(QRect(x, y, 150, 30));
-    animation->setEndValue(QRect(13, 10, 150, 30));
+    animation->setStartValue(QRect(x, y, 80, 74));
+    animation->setEndValue(QRect(13, 10, 80, 74));
     animation->start();
+
 }
 
 
@@ -496,15 +530,31 @@ void MainWindow::on_Start_Game_Botton_clicked()
 {
     socket->write("13");
     ui->GameControl->setCurrentIndex(8);
-    this->setFixedSize(1600,900);
+    this->setFixedSize(1500,800);
     this->move(15,0);
-    ui->GameControl->setFixedSize(1600,900);
+    ui->GameControl->setFixedSize(1500,800);
 
     QPixmap WaitingPic(":/Images/WaitingBG.jpg");
-    ui->Waiting_Lable->setFixedSize(1600,1000);
+    ui->Waiting_Lable->setFixedSize(1500,800);
     ui->Waiting_Lable->move(0,-50);
     ui->Waiting_Lable->setPixmap(WaitingPic);
     Rotate2->start(10);
-//    Plants_set();
+
+}
+
+
+void MainWindow::on_Spawned_brain_clicked()
+{
+    if (Brainfade->isActive()){
+        Brainfade->stop();
+    }
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->Spawned_brain, "geometry");
+    animation->setDuration(1000);
+    QPoint Spawned_brainPos = ui->Spawned_brain->pos();
+    int x = Spawned_brainPos.x();
+    int y = Spawned_brainPos.y();
+    animation->setStartValue(QRect(x, y, 80,74));
+    animation->setEndValue(QRect(13, 10, 80,74));
+    animation->start();
 }
 

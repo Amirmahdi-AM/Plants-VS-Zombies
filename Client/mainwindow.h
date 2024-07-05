@@ -60,6 +60,8 @@ private slots:
 
     void sun_rotation();
 
+    void brain_rotation();
+
     void Spawnning_sun();
 
     void Fade_sun();
@@ -67,6 +69,8 @@ private slots:
     void on_Spawned_sun_clicked();
 
     void on_Start_Game_Botton_clicked();
+
+    void on_Spawned_brain_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -80,6 +84,12 @@ private:
     QTimer* fade;
 
     QTimer* Sun_Rotate;
+
+    QTimer* brain_Rotate;
+
+    QTimer* brain_spawn;
+
+    QTimer* Brainfade;
 
     QTcpSocket *socket;
 
