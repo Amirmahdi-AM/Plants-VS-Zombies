@@ -10,6 +10,7 @@
 #include <QPropertyAnimation>
 #include <stdlib.h>
 #include <QPainter>
+#include "person.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
