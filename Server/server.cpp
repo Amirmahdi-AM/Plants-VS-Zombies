@@ -38,10 +38,22 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
     QStringList fields = receivedData.split(",");
 
     if (fields[0] == "11") {
-        signUp(fields[1], fields[2], fields[3], fields[4], fields[5], clientSocket);
+        if (signUp(fields[1], fields[2], fields[3], fields[4], fields[5])) {
+            QString respone = "112,";
+            respone += receivedData;
+            clientSocket->write(respone.toUtf8());
+        }
+        else
+            clientSocket->write("111");
     }
     if (fields[0] == "12") {
-        signIn(fields[1], fields[2], clientSocket);
+        if(signIn(fields[1], fields[2])) {
+            QString respone = "113,";
+            respone += receivedData;
+            clientSocket->write(respone.toUtf8());
+        }
+        else
+            clientSocket->write("114");
     }
     if (fields[0] == "13") {
         if (clients.size() == 2) {
@@ -59,10 +71,9 @@ void Server::onDisconnected(QTcpSocket *clientSocket)
     clients.erase(std::find(clients.begin(), clients.end(), clientSocket));
 }
 
-void Server::signUp(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email, QTcpSocket *client) {
+bool Server::signUp(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email) {
     if (checkExistingAccounts(_username)) {
-        client->write("111");
-        return;
+        return false;
     }
 
     QByteArray passwordHash = QCryptographicHash::hash(_password.toUtf8(), QCryptographicHash::Sha256);
@@ -72,7 +83,7 @@ void Server::signUp(const QString &_name, const QString &_username, const QStrin
         out << _username << "," << passwordHash.toHex() << "," << _name << "," << _phoneNumber << "," << _email << "\n";
         accFile.close();
     }
-    client->write("112");
+    return true;
 }
 
 bool Server::checkExistingAccounts(const QString &_username) {
@@ -93,14 +104,14 @@ bool Server::checkExistingAccounts(const QString &_username) {
     return result;
 }
 
-void Server::signIn(const QString &_username, const QString &_password, QTcpSocket *client)
+bool Server::signIn(const QString &_username, const QString &_password)
 {
     QByteArray passwordHash = QCryptographicHash::hash(_password.toUtf8(), QCryptographicHash::Sha256);
     if (validateCredentials(_username, passwordHash.toHex())){
-        client->write("113");
+        return true;
     }
     else{
-        client->write("114");
+        return false;
     }
 }
 
