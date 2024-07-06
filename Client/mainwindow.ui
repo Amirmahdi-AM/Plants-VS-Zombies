@@ -42,7 +42,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>9</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <property name="cursor">
@@ -113,7 +113,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <bold>true</bold>
+        <fontweight>DemiBold</fontweight>
        </font>
       </property>
       <property name="styleSheet">
@@ -139,7 +139,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <bold>true</bold>
+        <fontweight>DemiBold</fontweight>
        </font>
       </property>
       <property name="styleSheet">
@@ -328,7 +328,7 @@ background-color: rgb(85, 85, 85);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -346,7 +346,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -364,7 +364,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -382,7 +382,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -400,7 +400,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -418,7 +418,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -684,7 +684,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -701,7 +701,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -804,7 +804,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -821,7 +821,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <bold>true</bold>
+           <fontweight>DemiBold</fontweight>
           </font>
          </property>
          <property name="styleSheet">
@@ -1493,7 +1493,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
      <x>0</x>
      <y>0</y>
      <width>1596</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

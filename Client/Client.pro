@@ -12,11 +12,13 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    person.cpp
+    person.cpp \
+    plants.cpp
 
 HEADERS += \
     mainwindow.h \
-    person.h
+    person.h \
+    plants.h
 
 FORMS += \
     mainwindow.ui

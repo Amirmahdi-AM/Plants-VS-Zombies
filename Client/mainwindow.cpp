@@ -10,7 +10,11 @@
 #include <QPropertyAnimation>
 #include <stdlib.h>
 #include <QPainter>
+#include <QCursor>
 #include "person.h"
+#include <QDebug>
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -47,6 +51,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(Sun_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_sun);
     fade = new QTimer(this);
     connect(fade,&QTimer::timeout,this,&MainWindow::Fade_sun);
+
+    Labeldrag_drop = new QTimer(this);
+    connect(Labeldrag_drop,&QTimer::timeout,this,&MainWindow::Drag_Lable);
 
     brain_Rotate = new QTimer();
     connect(brain_Rotate,&QTimer::timeout,this,&MainWindow::brain_rotation);
@@ -126,7 +133,7 @@ void MainWindow::on_SignupCheck_clicked()
 
 }
 
-int circle=0;
+int circle=2;
 int rotationAngle = 1;
 void MainWindow::Loading_rotation(){
 
@@ -570,4 +577,59 @@ void MainWindow::on_Spawned_brain_Lable_clicked()
     animation->start();
 
 
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        if (P_or_Z == -1){
+            if (event->x() >= ui->Spawned_brain->x() && event->x() <= ui->Spawned_brain->x() + 80 && event->y() >= ui->Spawned_brain->y() && event->y() <= ui->Spawned_brain->y() + 74){
+                emit brainClicked();
+            }
+
+            if (event->x() >= ui->label_29->x() && event->x() <= ui->label_29->x() + ui->label_29->width() && event->y() >= ui->label_29->y() && event->y() <= ui->label_29->y() + ui->label_29->height()){
+                Labeldrag_drop->start(1);
+            }
+        }
+    }
+    QWidget::mousePressEvent(event);
+}
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    Labeldrag_drop->stop();
+    if (P_or_Z == -1) {
+        int x ,y;
+        x = ui->label_29->x() + 45;
+        y = ui->label_29->y() + 20;
+        if (x >= 1347 && x<= 1447){
+            x = 1347;
+            if (y >= 135 && y < 225)
+                y = 135;
+            else if (y >= 225 && y < 325)
+                y = 225;
+            else if (y >= 325 && y < 425)
+                y = 325;
+            else if (y >= 425 && y < 525)
+                y = 425;
+            else if (y >= 525 && y < 625)
+                y = 525;
+            else if (y >= 625 && y < 725)
+                y = 625;
+            else {
+                x = 800;
+                y = 50;
+            }
+        }
+        else {
+            x = 800;
+            y = 50;
+        }
+
+        ui->label_29->setGeometry(x, y, 91, 111);
+    }
+}
+
+void MainWindow::Drag_Lable(){
+    QPoint pos = QCursor::pos();
+    ui->label_29->setGeometry(pos.x()-60,pos.y()-60,ui->label_29->width(),ui->label_29->height());
 }

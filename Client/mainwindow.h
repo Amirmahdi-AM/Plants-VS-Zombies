@@ -70,6 +70,7 @@ private slots:
 
     void on_Start_Game_Botton_clicked();
 
+    void Drag_Lable();
 
     void on_Spawned_brain_Lable_clicked();
 signals:
@@ -94,17 +95,15 @@ private:
 
     QTimer* Brainfade;
 
+    QTimer* Labeldrag_drop;
+
     QTcpSocket *socket;
 
     QTimer *connectionTimer;
 
     int P_or_Z;
 
-    void mousePressEvent(QMouseEvent* event) override {
-            if (event->button() == Qt::LeftButton) {
-                emit brainClicked();
-            }
-            QWidget::mousePressEvent(event);
-        }
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
 };
 #endif // MAINWINDOW_H
