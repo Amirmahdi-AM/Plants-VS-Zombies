@@ -25,6 +25,7 @@ private:
     bool signIn(const QString &_username, const QString &_password);
     bool validateCredentials(const QString &_username, const QByteArray &_password);
     QString Person(QString _username);
+    void editPerson(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email);
 };
 
 #endif // SERVER_H

@@ -10,6 +10,7 @@
 #include <QtAlgorithms>
 #include <algorithm>
 #include <stdlib.h>
+#include <QVector>
 
 Server::Server(QObject *parent) : QTcpServer(parent)
 {
@@ -62,6 +63,10 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
             clients[0]->write(QString::number(player1).toUtf8());
             clients[1]->write(QString::number(player2).toUtf8());
         }
+    }
+
+    if (fields[0] == "14") {
+        editPerson(fields[1], fields[2], fields[3], fields[4], fields[5]);
     }
 }
 
@@ -147,4 +152,38 @@ QString Server::Person(QString _username)
         accFile.close();
     }
     return "";
+}
+
+void Server::editPerson(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email)
+{
+    QVector<QString> lines;
+    QFile accFile("Accounts.txt");
+    if (accFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&accFile);
+        while(!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            if (fields[0] == _username){
+                QString temp = "";
+                temp += _username + ",";
+                QByteArray passwordHash = QCryptographicHash::hash(_password.toUtf8(), QCryptographicHash::Sha256);
+                temp += passwordHash.toHex() + ",";
+                temp += _name + ",";
+                temp += _phoneNumber + ",";
+                temp += _email;
+                lines.push_back(temp);
+            } else {
+                lines.push_back(line);
+            }
+        }
+        accFile.close();
+
+        if (accFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+            QTextStream out(&accFile);
+            for (const QString &line : lines) {
+                out << line << '\n';
+            }
+            accFile.close();
+        }
+    }
 }
