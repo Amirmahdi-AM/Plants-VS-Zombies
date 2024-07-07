@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <QPainter>
 #include <QCursor>
-#include "person.h"
+//#include "person.h"
 #include <QDebug>
 
 
@@ -21,10 +21,23 @@ MainWindow::MainWindow(QWidget *parent)
     , connectionTimer(new QTimer(this))
 {
     ui->setupUi(this);
+    ////////////////////////////////////////////////////////////////////////
     this->setFixedSize(800,800);
     this->move(400,0);
     ui->GameControl->setFixedSize(800,800);
     ui->GameControl->setCurrentIndex(5);
+    ui->label_35->hide();
+    ui->label_36->hide();
+    ui->label_37->hide();
+    ui->label_38->hide();
+    ui->label_39->hide();
+    ui->label_40->hide();
+    ui->label_41->hide();
+    ui->label_42->hide();
+    ui->label_43->hide();
+    ui->label_44->hide();
+    ui->label_45->hide();
+    ui->label_46->hide();
     ////////////////////////////////////////////////////////////////////////
     QPixmap server_page(":/Images/server_connection.png");
 
@@ -32,7 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     palette100.setBrush(QPalette::Window, QBrush(server_page));
     ui->server->setPalette(palette100);
     ui->server->setAutoFillBackground(true);
-    connect(this,&MainWindow::brainClicked, this, &MainWindow::on_Spawned_brain_Lable_clicked);
+    connect(this,&MainWindow::brainClicked, this, &MainWindow::on_Spawned_Item_Lable_clicked);
+    connect(this,&MainWindow::sunClicked, this, &MainWindow::on_Spawned_Item_Lable_clicked);
 //    ui->Spawned_brain->setContentsMargins(0, 0, 0, 0);
 //    ui->Spawned_brain->setStyleSheet("margin: 0px;");
 //    ui->Spawned_brain->setAutoFillBackground(true);
@@ -48,9 +62,9 @@ MainWindow::MainWindow(QWidget *parent)
     Sun_Rotate = new QTimer();
     connect(Sun_Rotate,&QTimer::timeout,this,&MainWindow::sun_rotation);
     Sun_spawn = new QTimer();
-    connect(Sun_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_sun);
+    connect(Sun_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_Item);
     fade = new QTimer(this);
-    connect(fade,&QTimer::timeout,this,&MainWindow::Fade_sun);
+    connect(fade,&QTimer::timeout,this,&MainWindow::Fade_Item);
 
     Labeldrag_drop = new QTimer(this);
     connect(Labeldrag_drop,&QTimer::timeout,this,&MainWindow::Drag_Lable);
@@ -58,9 +72,9 @@ MainWindow::MainWindow(QWidget *parent)
     brain_Rotate = new QTimer();
     connect(brain_Rotate,&QTimer::timeout,this,&MainWindow::brain_rotation);
     brain_spawn = new QTimer();
-    connect(brain_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_sun);
+    connect(brain_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_Item);
     Brainfade = new QTimer(this);
-    connect(Brainfade,&QTimer::timeout,this,&MainWindow::Fade_sun);
+    connect(Brainfade,&QTimer::timeout,this,&MainWindow::Fade_Item);
     ////////////////////////////////////////////////////////////////////////
     /// socket connection
     socket = new QTcpSocket(this);
@@ -133,7 +147,7 @@ void MainWindow::on_SignupCheck_clicked()
 
 }
 
-int circle=2;
+int circle=0;
 int rotationAngle = 1;
 void MainWindow::Loading_rotation(){
 
@@ -404,9 +418,6 @@ void MainWindow::onReadyRead()
     QString response(data);
 
     QStringList fields = response.split(",");
-    if (fields[0] == "112") {
-        QMessageBox::information(this, "Signup", "Signup successfully!");
-    }
 
     if (fields[0] == "111"){
         QMessageBox::critical(this, "Signup", "This username already token!");
@@ -420,11 +431,21 @@ void MainWindow::onReadyRead()
 //        Zombies_set();
 //    }
     if (fields[0] == "113"){
+//        Player.set_name(fields[1]);
+//        Player.set_username(fields[2]);
+//        Player.set_password(fields[3]);
+//        Player.set_phoneNumber(fields[4]);
+//        Player.set_email(fields[5]);
         //QMessageBox::information(this, "Signin", "Welcome!");
         //ui->GameControl->setCurrentIndex(6);
-        ui->GameControl->setCurrentIndex(9);
-        P_or_Z = -1;
-        Zombies_set();
+        ////////////////////////////////////////
+//        ui->GameControl->setCurrentIndex(9);
+//        P_or_Z = -1;
+//        Zombies_set();
+        ////////////////////////////////////////////
+        ui->GameControl->setCurrentIndex(7);
+        P_or_Z = 1;
+        Plants_set();
 //        QPixmap MenuBackground(":/Images/MenuBG.png");
 
 //        QPalette palette;
@@ -480,7 +501,7 @@ void MainWindow::on_Ok_clicked()
     socket->write(output.toUtf8());
 }
 
-void MainWindow::Spawnning_sun(){
+void MainWindow::Spawnning_Item(){
     QPropertyAnimation *animation;
     if(P_or_Z==1){
         ui->Spawned_sun->setFixedSize(80,74);
@@ -507,7 +528,7 @@ void MainWindow::Spawnning_sun(){
     animation->start();
 }
 
-void MainWindow::Fade_sun(){
+void MainWindow::Fade_Item(){
     if(P_or_Z==1){
         ui->Spawned_sun->setStyleSheet("background-image: url(:/Images/FadedSun.png);");
             if (fade->isActive()){
@@ -521,23 +542,6 @@ void MainWindow::Fade_sun(){
             }
     }
 }
-
-void MainWindow::on_Spawned_sun_clicked()
-{
-    if (fade->isActive()){
-        fade->stop();
-    }
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->Spawned_sun, "geometry");
-    animation->setDuration(1000);
-    QPoint Spawned_sunPos = ui->Spawned_sun->pos();
-    int x = Spawned_sunPos.x();
-    int y = Spawned_sunPos.y();
-    animation->setStartValue(QRect(x, y, 80, 74));
-    animation->setEndValue(QRect(13, 10, 80, 74));
-    animation->start();
-
-}
-
 
 void MainWindow::on_Start_Game_Botton_clicked()
 {
@@ -557,20 +561,18 @@ void MainWindow::on_Start_Game_Botton_clicked()
 
 
 
-void MainWindow::on_Spawned_brain_Lable_clicked()
+void MainWindow::on_Spawned_Item_Lable_clicked()
 {
     if (Brainfade->isActive()){
         Brainfade->stop();
     }
 
-
-
-     ui->Spawned_brain->setWindowFlags(Qt::FramelessWindowHint);
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->Spawned_brain, "geometry");
+    spawnedItemp_Label->setWindowFlags(Qt::FramelessWindowHint);
+    QPropertyAnimation *animation = new QPropertyAnimation(spawnedItemp_Label, "geometry");
     animation->setDuration(1000);
-    QPoint Spawned_brainPos = ui->Spawned_brain->pos();
-    int x = Spawned_brainPos.x();
-    int y = Spawned_brainPos.y();
+    QPoint Spawned_ItemPos = spawnedItemp_Label->pos();
+    int x = Spawned_ItemPos.x();
+    int y = Spawned_ItemPos.y();
     animation->setStartValue(QRect(x, y, 100,100));
     //QRect(13, 10, 80,74
     animation->setEndValue(QRect(13, 10, 100,100));
@@ -583,11 +585,76 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         if (P_or_Z == -1){
-            if (event->x() >= ui->Spawned_brain->x() && event->x() <= ui->Spawned_brain->x() + 80 && event->y() >= ui->Spawned_brain->y() && event->y() <= ui->Spawned_brain->y() + 74){
+            if (event->x() >= ui->Spawned_brain->x() &&  event->x() <= ui->Spawned_brain->x() + 80 && event->y() >= ui->Spawned_brain->y() && event->y() <= ui->Spawned_brain->y() + 74){
+                spawnedItemp_Label = ui->Spawned_brain;
                 emit brainClicked();
             }
 
             if (event->x() >= ui->label_29->x() && event->x() <= ui->label_29->x() + ui->label_29->width() && event->y() >= ui->label_29->y() && event->y() <= ui->label_29->y() + ui->label_29->height()){
+                draging_Label = ui->label_36;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_28->x() && event->x() <= ui->label_28->x() + ui->label_28->width() && event->y() >= ui->label_28->y() && event->y() <= ui->label_28->y() + ui->label_28->height()){
+                draging_Label = ui->label_39;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_27->x() && event->x() <= ui->label_27->x() + ui->label_27->width() && event->y() >= ui->label_27->y() && event->y() <= ui->label_27->y() + ui->label_27->height()){
+                draging_Label = ui->label_40;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_26->x() && event->x() <= ui->label_26->x() + ui->label_26->width() && event->y() >= ui->label_26->y() && event->y() <= ui->label_26->y() + ui->label_26->height()){
+                draging_Label = ui->label_37;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_25->x() && event->x() <= ui->label_25->x() + ui->label_25->width() && event->y() >= ui->label_25->y() && event->y() <= ui->label_25->y() + ui->label_25->height()){
+                draging_Label = ui->label_38;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_23->x() && event->x() <= ui->label_23->x() + ui->label_23->width() && event->y() >= ui->label_23->y() && event->y() <= ui->label_23->y() + ui->label_23->height()){
+                draging_Label = ui->label_35;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+        }
+        if (P_or_Z == 1){
+            if (event->x() >= ui->Spawned_sun->x() && event->x() <= ui->Spawned_sun->x() + 80 && event->y() >= ui->Spawned_sun->y() && event->y() <= ui->Spawned_sun->y() + 74){
+                spawnedItemp_Label = ui->Spawned_sun;
+                emit sunClicked();
+            }
+
+            if (event->x() >= ui->label_24->x() && event->x() <= ui->label_24->x() + ui->label_24->width() && event->y() >= ui->label_24->y() && event->y() <= ui->label_24->y() + ui->label_24->height()){
+                draging_Label = ui->label_41;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_30->x() && event->x() <= ui->label_30->x() + ui->label_30->width() && event->y() >= ui->label_30->y() && event->y() <= ui->label_30->y() + ui->label_30->height()){
+                draging_Label = ui->label_42;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_31->x() && event->x() <= ui->label_31->x() + ui->label_31->width() && event->y() >= ui->label_31->y() && event->y() <= ui->label_31->y() + ui->label_31->height()){
+                draging_Label = ui->label_43;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_32->x() && event->x() <= ui->label_32->x() + ui->label_32->width() && event->y() >= ui->label_32->y() && event->y() <= ui->label_32->y() + ui->label_32->height()){
+                draging_Label = ui->label_44;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_33->x() && event->x() <= ui->label_33->x() + ui->label_33->width() && event->y() >= ui->label_33->y() && event->y() <= ui->label_33->y() + ui->label_33->height()){
+                draging_Label = ui->label_45;
+                draging_Label->show();
+                Labeldrag_drop->start(1);
+            }
+            if (event->x() >= ui->label_34->x() && event->x() <= ui->label_34->x() + ui->label_34->width() && event->y() >= ui->label_34->y() && event->y() <= ui->label_34->y() + ui->label_34->height()){
+                draging_Label = ui->label_46;
+                draging_Label->show();
                 Labeldrag_drop->start(1);
             }
         }
@@ -599,8 +666,8 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     Labeldrag_drop->stop();
     if (P_or_Z == -1) {
         int x ,y;
-        x = ui->label_29->x() + 45;
-        y = ui->label_29->y() + 20;
+        x = draging_Label->x() + 45;
+        y = draging_Label->y() + 20;
         if (x >= 1347 && x<= 1447){
             x = 1347;
             if (y >= 135 && y < 225)
@@ -625,11 +692,59 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             y = 50;
         }
 
-        ui->label_29->setGeometry(x, y, 91, 111);
+        draging_Label->setGeometry(x, y, 100, 100);
+    }
+    if (P_or_Z == 1) {
+        int x ,y;
+        x = draging_Label->x() + 45;
+        y = draging_Label->y() + 20;
+        if (x >= 1247 && x<= 1347){
+            x = 1247;
+        }
+        else if (x >= 1147 && x<= 1247)
+            x = 1147;
+        else if (x >= 1047 && x<= 1147)
+            x = 1047;
+        else if (x >= 947 && x<= 1047)
+            x = 947;
+        else if (x >= 847 && x<= 947)
+            x = 847;
+        else if (x >= 747 && x<= 847)
+            x = 747;
+        else if (x >= 647 && x<= 747)
+            x = 647;
+        else if (x >= 547 && x<= 647)
+            x = 547;
+        else if (x >= 447 && x<= 547)
+            x = 447;
+        else if (x >= 347 && x<= 447)
+            x = 347;
+        else if (x >= 247 && x<= 347)
+            x = 247;
+        else {
+            x = 800;
+        }
+        if (y >= 135 && y < 225)
+            y = 135;
+        else if (y >= 225 && y < 325)
+            y = 225;
+        else if (y >= 325 && y < 425)
+            y = 325;
+        else if (y >= 425 && y < 525)
+            y = 425;
+        else if (y >= 525 && y < 625)
+            y = 525;
+        else if (y >= 625 && y < 725)
+            y = 625;
+        else {
+            y = 50;
+        }
+
+        draging_Label->setGeometry(x, y, 100, 100);
     }
 }
 
 void MainWindow::Drag_Lable(){
     QPoint pos = QCursor::pos();
-    ui->label_29->setGeometry(pos.x()-60,pos.y()-60,ui->label_29->width(),ui->label_29->height());
+    draging_Label->setGeometry(pos.x()-60,pos.y()-60,draging_Label->width(),draging_Label->height());
 }

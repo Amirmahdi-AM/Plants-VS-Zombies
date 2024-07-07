@@ -5,14 +5,14 @@
 class Person
 {
 private:
-    const QString username;
-    QString name, password, email, phoneNumber;
+    QString username,name, password, email, phoneNumber;
     int winRound;
 
 public:
     Person();
-    Person(QString _username, QString _name, QString _password, QString _email, QString _phoneNumber);
+    Person(const QString _username,const QString _name,const QString _password,const QString _email,const QString _phoneNumber);
     void set_name(QString _name);
+    void set_username(QString _name);
     void set_password(QString _password);
     void set_email(QString _email);
     void set_phoneNumber(QString _phoneNumber);

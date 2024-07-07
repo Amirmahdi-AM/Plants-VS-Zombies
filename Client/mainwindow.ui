@@ -42,7 +42,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <property name="cursor">
@@ -113,7 +113,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <fontweight>DemiBold</fontweight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -139,7 +139,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <fontweight>DemiBold</fontweight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -328,7 +328,7 @@ background-color: rgb(85, 85, 85);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -346,7 +346,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -364,7 +364,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -382,7 +382,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -400,7 +400,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -418,7 +418,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -684,7 +684,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -701,7 +701,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -804,7 +804,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -821,7 +821,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -1037,7 +1037,7 @@ font: 14pt &quot;SWMono&quot;;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>170</y>
+        <y>130</y>
         <width>1131</width>
         <height>311</height>
        </rect>
@@ -1049,36 +1049,14 @@ font: 14pt &quot;SWMono&quot;;</string>
      <widget class="QLabel" name="Moving_sun">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>0</y>
+        <x>10</x>
+        <y>20</y>
         <width>141</width>
         <height>111</height>
        </rect>
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Spawned_sun">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>40</y>
-        <width>101</width>
-        <height>101</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="label_19">
@@ -1122,6 +1100,9 @@ font: 14pt &quot;SWMono&quot;;</string>
         <height>111</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1137,6 +1118,9 @@ font: 14pt &quot;SWMono&quot;;</string>
         <width>91</width>
         <height>111</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
        <string/>
@@ -1154,6 +1138,9 @@ font: 14pt &quot;SWMono&quot;;</string>
         <height>111</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1169,6 +1156,9 @@ font: 14pt &quot;SWMono&quot;;</string>
         <width>91</width>
         <height>111</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
        <string/>
@@ -1186,6 +1176,9 @@ font: 14pt &quot;SWMono&quot;;</string>
         <height>111</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1202,6 +1195,9 @@ font: 14pt &quot;SWMono&quot;;</string>
         <height>111</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1209,8 +1205,116 @@ font: 14pt &quot;SWMono&quot;;</string>
        <pixmap resource="Pictures.qrc">:/Images/Boomerang_P_Card.png</pixmap>
       </property>
      </widget>
+     <widget class="QLabel" name="label_41">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>20</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Peashooter_P.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_42">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>10</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/two_peashooter_P.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_43">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>20</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Walnut_P.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_44">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>20</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Plum_Mine_P.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_45">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>20</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Jalapeno_P.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_46">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>20</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Boomerang_P.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Spawned_sun">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>60</y>
+        <width>111</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
      <zorder>Ground</zorder>
-     <zorder>Spawned_sun</zorder>
      <zorder>label_19</zorder>
      <zorder>label_20</zorder>
      <zorder>Moving_sun</zorder>
@@ -1220,6 +1324,13 @@ font: 14pt &quot;SWMono&quot;;</string>
      <zorder>label_32</zorder>
      <zorder>label_33</zorder>
      <zorder>label_34</zorder>
+     <zorder>label_41</zorder>
+     <zorder>label_42</zorder>
+     <zorder>label_43</zorder>
+     <zorder>label_44</zorder>
+     <zorder>label_45</zorder>
+     <zorder>label_46</zorder>
+     <zorder>Spawned_sun</zorder>
     </widget>
     <widget class="QWidget" name="Waiting_Page">
      <property name="cursor">
@@ -1386,6 +1497,9 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
         <height>111</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1401,6 +1515,9 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
         <width>91</width>
         <height>111</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
        <string/>
@@ -1418,6 +1535,9 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
         <height>111</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1433,6 +1553,9 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
         <width>91</width>
         <height>111</height>
        </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="text">
        <string/>
@@ -1450,6 +1573,9 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
         <height>111</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1466,11 +1592,128 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
         <height>111</height>
        </rect>
       </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
       <property name="text">
        <string/>
       </property>
       <property name="pixmap">
        <pixmap resource="Pictures.qrc">:/Images/PurpleHead_Z_Card.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_35">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Regular_Z.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_36">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/PurpleHead_Z.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_37">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Bucket_Z.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_38">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/leaf_head_Z.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_39">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>-90</y>
+        <width>91</width>
+        <height>211</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Tall_Z.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_40">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>10</y>
+        <width>91</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>ArrowCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Austronut_Z.png</pixmap>
       </property>
      </widget>
      <zorder>Ground_2</zorder>
@@ -1484,6 +1727,12 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
      <zorder>label_28</zorder>
      <zorder>label_29</zorder>
      <zorder>Moving_brain</zorder>
+     <zorder>label_35</zorder>
+     <zorder>label_36</zorder>
+     <zorder>label_37</zorder>
+     <zorder>label_38</zorder>
+     <zorder>label_39</zorder>
+     <zorder>label_40</zorder>
     </widget>
    </widget>
   </widget>
@@ -1493,7 +1742,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
      <x>0</x>
      <y>0</y>
      <width>1596</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

@@ -27,5 +27,17 @@
         <file>Images/Plum_Mine_P_Card.png</file>
         <file>Images/two_peashooter_P_card.png</file>
         <file>Images/Walnut_P_Card.png</file>
+        <file>Images/Austronut_Z.png</file>
+        <file>Images/Boomerang_P.png</file>
+        <file>Images/Bucket_Z.png</file>
+        <file>Images/Jalapeno_P.png</file>
+        <file>Images/leaf_head_Z.png</file>
+        <file>Images/Peashooter_P.png</file>
+        <file>Images/Plum_Mine_P.png</file>
+        <file>Images/PurpleHead_Z.png</file>
+        <file>Images/Regular_Z.png</file>
+        <file>Images/Tall_Z.png</file>
+        <file>Images/two_peashooter_P.png</file>
+        <file>Images/Walnut_P.png</file>
     </qresource>
 </RCC>

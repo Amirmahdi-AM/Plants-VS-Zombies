@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QTcpSocket>
+#include "person.h"
+#include "qlabel.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -62,11 +64,11 @@ private slots:
 
     void brain_rotation();
 
-    void Spawnning_sun();
+    void Spawnning_Item();
 
-    void Fade_sun();
+    void Fade_Item();
 
-    void on_Spawned_sun_clicked();
+    void on_Spawned_Item_Lable_clicked();
 
     void on_Start_Game_Botton_clicked();
 
@@ -75,7 +77,11 @@ private slots:
     void on_Spawned_brain_Lable_clicked();
 signals:
     void brainClicked();
+
+    void sunClicked();
 private:
+
+    Person Player;
 
     Ui::MainWindow *ui;
 
@@ -96,6 +102,10 @@ private:
     QTimer* Brainfade;
 
     QTimer* Labeldrag_drop;
+
+    QLabel* draging_Label;
+
+    QLabel* spawnedItemp_Label;
 
     QTcpSocket *socket;
 

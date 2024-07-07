@@ -2,6 +2,10 @@
 
 Person::Person() {}
 
+void Person::set_username(QString _username)
+{
+    username = _username;
+}
 void Person::set_name(QString _name)
 {
     name = _name;
@@ -47,7 +51,7 @@ QString Person::get_phoneNumber() const
     return phoneNumber;
 }
 
-Person::Person(QString _username, QString _name, QString _password, QString _email, QString _phoneNumber)
+Person::Person(const QString _username,const  QString _name,const  QString _password,const  QString _email,const  QString _phoneNumber)
     :username(_username)
     ,name(_name)
     ,password(_password)
