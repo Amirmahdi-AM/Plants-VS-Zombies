@@ -24,6 +24,7 @@ private:
     bool checkExistingAccounts(const QString &_username);
     bool signIn(const QString &_username, const QString &_password);
     bool validateCredentials(const QString &_username, const QByteArray &_password);
+    QString Person(QString _username);
 };
 
 #endif // SERVER_H

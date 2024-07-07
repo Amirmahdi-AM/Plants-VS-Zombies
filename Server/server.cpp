@@ -39,7 +39,7 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
 
     if (fields[0] == "11") {
         if (signUp(fields[1], fields[2], fields[3], fields[4], fields[5])) {
-            QString respone = "112,";
+            QString respone = "113,";
             respone += receivedData;
             clientSocket->write(respone.toUtf8());
         }
@@ -49,7 +49,7 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
     if (fields[0] == "12") {
         if(signIn(fields[1], fields[2])) {
             QString respone = "113,";
-            respone += receivedData;
+            respone += Person(fields[1]);
             clientSocket->write(respone.toUtf8());
         }
         else
@@ -130,4 +130,21 @@ bool Server::validateCredentials(const QString &_username, const QByteArray &_pa
         accFile.close();
     }
     return false;
+}
+
+QString Server::Person(QString _username)
+{
+    QFile accFile("Accounts.txt");
+    if (accFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&accFile);
+        while(!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            if (fields[0] == _username){
+                return line;
+            }
+        }
+        accFile.close();
+    }
+    return "";
 }
