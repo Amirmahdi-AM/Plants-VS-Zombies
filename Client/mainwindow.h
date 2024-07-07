@@ -5,7 +5,10 @@
 #include <QTimer>
 #include <QTcpSocket>
 #include "person.h"
-#include "qlabel.h"
+#include "QLabel"
+#include "plants.h"
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -111,9 +114,12 @@ private:
 
     QTimer *connectionTimer;
 
-    int P_or_Z;
+    int P_or_Z = 0;
+
+    int selection = 0;
 
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+    QVector<Plants*> plants;
 };
 #endif // MAINWINDOW_H

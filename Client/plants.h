@@ -8,17 +8,23 @@
 #include <QPixmap>
 #include <QLabel>
 
-class Plants : QLabel
+class Plants : public QLabel
 {
     Q_OBJECT
-private:
+
+private slots:
+    //void shoot();
+protected:
     QTimer *shootTimer;
     int HP;
+    int neededSun;
+    bool shootState = false;
+    int firingRate = 0;
+    int attackPowe = 0;
     QPixmap picture;
 public:
-    Plants(const QString &imagePath, QWidget *parent = nullptr);
-    virtual void decreaseHP(int power) = 0;
-
+    Plants(QWidget *parent = nullptr);
+    //virtual void decreaseHP(int power);
 };
 
 #endif // PLANTS_H

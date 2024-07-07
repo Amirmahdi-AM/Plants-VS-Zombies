@@ -1,9 +1,9 @@
 #include "plants.h"
 
-Plants::Plants(const QString &imagePath, QWidget *parent) : QLabel(parent)
+Plants::Plants(QWidget *parent) : QLabel(parent)
 {
-    picture.load(imagePath);
+    /*.load(imagePath);
     setPixmap(picture);
-    setGeometry(100,100,100,100);
-    show();
+    setGeometry(x,y,100,100);
+    show();*/
 }

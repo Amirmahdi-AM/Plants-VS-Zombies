@@ -10,15 +10,27 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    boomerang.cpp \
+    jalapeno.cpp \
     main.cpp \
     mainwindow.cpp \
+    peashooter.cpp \
     person.cpp \
-    plants.cpp
+    plants.cpp \
+    plummine.cpp \
+    twopeashooter.cpp \
+    walnut.cpp
 
 HEADERS += \
+    boomerang.h \
+    jalapeno.h \
     mainwindow.h \
+    peashooter.h \
     person.h \
-    plants.h
+    plants.h \
+    plummine.h \
+    twopeashooter.h \
+    walnut.h
 
 FORMS += \
     mainwindow.ui

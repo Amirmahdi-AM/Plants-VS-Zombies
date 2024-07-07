@@ -11,8 +11,14 @@
 #include <stdlib.h>
 #include <QPainter>
 #include <QCursor>
-//#include "person.h"
+#include "person.h"
 #include <QDebug>
+#include "peashooter.h"
+#include "twopeashooter.h"
+#include "walnut.h"
+#include "plummine.h"
+#include "jalapeno.h"
+#include "boomerang.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -559,8 +565,6 @@ void MainWindow::on_Start_Game_Botton_clicked()
 
 }
 
-
-
 void MainWindow::on_Spawned_Item_Lable_clicked()
 {
     if (Brainfade->isActive()){
@@ -630,46 +634,94 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
             if (event->x() >= ui->label_24->x() && event->x() <= ui->label_24->x() + ui->label_24->width() && event->y() >= ui->label_24->y() && event->y() <= ui->label_24->y() + ui->label_24->height()){
                 draging_Label = ui->label_41;
                 draging_Label->show();
+                selection = 1;
                 Labeldrag_drop->start(1);
             }
             if (event->x() >= ui->label_30->x() && event->x() <= ui->label_30->x() + ui->label_30->width() && event->y() >= ui->label_30->y() && event->y() <= ui->label_30->y() + ui->label_30->height()){
                 draging_Label = ui->label_42;
                 draging_Label->show();
+                selection = 2;
                 Labeldrag_drop->start(1);
             }
             if (event->x() >= ui->label_31->x() && event->x() <= ui->label_31->x() + ui->label_31->width() && event->y() >= ui->label_31->y() && event->y() <= ui->label_31->y() + ui->label_31->height()){
                 draging_Label = ui->label_43;
                 draging_Label->show();
+                selection = 3;
                 Labeldrag_drop->start(1);
             }
             if (event->x() >= ui->label_32->x() && event->x() <= ui->label_32->x() + ui->label_32->width() && event->y() >= ui->label_32->y() && event->y() <= ui->label_32->y() + ui->label_32->height()){
                 draging_Label = ui->label_44;
                 draging_Label->show();
+                selection = 4;
                 Labeldrag_drop->start(1);
             }
             if (event->x() >= ui->label_33->x() && event->x() <= ui->label_33->x() + ui->label_33->width() && event->y() >= ui->label_33->y() && event->y() <= ui->label_33->y() + ui->label_33->height()){
                 draging_Label = ui->label_45;
                 draging_Label->show();
+                selection = 5;
                 Labeldrag_drop->start(1);
             }
             if (event->x() >= ui->label_34->x() && event->x() <= ui->label_34->x() + ui->label_34->width() && event->y() >= ui->label_34->y() && event->y() <= ui->label_34->y() + ui->label_34->height()){
                 draging_Label = ui->label_46;
                 draging_Label->show();
+                selection = 6;
                 Labeldrag_drop->start(1);
             }
         }
     }
     QWidget::mousePressEvent(event);
 }
+
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
     Labeldrag_drop->stop();
-    if (P_or_Z == -1) {
-        int x ,y;
-        x = draging_Label->x() + 45;
-        y = draging_Label->y() + 20;
-        if (x >= 1347 && x<= 1447){
-            x = 1347;
+    if (P_or_Z == 1) {
+        if (selection) {
+            int x ,y;
+            bool validate = true;
+            x = event->x();
+            y = event->y();
+            qDebug() << x;
+
+            if (x >= 165 && x < 271) {
+                x= 165;
+            }
+            else if (x >= 271 && x < 378){
+                x = 271;
+            }
+            else if (x >= 378 && x< 485){
+                x = 378;
+            }
+            else if (x >= 485 && x< 592){
+                x = 485;
+            }
+            else if (x >= 592 && x< 699){
+                x = 592;
+            }
+            else if (x >= 699 && x< 806){
+                x = 699;
+            }
+            else if (x >= 806 && x< 913){
+                x = 806;
+            }
+            else if (x >= 913 && x< 1020){
+                x = 913;
+            }
+            else if (x >= 1020 && x< 1127){
+                x = 1020;
+            }
+            else if (x >= 1127 && x< 1234){
+                x = 1127;
+            }
+            else if (x >= 1234 && x< 1341){
+                x = 1234;
+            }
+            else if (x >= 1341 && x< 1448){
+                x = 1341;
+            }
+            else {
+                validate = false;
+            }
             if (y >= 135 && y < 225)
                 y = 135;
             else if (y >= 225 && y < 325)
@@ -683,18 +735,33 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             else if (y >= 625 && y < 725)
                 y = 625;
             else {
-                x = 800;
-                y = 50;
+                validate = false;
             }
-        }
-        else {
-            x = 800;
-            y = 50;
-        }
 
-        draging_Label->setGeometry(x, y, 100, 100);
+            draging_Label->setGeometry(740, 10, 100, 100);
+            if (validate) {
+                if (selection == 1)
+                    PeaShooter* ps = new PeaShooter(x, y, ui->Plants_map);
+                if (selection == 2)
+                    TwoPeaShooter* tps = new TwoPeaShooter(x, y, ui->Plants_map);
+                if (selection == 3)
+                    Walnut *w = new Walnut(x, y, ui->Plants_map);
+                if (selection == 4)
+                    PlumMine *pm = new PlumMine(x, y, ui->Plants_map);
+                if (selection == 5)
+                    Jalapeno *j = new Jalapeno(x, y, ui->Plants_map);
+                if (selection == 6)
+                    Boomerang *b = new Boomerang(x, y, ui->Plants_map);
+
+
+
+
+            }
+            draging_Label->hide();
+            selection = 0;
+        }
     }
-    if (P_or_Z == 1) {
+    if (P_or_Z == -1) {
         int x ,y;
         x = draging_Label->x() + 45;
         y = draging_Label->y() + 20;
