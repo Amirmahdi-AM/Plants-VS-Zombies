@@ -57,9 +57,10 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
             clientSocket->write("114");
     }
     if (fields[0] == "13") {
-        if (clients.size() == 2) {
+        players.push_back(clientSocket);
+        if (players.size() == 2) {
             int player1 = rand () % 2;
-            int player2 = player1 - 1;
+            int player2 = 1 - player1;
             clients[0]->write(QString::number(player1).toUtf8());
             clients[1]->write(QString::number(player2).toUtf8());
         }

@@ -18,6 +18,7 @@ protected:
 
 private:
     QVector<QTcpSocket *> clients;
+    QVector<QTcpSocket *> players;
     void onReadyRead(QTcpSocket *clientSocket);
     void onDisconnected(QTcpSocket *clientSocket);
     bool signUp(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email);
