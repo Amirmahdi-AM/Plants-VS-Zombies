@@ -13,18 +13,6 @@
 #include <QCursor>
 #include "person.h"
 #include <QDebug>
-#include "peashooter.h"
-#include "twopeashooter.h"
-#include "walnut.h"
-#include "plummine.h"
-#include "jalapeno.h"
-#include "boomerang.h"
-#include "regularzombie.h"
-#include "bucketheadzombie.h"
-#include "leafheadzombie.h"
-#include "tallzombie.h"
-#include "astronautzombie.h"
-#include "purplehairzombie.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -493,6 +481,7 @@ void MainWindow::onReadyRead()
     if (fields[0] == "card"){
         if (fields[1] == "PSP"){
             PeaShooter* ps = new PeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
+            PSS.push_back(ps);
         }
         if (fields[1] == "TPSP"){
             TwoPeaShooter* ps = new TwoPeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
@@ -511,6 +500,11 @@ void MainWindow::onReadyRead()
         }
         if (fields[1] == "RZ"){
             RegularZombie* ps = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            for (auto temp : PSS) {
+                if (ps->y() == temp->y()) {
+                    Pea *p = new Pea(temp->x(), temp->y(), 100, currentMap);
+                }
+            }
          }
         if (fields[1] == "BHZ"){
             BucketHeadZombie* ps = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);

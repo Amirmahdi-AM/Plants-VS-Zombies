@@ -7,6 +7,20 @@
 #include "person.h"
 #include "QLabel"
 #include "plants.h"
+#include "pea.h"
+#include "peashooter.h"
+#include "twopeashooter.h"
+#include "walnut.h"
+#include "plummine.h"
+#include "jalapeno.h"
+#include "boomerang.h"
+#include "regularzombie.h"
+#include "bucketheadzombie.h"
+#include "leafheadzombie.h"
+#include "tallzombie.h"
+#include "astronautzombie.h"
+#include "purplehairzombie.h"
+
 
 
 QT_BEGIN_NAMESPACE
@@ -123,5 +137,6 @@ private:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
     QVector<Plants*> plants;
+    QVector<PeaShooter *> PSS;
 };
 #endif // MAINWINDOW_H

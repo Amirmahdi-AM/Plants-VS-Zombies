@@ -17,6 +17,7 @@ SOURCES += \
     leafheadzombie.cpp \
     main.cpp \
     mainwindow.cpp \
+    pea.cpp \
     peashooter.cpp \
     person.cpp \
     plants.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     jalapeno.h \
     leafheadzombie.h \
     mainwindow.h \
+    pea.h \
     peashooter.h \
     person.h \
     plants.h \
