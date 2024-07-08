@@ -64,9 +64,24 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
             clients[1]->write(QString::number(player2).toUtf8());
         }
     }
-
     if (fields[0] == "14") {
         editPerson(fields[1], fields[2], fields[3], fields[4], fields[5]);
+    }
+    if (fields[0] == "15") {//forgot password-check email pass
+        if(checkemail_pass(fields[1], fields[2])){
+            clientSocket->write("1151");
+        }
+        else{
+            clientSocket->write("1152");
+        }
+    }
+    if (fields[0] == "16") {//Resetpass
+        QString line = findUser_WithEmail(fields[1],fields[2]);
+        QStringList parts = line.split(",");
+        parts[1] = fields[3];
+        editPerson(parts[2], parts[0], parts[1], parts[3], parts[4]);
+        QString output = "116";
+        clientSocket->write(output.toUtf8());
     }
 }
 
@@ -187,3 +202,46 @@ void Server::editPerson(const QString &_name, const QString &_username, const QS
         }
     }
 }
+
+bool Server::checkemail_pass(const QString &_phoneNumber, const QString &_email)
+{
+
+    QFile accFile("Accounts.txt");
+    if (accFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&accFile);
+        while(!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            if (fields[3] == _phoneNumber && fields[4] == _email){
+                return true;
+            }
+        }
+        accFile.close();
+    }
+    return false;
+}
+
+QString Server::findUser_WithEmail(const QString &_phoneNumber, const QString &_email){
+    QFile accFile("Accounts.txt");
+    if (accFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&accFile);
+        while(!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            if (fields[3] == _phoneNumber && fields[4] == _email){
+                return line;
+            }
+        }
+        accFile.close();
+        return "";
+    }
+}
+
+
+
+
+
+
+
+
+
