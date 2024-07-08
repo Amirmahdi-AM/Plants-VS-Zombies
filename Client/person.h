@@ -6,7 +6,6 @@ class Person
 {
 private:
     QString username,name, password, email, phoneNumber;
-    int winRound;
 
 public:
     Person();
@@ -21,6 +20,8 @@ public:
     QString  get_password() const;
     QString get_email() const;
     QString get_phoneNumber() const;
+    int winRound;
+    int Point;
 };
 
 #endif // PERSON_H

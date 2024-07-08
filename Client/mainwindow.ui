@@ -42,7 +42,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>7</number>
+     <number>10</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <property name="cursor">
@@ -113,7 +113,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <fontweight>DemiBold</fontweight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -139,7 +139,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <fontweight>DemiBold</fontweight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -328,7 +328,7 @@ background-color: rgb(85, 85, 85);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -346,7 +346,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -364,7 +364,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -382,7 +382,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -400,7 +400,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -418,7 +418,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -598,7 +598,7 @@ color: rgb(83, 255, 212);</string>
        <string>Enter</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Ok_newpass_3">
+     <widget class="QPushButton" name="Back_newpass">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -684,7 +684,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -701,7 +701,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -804,7 +804,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -821,7 +821,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -856,7 +856,7 @@ color: rgb(83, 255, 212);</string>
        <string>Enter</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Ok_newpass_2">
+     <widget class="QPushButton" name="Back_newpass_2">
       <property name="geometry">
        <rect>
         <x>110</x>
@@ -1000,36 +1000,67 @@ font: 14pt &quot;SWMono&quot;;</string>
      </widget>
     </widget>
     <widget class="QWidget" name="Menu">
-     <widget class="QPushButton" name="Start_Game_Botton">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
         <x>100</x>
         <y>50</y>
-        <width>211</width>
-        <height>51</height>
+        <width>285</width>
+        <height>171</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Showcard Gothic</family>
-        <pointsize>26</pointsize>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 186, 101);</string>
-      </property>
-      <property name="text">
-       <string>Start Game</string>
-      </property>
-      <property name="autoDefault">
-       <bool>true</bool>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QPushButton" name="Start_Game_Botton">
+         <property name="font">
+          <font>
+           <family>Showcard Gothic</family>
+           <pointsize>26</pointsize>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 186, 101);</string>
+         </property>
+         <property name="text">
+          <string>Start Game</string>
+         </property>
+         <property name="autoDefault">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="Edit_information_botton">
+         <property name="font">
+          <font>
+           <family>Showcard Gothic</family>
+           <pointsize>26</pointsize>
+          </font>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(255, 186, 101);</string>
+         </property>
+         <property name="text">
+          <string>Edit information</string>
+         </property>
+         <property name="autoDefault">
+          <bool>true</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="Plants_map">
@@ -1107,7 +1138,7 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Peashooter_P_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Peashooter_P_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_30">
@@ -1126,7 +1157,7 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/two_peashooter_P_card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/two_peashooter_P_card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_31">
@@ -1145,7 +1176,7 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Walnut_P_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Walnut_P_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_32">
@@ -1164,7 +1195,7 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Plum_Mine_P_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Plum_Mine_P_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_33">
@@ -1183,7 +1214,7 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Jalapeno_P_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Jalapeno_P_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_34">
@@ -1202,7 +1233,7 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Boomerang_P_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Boomerang_P_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_41">
@@ -1314,6 +1345,72 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="label_48">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>81</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Tw Cen MT Condensed</family>
+        <pointsize>28</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>Points:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_49">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>80</y>
+        <width>81</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Tw Cen MT Condensed</family>
+        <pointsize>28</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Plants_point_Label">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>90</y>
+        <width>81</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Tw Cen MT Condensed</family>
+        <pointsize>28</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
      <zorder>Ground</zorder>
      <zorder>label_19</zorder>
      <zorder>label_20</zorder>
@@ -1331,6 +1428,9 @@ font: 14pt &quot;SWMono&quot;;</string>
      <zorder>label_45</zorder>
      <zorder>label_46</zorder>
      <zorder>Spawned_sun</zorder>
+     <zorder>label_48</zorder>
+     <zorder>label_49</zorder>
+     <zorder>Plants_point_Label</zorder>
     </widget>
     <widget class="QWidget" name="Waiting_Page">
      <property name="cursor">
@@ -1504,7 +1604,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Regular_Z_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Regular_Z_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_25">
@@ -1523,7 +1623,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/LeafHead_Z_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/LeafHead_Z_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_26">
@@ -1542,7 +1642,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Bucket_Z_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Bucket_Z_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_27">
@@ -1561,7 +1661,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Austronut_Z_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Austronut_Z_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_28">
@@ -1580,7 +1680,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/Tall_Z_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/Tall_Z_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_29">
@@ -1599,7 +1699,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Pictures.qrc">:/Images/PurpleHead_Z_Card.png</pixmap>
+       <pixmap resource="Pictures.qrc">:/Images/PurpleHead_Z_Card_Faded.png</pixmap>
       </property>
      </widget>
      <widget class="QLabel" name="label_35">
@@ -1716,8 +1816,51 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <pixmap resource="Pictures.qrc">:/Images/Austronut_Z.png</pixmap>
       </property>
      </widget>
+     <widget class="QLabel" name="label_47">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>81</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Tw Cen MT Condensed</family>
+        <pointsize>28</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>Points:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Zombies_point_Lable">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>90</y>
+        <width>81</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Tw Cen MT Condensed</family>
+        <pointsize>28</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
      <zorder>Ground_2</zorder>
-     <zorder>Spawned_brain</zorder>
      <zorder>label_21</zorder>
      <zorder>label_22</zorder>
      <zorder>label_23</zorder>
@@ -1733,6 +1876,126 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
      <zorder>label_38</zorder>
      <zorder>label_39</zorder>
      <zorder>label_40</zorder>
+     <zorder>Spawned_brain</zorder>
+     <zorder>label_47</zorder>
+     <zorder>Zombies_point_Lable</zorder>
+    </widget>
+    <widget class="QWidget" name="Edit_Information_page">
+     <widget class="QLabel" name="label_50">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>50</y>
+        <width>601</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Tw Cen MT Condensed</family>
+        <pointsize>24</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(4, 101, 3);
+color: rgb(80, 121, 37);</string>
+      </property>
+      <property name="text">
+       <string>Enter your new informations</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_13">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>150</y>
+        <width>249</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sitka Display Semibold</family>
+        <pointsize>16</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_14">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>210</y>
+        <width>249</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sitka Display Semibold</family>
+        <pointsize>16</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_15">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>260</y>
+        <width>249</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sitka Display Semibold</family>
+        <pointsize>16</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_16">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>320</y>
+        <width>249</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Sitka Display Semibold</family>
+        <pointsize>16</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -1742,7 +2005,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
      <x>0</x>
      <y>0</y>
      <width>1596</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

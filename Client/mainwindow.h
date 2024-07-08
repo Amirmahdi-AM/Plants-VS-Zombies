@@ -45,9 +45,9 @@ private slots:
 
     void on_Ok_RPass_clicked();
 
-    void on_Ok_newpass_2_clicked();
+    void on_Back_newpass_clicked();
 
-    void on_Ok_newpass_3_clicked();
+    void on_Back_newpass_2_clicked();
 
     void on_Ok_newpass_clicked();
 
@@ -78,6 +78,10 @@ private slots:
     void Drag_Lable();
 
     void on_Spawned_brain_Lable_clicked();
+
+
+
+
 signals:
     void brainClicked();
 

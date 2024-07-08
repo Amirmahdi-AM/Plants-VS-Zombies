@@ -321,7 +321,7 @@ void MainWindow::on_Ok_RPass_clicked()
         QMessageBox::warning(this,"Error", "pleas fill in all the blanks\n");
         return;
     }
-    QString output="";
+    QString output="15,";
     QRegularExpression phonenumRegex(R"(\b09\d{9}\b)");
     if (!phonenumRegex.match(ui->lineEdit_9->text()).hasMatch()) {
         QMessageBox::warning(this,"Error", "Invalid phonenumber format\n");
@@ -333,23 +333,21 @@ void MainWindow::on_Ok_RPass_clicked()
         QMessageBox::warning(this,"Error", "Invalid email format\n");
         return;
     }
-    output+=ui->lineEdit_10->text()+"\n";
-    //cheking in server if was true.go to set new password page
-    QPixmap ResetPass(":/Images/PasswordReset.png");
 
-    QPalette palette;
-    palette.setBrush(QPalette::Window, QBrush(ResetPass));
-    ui->SetnewPass->setPalette(palette);
-    ui->SetnewPass->setAutoFillBackground(true);
-    ui->GameControl->setCurrentIndex(4);
+    output+=ui->lineEdit_10->text();
+    socket->write(output.toUtf8());
+    //cheking in server if was true.go to set new password page
+
 }
 
-void MainWindow::on_Ok_newpass_2_clicked()
+void MainWindow::on_Back_newpass_2_clicked()
 {
     ui->GameControl->setCurrentIndex(3);
+    ui->lineEdit_11->setText("");
+    ui->lineEdit_12->setText("");
 }
 
-void MainWindow::on_Ok_newpass_3_clicked()
+void MainWindow::on_Back_newpass_clicked()
 {
     ui->GameControl->setCurrentIndex(1);
     ui->lineEdit_9->setText("");
@@ -362,7 +360,7 @@ void MainWindow::on_Ok_newpass_clicked()
         QMessageBox::warning(this,"Error", "pleas fill in all the blanks\n");
         return;
     }
-    QString output="";
+    QString output="16,"+ui->lineEdit_9->text()+","+ui->lineEdit_10->text()+",";
     if(ui->lineEdit_11->text().length()<8){
         QMessageBox::warning(this,"Error", "Password is weak!!\n");
         return;
@@ -371,7 +369,9 @@ void MainWindow::on_Ok_newpass_clicked()
         QMessageBox::warning(this,"Error", "Password confirmation failed\n");
         return;
     }
-    output+=ui->lineEdit_11->text()+"\n";
+
+    output+=ui->lineEdit_11->text();
+    socket->write(output.toUtf8());
 }
 
 void MainWindow::on_connectButton_clicked()
@@ -397,6 +397,7 @@ void MainWindow::Plants_set(){
     Sun_Rotate->start(10);
     Sun_spawn->start(6000);
     /////////////////////////////////////////
+    ui->Plants_point_Label->setText(QString("%1").arg(Player.Point));
 }
 
 void MainWindow::Zombies_set(){
@@ -416,6 +417,7 @@ void MainWindow::Zombies_set(){
     brain_spawn->start(6000);
     /////////////////////////////////////////
     ui->Spawned_brain->setGeometry(-10,-10,80,74);
+    ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
 }
 
 void MainWindow::onReadyRead()
@@ -437,12 +439,13 @@ void MainWindow::onReadyRead()
 //        Zombies_set();
 //    }
     if (fields[0] == "113"){
-//        Player.set_name(fields[1]);
-//        Player.set_username(fields[2]);
-//        Player.set_password(fields[3]);
-//        Player.set_phoneNumber(fields[4]);
-//        Player.set_email(fields[5]);
-        //QMessageBox::information(this, "Signin", "Welcome!");
+        Player.set_name(fields[1]);
+        Player.set_username(fields[3]);
+        Player.set_password(fields[2]);
+        Player.set_phoneNumber(fields[4]);
+        Player.set_email(fields[5]);
+        Player.winRound = 0;
+        Player.Point = 0;
         //ui->GameControl->setCurrentIndex(6);
         ////////////////////////////////////////
 //        ui->GameControl->setCurrentIndex(9);
@@ -462,6 +465,22 @@ void MainWindow::onReadyRead()
 
     if (fields[0] == "114"){
         QMessageBox::critical(this, "Signin", "Incorrect username/password!");
+    }
+    if (fields[0] == "1151"){
+        ui->GameControl->setCurrentIndex(4);
+        QPixmap ResetPass(":/Images/PasswordReset.png");
+
+        QPalette palette;
+        palette.setBrush(QPalette::Window, QBrush(ResetPass));
+        ui->SetnewPass->setPalette(palette);
+        ui->SetnewPass->setAutoFillBackground(true);
+    }
+    if (fields[0] == "1152"){
+        QMessageBox::critical(this, "Reset password", "Incorrect Emial/Phonenumber!");
+    }
+    if (fields[0] == "116"){
+        QMessageBox::information(this, "Pass changed", "Password successfully changed");
+        ui->GameControl->setCurrentIndex(1);
     }
 }
 
@@ -514,6 +533,9 @@ void MainWindow::Spawnning_Item(){
         ui->Spawned_sun->setStyleSheet("background-image: url(:/Images/sun.png);");
         ui->Spawned_sun->setGeometry(-1, -1, 80,74);
        animation = new QPropertyAnimation(ui->Spawned_sun, "geometry");
+       if(!ui->Spawned_sun->isVisible()){
+           ui->Spawned_sun->show();
+       }
        fade->start(3000);
     }
     if(P_or_Z==-1){
@@ -521,11 +543,11 @@ void MainWindow::Spawnning_Item(){
         ui->Spawned_brain->setStyleSheet("background-image: url(:/Images/Brain.png);");
         ui->Spawned_brain->setGeometry(-1, -1, 80,74);
         animation = new QPropertyAnimation(ui->Spawned_brain, "geometry");
+        if(!ui->Spawned_brain->isVisible()){
+            ui->Spawned_brain->show();
+        }
         Brainfade->start(3000);
     }
-
-
-
     animation->setDuration(2000);
     int x = rand() % 1200 + 200;
     int y = rand() % 550 + 200;
@@ -580,6 +602,48 @@ void MainWindow::on_Spawned_Item_Lable_clicked()
     animation->setStartValue(QRect(x, y, 100,100));
     //QRect(13, 10, 80,74
     animation->setEndValue(QRect(13, 10, 100,100));
+    QObject::connect(animation, &QPropertyAnimation::finished, spawnedItemp_Label,[&](){
+        Player.Point += 25;
+        if(P_or_Z==-1){
+            ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
+            if(Player.Point>=100){
+                ui->label_23->setPixmap(QPixmap(":/Images/Regular_Z_Card.png"));
+            }
+            if(Player.Point>=150){
+                ui->label_24->setPixmap(QPixmap(":/Images/LeafHead_Z_Card.png"));
+                ui->label_25->setPixmap(QPixmap(":/Images/Tall_Z_Card.png"));
+            }
+            if(Player.Point>=200){
+                ui->label_26->setPixmap(QPixmap(":/Images/Bucket_Z_Card.png"));
+                ui->label_27->setPixmap(QPixmap(":/Images/Austronut_Z_Card.png"));
+            }
+            if(Player.Point>=800){
+                ui->label_28->setPixmap(QPixmap(":/Images/PurpleHead_Z_Card.png"));
+            }
+        }
+        if(P_or_Z == 1){
+            ui->Plants_point_Label->setText(QString("%1").arg(Player.Point));
+            if(Player.Point>=50){
+                ui->label_24->setPixmap(QPixmap(":/Images/Peashooter_P_Card.png"));
+            }
+            if(Player.Point>=100){
+                ui->label_30->setPixmap(QPixmap(":/Images/two_peashooter_P_card.png"));
+                ui->label_31->setPixmap(QPixmap(":/Images/Walnut_P_Card.png"));
+            }
+            if(Player.Point>=125){
+                ui->label_34->setPixmap(QPixmap(":/Images/Boomerang_P_Card.png"));
+            }
+            if(Player.Point>=150){
+                ui->label_33->setPixmap(QPixmap(":/Images/Jalapeno_P_Card.png"));
+            }
+            if(Player.Point>=175){
+                ui->label_32->setPixmap(QPixmap(":/Images/Plum_Mine_P_Card.png"));
+            }
+        }
+        spawnedItemp_Label->hide();
+
+        //&QLabel::hide;
+    });
     animation->start();
 
 
@@ -631,37 +695,37 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 emit sunClicked();
             }
 
-            if (event->x() >= ui->label_24->x() && event->x() <= ui->label_24->x() + ui->label_24->width() && event->y() >= ui->label_24->y() && event->y() <= ui->label_24->y() + ui->label_24->height()){
+            if (event->x() >= ui->label_24->x() && event->x() <= ui->label_24->x() + ui->label_24->width() && event->y() >= ui->label_24->y() && event->y() <= ui->label_24->y() + ui->label_24->height()&& Player.Point>=50){
                 draging_Label = ui->label_41;
                 draging_Label->show();
                 selection = 1;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_30->x() && event->x() <= ui->label_30->x() + ui->label_30->width() && event->y() >= ui->label_30->y() && event->y() <= ui->label_30->y() + ui->label_30->height()){
+            if (event->x() >= ui->label_30->x() && event->x() <= ui->label_30->x() + ui->label_30->width() && event->y() >= ui->label_30->y() && event->y() <= ui->label_30->y() + ui->label_30->height() && Player.Point>=100){
                 draging_Label = ui->label_42;
                 draging_Label->show();
                 selection = 2;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_31->x() && event->x() <= ui->label_31->x() + ui->label_31->width() && event->y() >= ui->label_31->y() && event->y() <= ui->label_31->y() + ui->label_31->height()){
+            if (event->x() >= ui->label_31->x() && event->x() <= ui->label_31->x() + ui->label_31->width() && event->y() >= ui->label_31->y() && event->y() <= ui->label_31->y() + ui->label_31->height() && Player.Point>=100){
                 draging_Label = ui->label_43;
                 draging_Label->show();
                 selection = 3;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_32->x() && event->x() <= ui->label_32->x() + ui->label_32->width() && event->y() >= ui->label_32->y() && event->y() <= ui->label_32->y() + ui->label_32->height()){
+            if (event->x() >= ui->label_32->x() && event->x() <= ui->label_32->x() + ui->label_32->width() && event->y() >= ui->label_32->y() && event->y() <= ui->label_32->y() + ui->label_32->height() && Player.Point>=175){
                 draging_Label = ui->label_44;
                 draging_Label->show();
                 selection = 4;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_33->x() && event->x() <= ui->label_33->x() + ui->label_33->width() && event->y() >= ui->label_33->y() && event->y() <= ui->label_33->y() + ui->label_33->height()){
+            if (event->x() >= ui->label_33->x() && event->x() <= ui->label_33->x() + ui->label_33->width() && event->y() >= ui->label_33->y() && event->y() <= ui->label_33->y() + ui->label_33->height() && Player.Point>=150){
                 draging_Label = ui->label_45;
                 draging_Label->show();
                 selection = 5;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_34->x() && event->x() <= ui->label_34->x() + ui->label_34->width() && event->y() >= ui->label_34->y() && event->y() <= ui->label_34->y() + ui->label_34->height()){
+            if (event->x() >= ui->label_34->x() && event->x() <= ui->label_34->x() + ui->label_34->width() && event->y() >= ui->label_34->y() && event->y() <= ui->label_34->y() + ui->label_34->height() && Player.Point>=125){
                 draging_Label = ui->label_46;
                 draging_Label->show();
                 selection = 6;
@@ -681,7 +745,6 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             bool validate = true;
             x = event->x();
             y = event->y();
-            qDebug() << x;
 
             if (x >= 165 && x < 271) {
                 x= 165;
@@ -716,9 +779,6 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             else if (x >= 1234 && x< 1341){
                 x = 1234;
             }
-            else if (x >= 1341 && x< 1448){
-                x = 1341;
-            }
             else {
                 validate = false;
             }
@@ -740,22 +800,53 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
             draging_Label->setGeometry(740, 10, 100, 100);
             if (validate) {
-                if (selection == 1)
+                if (selection == 1){
                     PeaShooter* ps = new PeaShooter(x, y, ui->Plants_map);
-                if (selection == 2)
+                    Player.Point -= 50;
+                }
+
+                if (selection == 2){
                     TwoPeaShooter* tps = new TwoPeaShooter(x, y, ui->Plants_map);
-                if (selection == 3)
+                    Player.Point -= 100;
+                }
+
+                if (selection == 3){
                     Walnut *w = new Walnut(x, y, ui->Plants_map);
-                if (selection == 4)
+                    Player.Point -= 100;
+                }
+
+                if (selection == 4){
                     PlumMine *pm = new PlumMine(x, y, ui->Plants_map);
-                if (selection == 5)
+                    Player.Point -= 175;
+                }
+
+                if (selection == 5){
                     Jalapeno *j = new Jalapeno(x, y, ui->Plants_map);
-                if (selection == 6)
+                    Player.Point -= 150;
+                }
+
+                if (selection == 6){
                     Boomerang *b = new Boomerang(x, y, ui->Plants_map);
+                    Player.Point -= 125;
+                }
 
-
-
-
+            }
+            ui->Plants_point_Label->setText(QString("%1").arg(Player.Point));
+            if(Player.Point<50){
+                ui->label_24->setPixmap(QPixmap(":/Images/Peashooter_P_Card_Faded.png"));
+            }
+            if(Player.Point<100){
+                ui->label_30->setPixmap(QPixmap(":/Images/two_peashooter_P_card_Faded.png"));
+                ui->label_31->setPixmap(QPixmap(":/Images/Walnut_P_Card_Faded.png"));
+            }
+            if(Player.Point<125){
+                ui->label_34->setPixmap(QPixmap(":/Images/Boomerang_P_Card_Faded.png"));
+            }
+            if(Player.Point<150){
+                ui->label_33->setPixmap(QPixmap(":/Images/Jalapeno_P_Card_Faded.png"));
+            }
+            if(Player.Point<175){
+                ui->label_32->setPixmap(QPixmap(":/Images/Plum_Mine_P_Card_Faded.png"));
             }
             draging_Label->hide();
             selection = 0;
@@ -806,7 +897,21 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
         else {
             y = 50;
         }
-
+        ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
+        if(Player.Point>=100){
+            ui->label_23->setPixmap(QPixmap(":/Images/Regular_Z_Card_Faded.png"));
+        }
+        if(Player.Point>=150){
+            ui->label_24->setPixmap(QPixmap(":/Images/LeafHead_Z_Card_Faded.png"));
+            ui->label_25->setPixmap(QPixmap(":/Images/Tall_Z_Card_Faded.png"));
+        }
+        if(Player.Point>=200){
+            ui->label_26->setPixmap(QPixmap(":/Images/Bucket_Z_Card_Faded.png"));
+            ui->label_27->setPixmap(QPixmap(":/Images/Austronut_Z_Card_Faded.png"));
+        }
+        if(Player.Point>=800){
+            ui->label_28->setPixmap(QPixmap(":/Images/PurpleHead_Z_Card_Faded.png"));
+        }
         draging_Label->setGeometry(x, y, 100, 100);
     }
 }
@@ -815,3 +920,9 @@ void MainWindow::Drag_Lable(){
     QPoint pos = QCursor::pos();
     draging_Label->setGeometry(pos.x()-60,pos.y()-60,draging_Label->width(),draging_Label->height());
 }
+
+
+
+
+
+
