@@ -853,7 +853,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
             draging_Label->setGeometry(740, 10, 100, 100);
             if (validate) {
-                QString output = "card";
+                QString output = "card,";
                 if (selection == 1){
                     output += "PSP,";
                     output += QString::number(x)+","+QString::number(y);
@@ -947,7 +947,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
                 validate = false;
             }
             if(validate){
-                    QString output = "card";
+                    QString output = "card,";
                 if (selection == 6){
                     output += "RZ,";
                     output += QString::number(x)+","+QString::number(y);
