@@ -19,6 +19,12 @@
 #include "plummine.h"
 #include "jalapeno.h"
 #include "boomerang.h"
+#include "regularzombie.h"
+#include "bucketheadzombie.h"
+#include "leafheadzombie.h"
+#include "tallzombie.h"
+#include "astronautzombie.h"
+#include "purplehairzombie.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -448,13 +454,13 @@ void MainWindow::onReadyRead()
         Player.Point = 0;
         //ui->GameControl->setCurrentIndex(6);
         ////////////////////////////////////////
-//        ui->GameControl->setCurrentIndex(9);
-//        P_or_Z = -1;
-//        Zombies_set();
+        ui->GameControl->setCurrentIndex(9);
+        P_or_Z = -1;
+        Zombies_set();
         ////////////////////////////////////////////
-        ui->GameControl->setCurrentIndex(7);
-        P_or_Z = 1;
-        Plants_set();
+        //ui->GameControl->setCurrentIndex(7);
+        //P_or_Z = 1;
+        //Plants_set();
 //        QPixmap MenuBackground(":/Images/MenuBG.png");
 
 //        QPalette palette;
@@ -610,15 +616,15 @@ void MainWindow::on_Spawned_Item_Lable_clicked()
                 ui->label_23->setPixmap(QPixmap(":/Images/Regular_Z_Card.png"));
             }
             if(Player.Point>=150){
-                ui->label_24->setPixmap(QPixmap(":/Images/LeafHead_Z_Card.png"));
-                ui->label_25->setPixmap(QPixmap(":/Images/Tall_Z_Card.png"));
+                ui->label_25->setPixmap(QPixmap(":/Images/LeafHead_Z_Card.png"));
+                ui->label_28->setPixmap(QPixmap(":/Images/Tall_Z_Card.png"));
             }
             if(Player.Point>=200){
                 ui->label_26->setPixmap(QPixmap(":/Images/Bucket_Z_Card.png"));
                 ui->label_27->setPixmap(QPixmap(":/Images/Austronut_Z_Card.png"));
             }
             if(Player.Point>=800){
-                ui->label_28->setPixmap(QPixmap(":/Images/PurpleHead_Z_Card.png"));
+                ui->label_29->setPixmap(QPixmap(":/Images/PurpleHead_Z_Card.png"));
             }
         }
         if(P_or_Z == 1){
@@ -658,34 +664,40 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 emit brainClicked();
             }
 
-            if (event->x() >= ui->label_29->x() && event->x() <= ui->label_29->x() + ui->label_29->width() && event->y() >= ui->label_29->y() && event->y() <= ui->label_29->y() + ui->label_29->height()){
+            if (event->x() >= ui->label_29->x() && event->x() <= ui->label_29->x() + ui->label_29->width() && event->y() >= ui->label_29->y() && event->y() <= ui->label_29->y() + ui->label_29->height()&& Player.Point>=800){
                 draging_Label = ui->label_36;
                 draging_Label->show();
+                selection = 1;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_28->x() && event->x() <= ui->label_28->x() + ui->label_28->width() && event->y() >= ui->label_28->y() && event->y() <= ui->label_28->y() + ui->label_28->height()){
+            if (event->x() >= ui->label_28->x() && event->x() <= ui->label_28->x() + ui->label_28->width() && event->y() >= ui->label_28->y() && event->y() <= ui->label_28->y() + ui->label_28->height()&& Player.Point>=150){
                 draging_Label = ui->label_39;
                 draging_Label->show();
+                selection = 2;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_27->x() && event->x() <= ui->label_27->x() + ui->label_27->width() && event->y() >= ui->label_27->y() && event->y() <= ui->label_27->y() + ui->label_27->height()){
+            if (event->x() >= ui->label_27->x() && event->x() <= ui->label_27->x() + ui->label_27->width() && event->y() >= ui->label_27->y() && event->y() <= ui->label_27->y() + ui->label_27->height()&& Player.Point>=200){
                 draging_Label = ui->label_40;
                 draging_Label->show();
+                selection = 3;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_26->x() && event->x() <= ui->label_26->x() + ui->label_26->width() && event->y() >= ui->label_26->y() && event->y() <= ui->label_26->y() + ui->label_26->height()){
+            if (event->x() >= ui->label_26->x() && event->x() <= ui->label_26->x() + ui->label_26->width() && event->y() >= ui->label_26->y() && event->y() <= ui->label_26->y() + ui->label_26->height()&& Player.Point>=200){
                 draging_Label = ui->label_37;
                 draging_Label->show();
+                selection = 4;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_25->x() && event->x() <= ui->label_25->x() + ui->label_25->width() && event->y() >= ui->label_25->y() && event->y() <= ui->label_25->y() + ui->label_25->height()){
+            if (event->x() >= ui->label_25->x() && event->x() <= ui->label_25->x() + ui->label_25->width() && event->y() >= ui->label_25->y() && event->y() <= ui->label_25->y() + ui->label_25->height()&& Player.Point>=150){
                 draging_Label = ui->label_38;
                 draging_Label->show();
+                selection = 5;
                 Labeldrag_drop->start(1);
             }
-            if (event->x() >= ui->label_23->x() && event->x() <= ui->label_23->x() + ui->label_23->width() && event->y() >= ui->label_23->y() && event->y() <= ui->label_23->y() + ui->label_23->height()){
+            if (event->x() >= ui->label_23->x() && event->x() <= ui->label_23->x() + ui->label_23->width() && event->y() >= ui->label_23->y() && event->y() <= ui->label_23->y() + ui->label_23->height()&& Player.Point>=100){
                 draging_Label = ui->label_35;
                 draging_Label->show();
+                selection = 6;
                 Labeldrag_drop->start(1);
             }
         }
@@ -853,66 +865,83 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
         }
     }
     if (P_or_Z == -1) {
-        int x ,y;
-        x = draging_Label->x() + 45;
-        y = draging_Label->y() + 20;
-        if (x >= 1247 && x<= 1347){
-            x = 1247;
+        if (selection) {
+            int x ,y;
+            bool validate = true;
+            x = event->x();
+            y = event->y();
+            if (x >= 1347 && x<= 1447){
+                x = 1347;
+            }
+            else {
+                validate = false;
+            }
+            if (y >= 135 && y < 225)
+                y = 135;
+            else if (y >= 225 && y < 325)
+                y = 225;
+            else if (y >= 325 && y < 425)
+                y = 325;
+            else if (y >= 425 && y < 525)
+                y = 425;
+            else if (y >= 525 && y < 625)
+                y = 525;
+            else if (y >= 625 && y < 725)
+                y = 625;
+            else {
+                validate = false;
+            }
+            if(validate){
+
+                if (selection == 6){
+                    RegularZombie* rz = new RegularZombie(x, y, ui->Zombies_map);
+                    Player.Point -= 100;
+                }
+
+                if (selection == 4){
+                    BucketHeadZombie* bhz = new BucketHeadZombie(x, y, ui->Zombies_map);
+                    Player.Point -= 200;
+                }
+
+                if (selection == 5){
+                    LeafHeadZombie *lhz = new LeafHeadZombie(x, y, ui->Zombies_map);
+                    Player.Point -= 150;
+                }
+
+                if (selection == 2){
+                    TallZombie *tz = new TallZombie(x, y, ui->Zombies_map);
+                    Player.Point -= 150;
+                }
+
+                if (selection == 3){
+                    AstronautZombie *az = new AstronautZombie(x, y, ui->Zombies_map);
+                    Player.Point -= 200;
+                }
+
+                if (selection == 1){
+                    PurpleHairZombie *phz = new PurpleHairZombie(x, y, ui->Zombies_map);
+                    Player.Point -= 800;
+                }
+
+            }
+            ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
+            if(Player.Point<100){
+                ui->label_23->setPixmap(QPixmap(":/Images/Regular_Z_Card_Faded.png"));
+            }
+            if(Player.Point<150){
+                ui->label_25->setPixmap(QPixmap(":/Images/LeafHead_Z_Card_Faded.png"));
+                ui->label_28->setPixmap(QPixmap(":/Images/Tall_Z_Card_Faded.png"));
+            }
+            if(Player.Point<200){
+                ui->label_27->setPixmap(QPixmap(":/Images/Austronut_Z_Card_Faded.png"));
+                ui->label_26->setPixmap(QPixmap(":/Images/Bucket_Z_Card_Faded.png"));
+            }
+            if(Player.Point<800){
+                ui->label_29->setPixmap(QPixmap(":/Images/PurpleHead_Z_Card_Faded.png"));
+            }
+            draging_Label->hide();
+            selection = 0;
         }
-        else if (x >= 1147 && x<= 1247)
-            x = 1147;
-        else if (x >= 1047 && x<= 1147)
-            x = 1047;
-        else if (x >= 947 && x<= 1047)
-            x = 947;
-        else if (x >= 847 && x<= 947)
-            x = 847;
-        else if (x >= 747 && x<= 847)
-            x = 747;
-        else if (x >= 647 && x<= 747)
-            x = 647;
-        else if (x >= 547 && x<= 647)
-            x = 547;
-        else if (x >= 447 && x<= 547)
-            x = 447;
-        else if (x >= 347 && x<= 447)
-            x = 347;
-        else if (x >= 247 && x<= 347)
-            x = 247;
-        else {
-            x = 800;
-        }
-        if (y >= 135 && y < 225)
-            y = 135;
-        else if (y >= 225 && y < 325)
-            y = 225;
-        else if (y >= 325 && y < 425)
-            y = 325;
-        else if (y >= 425 && y < 525)
-            y = 425;
-        else if (y >= 525 && y < 625)
-            y = 525;
-        else if (y >= 625 && y < 725)
-            y = 625;
-        else {
-            y = 50;
-        }
-        ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
-        if(Player.Point>=100){
-            ui->label_23->setPixmap(QPixmap(":/Images/Regular_Z_Card_Faded.png"));
-        }
-        if(Player.Point>=150){
-            ui->label_24->setPixmap(QPixmap(":/Images/LeafHead_Z_Card_Faded.png"));
-            ui->label_25->setPixmap(QPixmap(":/Images/Tall_Z_Card_Faded.png"));
-        }
-        if(Player.Point>=200){
-            ui->label_26->setPixmap(QPixmap(":/Images/Bucket_Z_Card_Faded.png"));
-            ui->label_27->setPixmap(QPixmap(":/Images/Austronut_Z_Card_Faded.png"));
-        }
-        if(Player.Point>=800){
-            ui->label_28->setPixmap(QPixmap(":/Images/PurpleHead_Z_Card_Faded.png"));
-        }
-        draging_Label->setGeometry(x, y, 100, 100);
     }
 }
 

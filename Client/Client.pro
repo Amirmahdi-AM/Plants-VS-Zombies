@@ -10,27 +10,41 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    astronautzombie.cpp \
     boomerang.cpp \
+    bucketheadzombie.cpp \
     jalapeno.cpp \
+    leafheadzombie.cpp \
     main.cpp \
     mainwindow.cpp \
     peashooter.cpp \
     person.cpp \
     plants.cpp \
     plummine.cpp \
+    purplehairzombie.cpp \
+    regularzombie.cpp \
+    tallzombie.cpp \
     twopeashooter.cpp \
-    walnut.cpp
+    walnut.cpp \
+    zombies.cpp
 
 HEADERS += \
+    astronautzombie.h \
     boomerang.h \
+    bucketheadzombie.h \
     jalapeno.h \
+    leafheadzombie.h \
     mainwindow.h \
     peashooter.h \
     person.h \
     plants.h \
     plummine.h \
+    purplehairzombie.h \
+    regularzombie.h \
+    tallzombie.h \
     twopeashooter.h \
-    walnut.h
+    walnut.h \
+    zombies.h
 
 FORMS += \
     mainwindow.ui

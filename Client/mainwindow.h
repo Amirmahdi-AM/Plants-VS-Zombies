@@ -77,10 +77,6 @@ private slots:
 
     void Drag_Lable();
 
-    void on_Spawned_brain_Lable_clicked();
-
-
-
 
 signals:
     void brainClicked();
