@@ -20,8 +20,8 @@ protected:
     QPixmap picture;
 
 
-private slots:
-    //virtual void move();
+protected slots:
+    virtual void move() = 0;
 
 public:
     Zombies(QWidget *parent = nullptr);

@@ -83,6 +83,12 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
         QString output = "116";
         clientSocket->write(output.toUtf8());
     }
+    if (fields[0] == "card") {//Resetpass
+        for(auto temp : clients){
+            temp->write(receivedData.toUtf8());
+        }
+    }
+
 }
 
 void Server::onDisconnected(QTcpSocket *clientSocket)

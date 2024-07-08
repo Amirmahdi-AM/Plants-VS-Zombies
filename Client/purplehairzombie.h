@@ -7,6 +7,8 @@ class PurpleHairZombie : public Zombies
     Q_OBJECT
 public:
     PurpleHairZombie(int x, int y, QWidget *parent = nullptr);
+private slots:
+    void move() override;
 };
 
 #endif // PURPLEHAIRZOMBIE_H

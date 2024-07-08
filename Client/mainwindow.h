@@ -114,6 +114,8 @@ private:
 
     QTimer *connectionTimer;
 
+    QWidget* currentMap;
+
     int P_or_Z = 0;
 
     int selection = 0;

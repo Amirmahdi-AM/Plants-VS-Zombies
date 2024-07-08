@@ -436,14 +436,16 @@ void MainWindow::onReadyRead()
     if (fields[0] == "111"){
         QMessageBox::critical(this, "Signup", "This username already token!");
     }
-//    if (fields[0] == "0"){
-//        P_or_Z = 1;
-//        Plants_set();
-//    }
-//    if (fields[0] == "1"){
-//        P_or_Z = -1;
-//        Zombies_set();
-//    }
+    if (fields[0] == "0"){
+        P_or_Z = 1;
+        currentMap = ui->Plants_map;
+        Plants_set();
+    }
+    if (fields[0] == "1"){
+        P_or_Z = -1;
+        currentMap = ui->Zombies_map;
+        Zombies_set();
+    }
     if (fields[0] == "113"){
         Player.set_name(fields[1]);
         Player.set_username(fields[3]);
@@ -451,22 +453,22 @@ void MainWindow::onReadyRead()
         Player.set_phoneNumber(fields[4]);
         Player.set_email(fields[5]);
         Player.winRound = 0;
-        Player.Point = 0;
-        //ui->GameControl->setCurrentIndex(6);
+        Player.Point = 20000;
+        ui->GameControl->setCurrentIndex(6);
         ////////////////////////////////////////
-        ui->GameControl->setCurrentIndex(9);
-        P_or_Z = -1;
-        Zombies_set();
+//        ui->GameControl->setCurrentIndex(9);
+//        P_or_Z = -1;
+//        Zombies_set();
         ////////////////////////////////////////////
         //ui->GameControl->setCurrentIndex(7);
         //P_or_Z = 1;
         //Plants_set();
-//        QPixmap MenuBackground(":/Images/MenuBG.png");
+        QPixmap MenuBackground(":/Images/MenuBG.png");
 
-//        QPalette palette;
-//        palette.setBrush(QPalette::Window, QBrush(MenuBackground));
-//        ui->Menu->setPalette(palette);
-//        ui->Menu->setAutoFillBackground(true);
+        QPalette palette;
+        palette.setBrush(QPalette::Window, QBrush(MenuBackground));
+        ui->Menu->setPalette(palette);
+        ui->Menu->setAutoFillBackground(true);
     }
 
     if (fields[0] == "114"){
@@ -487,6 +489,45 @@ void MainWindow::onReadyRead()
     if (fields[0] == "116"){
         QMessageBox::information(this, "Pass changed", "Password successfully changed");
         ui->GameControl->setCurrentIndex(1);
+    }
+    if (fields[0] == "card"){
+        if (fields[1] == "PSP"){
+            PeaShooter* ps = new PeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "TPSP"){
+            TwoPeaShooter* ps = new TwoPeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "WP"){
+            Walnut* ps = new Walnut(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "PMP"){
+            PlumMine* ps = new PlumMine(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "JP"){
+            Jalapeno* ps = new Jalapeno(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "BP"){
+            Boomerang* ps = new Boomerang(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "RZ"){
+            RegularZombie* ps = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+         }
+        if (fields[1] == "BHZ"){
+            BucketHeadZombie* ps = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "LHZ"){
+            LeafHeadZombie* ps = new LeafHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "TZ"){
+            TallZombie* ps = new TallZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "AZ"){
+            AstronautZombie* ps = new AstronautZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+        if (fields[1] == "PHZ"){
+            PurpleHairZombie* ps = new PurpleHairZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+        }
+
     }
 }
 
@@ -587,7 +628,7 @@ void MainWindow::on_Start_Game_Botton_clicked()
 
     QPixmap WaitingPic(":/Images/WaitingBG.jpg");
     ui->Waiting_Lable->setFixedSize(1500,800);
-    ui->Waiting_Lable->move(0,-50);
+    ui->Waiting_Lable->move(0,0);
     ui->Waiting_Lable->setPixmap(WaitingPic);
     Rotate2->start(10);
 
@@ -812,35 +853,49 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
             draging_Label->setGeometry(740, 10, 100, 100);
             if (validate) {
+                QString output = "card";
                 if (selection == 1){
-                    PeaShooter* ps = new PeaShooter(x, y, ui->Plants_map);
+                    output += "PSP,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //PeaShooter* ps = new PeaShooter(x, y, ui->Plants_map);
                     Player.Point -= 50;
                 }
 
                 if (selection == 2){
-                    TwoPeaShooter* tps = new TwoPeaShooter(x, y, ui->Plants_map);
+                    output += "TPSP,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //TwoPeaShooter* tps = new TwoPeaShooter(x, y, ui->Plants_map);
                     Player.Point -= 100;
                 }
 
                 if (selection == 3){
-                    Walnut *w = new Walnut(x, y, ui->Plants_map);
+                    output += "WP,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //Walnut *w = new Walnut(x, y, ui->Plants_map);
                     Player.Point -= 100;
                 }
 
                 if (selection == 4){
-                    PlumMine *pm = new PlumMine(x, y, ui->Plants_map);
+                    output += "PMP,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //PlumMine *pm = new PlumMine(x, y, ui->Plants_map);
                     Player.Point -= 175;
                 }
 
                 if (selection == 5){
-                    Jalapeno *j = new Jalapeno(x, y, ui->Plants_map);
+                    output += "JP,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //Jalapeno *j = new Jalapeno(x, y, ui->Plants_map);
                     Player.Point -= 150;
                 }
 
                 if (selection == 6){
-                    Boomerang *b = new Boomerang(x, y, ui->Plants_map);
+                    output += "BP,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //Boomerang *b = new Boomerang(x, y, ui->Plants_map);
                     Player.Point -= 125;
                 }
+                socket->write(output.toUtf8());
 
             }
             ui->Plants_point_Label->setText(QString("%1").arg(Player.Point));
@@ -892,36 +947,49 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
                 validate = false;
             }
             if(validate){
-
+                    QString output = "card";
                 if (selection == 6){
-                    RegularZombie* rz = new RegularZombie(x, y, ui->Zombies_map);
+                    output += "RZ,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //RegularZombie* rz = new RegularZombie(x, y, ui->Zombies_map);
                     Player.Point -= 100;
                 }
 
                 if (selection == 4){
-                    BucketHeadZombie* bhz = new BucketHeadZombie(x, y, ui->Zombies_map);
+                    output += "BHZ,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //BucketHeadZombie* bhz = new BucketHeadZombie(x, y, ui->Zombies_map);
                     Player.Point -= 200;
                 }
 
                 if (selection == 5){
-                    LeafHeadZombie *lhz = new LeafHeadZombie(x, y, ui->Zombies_map);
+                    output += "LHZ,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //LeafHeadZombie *lhz = new LeafHeadZombie(x, y, ui->Zombies_map);
                     Player.Point -= 150;
                 }
 
                 if (selection == 2){
-                    TallZombie *tz = new TallZombie(x, y, ui->Zombies_map);
+                    output += "TZ,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //TallZombie *tz = new TallZombie(x, y, ui->Zombies_map);
                     Player.Point -= 150;
                 }
 
                 if (selection == 3){
-                    AstronautZombie *az = new AstronautZombie(x, y, ui->Zombies_map);
+                    output += "AZ,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //AstronautZombie *az = new AstronautZombie(x, y, ui->Zombies_map);
                     Player.Point -= 200;
                 }
 
                 if (selection == 1){
-                    PurpleHairZombie *phz = new PurpleHairZombie(x, y, ui->Zombies_map);
+                    output += "PHZ,";
+                    output += QString::number(x)+","+QString::number(y);
+                    //PurpleHairZombie *phz = new PurpleHairZombie(x, y, ui->Zombies_map);
                     Player.Point -= 800;
                 }
+                socket->write(output.toUtf8());
 
             }
             ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
