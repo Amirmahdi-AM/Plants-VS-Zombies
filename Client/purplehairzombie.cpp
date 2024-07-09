@@ -14,5 +14,5 @@ PurpleHairZombie::PurpleHairZombie(int x, int y, QWidget *parent) : Zombies(pare
     show();
 }
 void PurpleHairZombie::move(){
-    setGeometry(this->x()-5.3, this->y(), 100, 100);
+    setGeometry(this->x()-moveX, this->y(), 100, 100);
 }

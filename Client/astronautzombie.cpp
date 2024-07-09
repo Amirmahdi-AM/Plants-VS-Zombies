@@ -15,5 +15,5 @@ AstronautZombie::AstronautZombie(int x, int y, QWidget *parent) : Zombies(parent
     show();
 }
 void AstronautZombie::move(){
-    setGeometry(this->x()-5.3, this->y(), 100, 100);
+    setGeometry(this->x()-moveX, this->y(), 100, 100);
 }

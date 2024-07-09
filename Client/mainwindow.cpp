@@ -1185,6 +1185,15 @@ void MainWindow::onCheckcollision()
                 delete PeaBullet;
             }
         }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        for(auto p : PSPvec){
+            for (auto z : RZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                }
+            }
+        }
 
     }
 //    for(auto Boom:Peavec){

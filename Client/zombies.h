@@ -18,6 +18,8 @@ protected:
     QTimer *attackTimer;
     QTimer *moveTimer;
     QPixmap picture;
+    double moveX = 5.3;
+
 
 public:
     Plants *target;
@@ -28,6 +30,8 @@ protected slots:
 public:
     Zombies(QWidget *parent = nullptr);
     void decreaseHP(int power);
+    void offMovement();
+    void onMovemevt();
 };
 
 #endif // ZOMBIES_H
