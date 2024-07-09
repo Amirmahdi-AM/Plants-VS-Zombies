@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QTcpSocket>
+#include <list>
 #include "person.h"
 #include "QLabel"
 #include "plants.h"
@@ -20,6 +21,7 @@
 #include "tallzombie.h"
 #include "astronautzombie.h"
 #include "purplehairzombie.h"
+using namespace std;
 
 
 
@@ -91,6 +93,8 @@ private slots:
 
     void Drag_Lable();
 
+    void onCreateBullets(int x, int y);
+
 
 signals:
     void brainClicked();
@@ -136,7 +140,22 @@ private:
 
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
-    QVector<Plants*> plants;
-    QVector<PeaShooter *> PSS;
+    list<pair<int, int>> fullLocations;
+
+    QVector<RegularZombie*> RZvec;
+    QVector<BucketHeadZombie*> BHZvec;
+    QVector<LeafHeadZombie*> LHZvec;
+    QVector<PurpleHairZombie*> PHZvec;
+    QVector<TallZombie*> TZvec;
+    QVector<AstronautZombie*> AZvec;
+    QVector<PeaShooter*> PSPvec;
+    QVector<Boomerang*> BPvec;
+    QVector<TwoPeaShooter*> TPSPvec;
+    QVector<Walnut*> WPvec;
+    QVector<PlumMine*> PMPvec;
+    QVector<Jalapeno*> JPvec;
+
+    QVector<Pea*> Peavec;
+
 };
 #endif // MAINWINDOW_H

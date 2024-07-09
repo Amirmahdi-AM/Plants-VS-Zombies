@@ -83,6 +83,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, QOverload<QTcpSocket::SocketError>::of(&QTcpSocket::errorOccurred), this, &MainWindow::onError);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::onConnectionTimeout);
     ui->Spawned_brain->setStyleSheet("QPushButton { border: none; }");
+    ///////////////////////////////
 }
 
 
@@ -479,47 +480,110 @@ void MainWindow::onReadyRead()
         ui->GameControl->setCurrentIndex(1);
     }
     if (fields[0] == "card"){
+        int Targetcounts = 0;
+        if(fields[1][fields[1].size() - 1] == 'P') {
+            for(auto temp : RZvec){
+                if(temp->y()==fields[3].toInt()){
+                    Targetcounts++;
+                }
+            }
+            for(auto temp : BHZvec){
+                if(temp->y()==fields[3].toInt()){
+                    Targetcounts++;
+                }
+            }
+            for(auto temp : LHZvec){
+                if(temp->y()==fields[3].toInt()){
+                    Targetcounts++;
+                }
+            }
+            for(auto temp : PHZvec){
+                if(temp->y()==fields[3].toInt()){
+                    Targetcounts++;
+                }
+            }
+            for(auto temp : TZvec){
+                if(temp->y()==fields[3].toInt()){
+                    Targetcounts++;
+                }
+            }
+            for(auto temp : AZvec){
+                if(temp->y()==fields[3].toInt()){
+                    Targetcounts++;
+                }
+            }
+        }
+        if(fields[1][fields[1].size() - 1] == 'Z') {
+            for(auto temp : PSPvec){
+                if(temp->y()==fields[3].toInt()){
+                    temp->target++;
+                }
+            }
+            for(auto temp : BPvec){
+                if(temp->y()==fields[3].toInt()){
+                    temp->target++;
+                }
+            }
+            for(auto temp : TPSPvec){
+                if(temp->y()==fields[3].toInt()){
+                    temp->target++;
+                }
+            }
+        }
+
         if (fields[1] == "PSP"){
             PeaShooter* ps = new PeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
-            PSS.push_back(ps);
+            PSPvec.push_back(ps);
+            ps->target += Targetcounts;
+            connect(ps, &PeaShooter::createPea, this, &MainWindow::onCreateBullets);
         }
         if (fields[1] == "TPSP"){
-            TwoPeaShooter* ps = new TwoPeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
+            TwoPeaShooter* tps = new TwoPeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
+            TPSPvec.push_back(tps);
+            tps->target += Targetcounts;
+            connect(tps, &TwoPeaShooter::createPea, this, &MainWindow::onCreateBullets);
         }
         if (fields[1] == "WP"){
-            Walnut* ps = new Walnut(fields[2].toInt(),fields[3].toInt(), currentMap);
+            Walnut* w = new Walnut(fields[2].toInt(),fields[3].toInt(), currentMap);
+            WPvec.push_back(w);
         }
         if (fields[1] == "PMP"){
             PlumMine* ps = new PlumMine(fields[2].toInt(),fields[3].toInt(), currentMap);
+            PMPvec.push_back(ps);
         }
         if (fields[1] == "JP"){
-            Jalapeno* ps = new Jalapeno(fields[2].toInt(),fields[3].toInt(), currentMap);
+            Jalapeno* j = new Jalapeno(fields[2].toInt(),fields[3].toInt(), currentMap);
+            JPvec.push_back(j);
         }
         if (fields[1] == "BP"){
-            Boomerang* ps = new Boomerang(fields[2].toInt(),fields[3].toInt(), currentMap);
+            Boomerang* bm = new Boomerang(fields[2].toInt(),fields[3].toInt(), currentMap);
+            BPvec.push_back(bm);
+            bm->target += Targetcounts;
+            connect(bm, &Boomerang::createBullet, this, &MainWindow::onCreateBullets);
         }
         if (fields[1] == "RZ"){
-            RegularZombie* ps = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-            for (auto temp : PSS) {
-                if (ps->y() == temp->y()) {
-                    Pea *p = new Pea(temp->x(), temp->y(), 100, currentMap);
-                }
-            }
-         }
+            RegularZombie* rz = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            RZvec.push_back(rz);
+        }
         if (fields[1] == "BHZ"){
-            BucketHeadZombie* ps = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            BucketHeadZombie* bhz = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            BHZvec.push_back(bhz);
         }
         if (fields[1] == "LHZ"){
-            LeafHeadZombie* ps = new LeafHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            LeafHeadZombie* lhz = new LeafHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            LHZvec.push_back(lhz);
         }
         if (fields[1] == "TZ"){
-            TallZombie* ps = new TallZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            TallZombie* tz = new TallZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            TZvec.push_back(tz);
         }
         if (fields[1] == "AZ"){
-            AstronautZombie* ps = new AstronautZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            AstronautZombie* az = new AstronautZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            AZvec.push_back(az);
         }
         if (fields[1] == "PHZ"){
-            PurpleHairZombie* ps = new PurpleHairZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            PurpleHairZombie* phz = new PurpleHairZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+            PHZvec.push_back(phz);
         }
 
     }
@@ -844,9 +908,13 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             else {
                 validate = false;
             }
-
+            for (auto temp : fullLocations) {
+                if (temp.first == x && temp.second == y)
+                    validate = false;
+            }
             draging_Label->setGeometry(740, 10, 100, 100);
             if (validate) {
+                fullLocations.push_back(make_pair(x,y));
                 QString output = "card,";
                 if (selection == 1){
                     output += "PSP,";
@@ -1010,6 +1078,12 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 void MainWindow::Drag_Lable(){
     QPoint pos = QCursor::pos();
     draging_Label->setGeometry(pos.x()-60,pos.y()-60,draging_Label->width(),draging_Label->height());
+}
+
+void MainWindow::onCreateBullets(int x, int y)
+{
+    Pea *bullet = new Pea(x, y, 100,currentMap);
+    Peavec.push_back(bullet);
 }
 
 

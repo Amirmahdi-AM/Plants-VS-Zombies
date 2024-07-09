@@ -12,8 +12,7 @@ class Plants : public QLabel
 {
     Q_OBJECT
 
-private slots:
-    //void shoot();
+
 protected:
     QTimer *shootTimer;
     int HP;
