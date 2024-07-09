@@ -45,6 +45,7 @@ public slots:
 
     void Loading_rotation();
     void waiting_rotation();
+    void decreasePlantsTargets(int _y);
 
 private slots:
     void on_SignUp_clicked();
@@ -95,6 +96,7 @@ private slots:
 
     void onCreateBullets(int x, int y);
 
+    void onCheckcollision();
 
 signals:
     void brainClicked();
@@ -123,6 +125,8 @@ private:
     QTimer* Brainfade;
 
     QTimer* Labeldrag_drop;
+
+    QTimer* checkCollision;
 
     QLabel* draging_Label;
 

@@ -96,6 +96,7 @@ void Server::onDisconnected(QTcpSocket *clientSocket)
 {
     clientSocket->deleteLater();
     clients.erase(std::find(clients.begin(), clients.end(), clientSocket));
+    players.erase(std::find(players.begin(), players.end(), clientSocket));
 }
 
 bool Server::signUp(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email) {

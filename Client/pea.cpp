@@ -2,16 +2,22 @@
 
 void Pea::onMove()
 {
-    setGeometry(x() + 2, y(), 60, 60);
+    setGeometry(x() + 2, y(), 30, 30);
 }
 
-Pea::Pea(int x, int y, int power, QWidget *parent) : QLabel(parent)
+Pea::Pea(int x, int y, int _power, QWidget *parent) : QLabel(parent)
 {
     picture.load(":/Images/Pea.png");
     setPixmap(picture);
-    setGeometry(x,y,60,60);
+    setGeometry(x+10,y-5,30,30);
+    power = _power+20;
     show();
     move = new QTimer();
     connect(move, &QTimer::timeout, this, &Pea::onMove);
     move->start(10);
+}
+
+int Pea::getPower()
+{
+    return power;
 }

@@ -13,8 +13,10 @@
 #include <QCursor>
 #include "person.h"
 #include <QDebug>
+#include <QtAlgorithms>
+#include <algorithm>
 
-
+using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -75,6 +77,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(brain_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_Item);
     Brainfade = new QTimer(this);
     connect(Brainfade,&QTimer::timeout,this,&MainWindow::Fade_Item);
+    checkCollision = new QTimer(this);
+    connect(checkCollision,&QTimer::timeout,this,&MainWindow::onCheckcollision);
+    checkCollision->start(10);
     ////////////////////////////////////////////////////////////////////////
     /// socket connection
     socket = new QTcpSocket(this);
@@ -222,6 +227,25 @@ void MainWindow::waiting_rotation(){
     QPixmap rotatedSunflower = Sunflower.transformed(transform);
     ui->SunFlow_2->setPixmap(rotatedSunflower);
     rotationAngle++;
+}
+
+void MainWindow::decreasePlantsTargets(int _y)
+{
+    for(auto temp : PSPvec){
+        if(temp->y()==_y){
+            temp->target--;
+        }
+    }
+    for(auto temp : BPvec){
+        if(temp->y()==_y){
+            temp->target--;
+        }
+    }
+    for(auto temp : TPSPvec){
+        if(temp->y()==_y){
+            temp->target--;
+        }
+    }
 }
 
 void MainWindow::sun_rotation(){
@@ -1082,8 +1106,161 @@ void MainWindow::Drag_Lable(){
 
 void MainWindow::onCreateBullets(int x, int y)
 {
-    Pea *bullet = new Pea(x, y, 100,currentMap);
+    Pea *bullet = new Pea(x, y, 50,currentMap);
     Peavec.push_back(bullet);
+}
+
+void MainWindow::onCheckcollision()
+{
+    for(auto PeaBullet:Peavec){
+        for(auto Z:RZvec){
+            if(PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:BHZvec){
+            if(PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    BHZvec.erase(std::find(BHZvec.begin(),BHZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:LHZvec){
+            if(PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    LHZvec.erase(std::find(LHZvec.begin(),LHZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:PHZvec){
+            if(PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    PHZvec.erase(std::find(PHZvec.begin(),PHZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:TZvec){
+            if(PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    TZvec.erase(std::find(TZvec.begin(),TZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:AZvec){
+            if(PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    AZvec.erase(std::find(AZvec.begin(),AZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+
+    }
+//    for(auto Boom:Peavec){
+//        for(auto Z:RZvec){
+//            if(PeaBullet->geometry().intersects(Z->geometry())){
+//                Z->decreaseHP(PeaBullet->getPower());
+//                if(Z->getHp()<=0){
+//                    decreasePlantsTargets(Z->y());
+//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+//                    delete Z;
+//                }
+//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+//                delete PeaBullet;
+//            }
+//        }
+//        for(auto Z:BHZvec){
+//            if(PeaBullet->geometry().intersects(Z->geometry())){
+//                Z->decreaseHP(PeaBullet->getPower());
+//                if(Z->getHp()<=0){
+//                    decreasePlantsTargets(Z->y());
+//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+//                    delete Z;
+//                }
+//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+//                delete PeaBullet;
+//            }
+//        }
+//        for(auto Z:LHZvec){
+//            if(PeaBullet->geometry().intersects(Z->geometry())){
+//                Z->decreaseHP(PeaBullet->getPower());
+//                if(Z->getHp()<=0){
+//                    decreasePlantsTargets(Z->y());
+//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+//                    delete Z;
+//                }
+//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+//                delete PeaBullet;
+//            }
+//        }
+//        for(auto Z:PHZvec){
+//            if(PeaBullet->geometry().intersects(Z->geometry())){
+//                Z->decreaseHP(PeaBullet->getPower());
+//                if(Z->getHp()<=0){
+//                    decreasePlantsTargets(Z->y());
+//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+//                    delete Z;
+//                }
+//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+//                delete PeaBullet;
+//            }
+//        }
+//        for(auto Z:TZvec){
+//            if(PeaBullet->geometry().intersects(Z->geometry())){
+//                Z->decreaseHP(PeaBullet->getPower());
+//                if(Z->getHp()<=0){
+//                    decreasePlantsTargets(Z->y());
+//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+//                    delete Z;
+//                }
+//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+//                delete PeaBullet;
+//            }
+//        }
+//        for(auto Z:AZvec){
+//            if(PeaBullet->geometry().intersects(Z->geometry())){
+//                Z->decreaseHP(PeaBullet->getPower());
+//                if(Z->getHp()<=0){
+//                    decreasePlantsTargets(Z->y());
+//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+//                    delete Z;
+//                }
+//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+//                delete PeaBullet;
+//            }
+//        }
+//    }
 }
 
 

@@ -14,18 +14,20 @@ protected:
     int moveMentDelay;
     int attackPower;
     int TBA;
-    Plants *target;
+
     QTimer *attackTimer;
     QTimer *moveTimer;
     QPixmap picture;
 
-
+public:
+    Plants *target;
+    int getHp();
 protected slots:
     virtual void move() = 0;
 
 public:
     Zombies(QWidget *parent = nullptr);
-    //virtual void decreaseHP(int power);
+    void decreaseHP(int power);
 };
 
 #endif // ZOMBIES_H

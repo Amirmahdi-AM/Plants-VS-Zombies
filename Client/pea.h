@@ -15,7 +15,8 @@ private slots:
     void onMove();
 
 public:
-    Pea(int x, int y, int power, QWidget *parent = nullptr);
+    Pea(int x, int y, int _power, QWidget *parent = nullptr);
+    int getPower();
 };
 
 #endif // PEA_H
