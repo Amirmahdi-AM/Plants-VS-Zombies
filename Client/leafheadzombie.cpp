@@ -12,6 +12,7 @@ LeafHeadZombie::LeafHeadZombie(int x, int y, QWidget *parent) : Zombies(parent)
     setPixmap(picture);
     setGeometry(x, y, 100, 100);
     show();
+    this->target=NULL;
     attackTimer = new QTimer(this);
     connect(attackTimer, &QTimer::timeout, this, &LeafHeadZombie::onAttack);
 }

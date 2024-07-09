@@ -12,6 +12,7 @@ BucketHeadZombie::BucketHeadZombie(int x, int y, QWidget *parent)  : Zombies(par
     setPixmap(picture);
     setGeometry(x, y, 100, 100);
     show();
+    this->target=NULL;
     attackTimer = new QTimer(this);
     connect(attackTimer, &QTimer::timeout, this, &BucketHeadZombie::onAttack);
 }

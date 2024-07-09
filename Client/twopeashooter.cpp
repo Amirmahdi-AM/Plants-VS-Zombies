@@ -11,6 +11,7 @@ TwoPeaShooter::TwoPeaShooter(int x, int y, QWidget *parent) : Plants(parent) {
     connect(checkTarget, &QTimer::timeout, this, &TwoPeaShooter::onCheckedTargets);
     connect(shooting, &QTimer::timeout, this, &TwoPeaShooter::Fire);
     firingRate = 1000;
+    HP = 200;
 }
 
 void TwoPeaShooter::Fire()

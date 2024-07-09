@@ -11,6 +11,7 @@ Boomerang::Boomerang(int x, int y, QWidget *parent) : Plants(parent) {
     connect(checkTarget, &QTimer::timeout, this, &Boomerang::onCheckedTargets);
     connect(shooting, &QTimer::timeout, this, &Boomerang::Fire);
     firingRate = 1000;
+    HP = 200;
 }
 void Boomerang::Fire()
 {

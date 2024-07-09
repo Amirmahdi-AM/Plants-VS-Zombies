@@ -5,4 +5,5 @@ Walnut::Walnut(int x, int y, QWidget *parent) : Plants(parent) {
     setPixmap(picture);
     setGeometry(x, y, 100, 100);
     show();
+    HP = 400;
 }

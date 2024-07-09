@@ -14,6 +14,7 @@ AstronautZombie::AstronautZombie(int x, int y, QWidget *parent) : Zombies(parent
     setGeometry(x, y, 100, 100);
     show();
     attackTimer = new QTimer(this);
+    this->target=NULL;
     connect(attackTimer, &QTimer::timeout, this, &AstronautZombie::onAttack);
 }
 void AstronautZombie::move(){
