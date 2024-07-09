@@ -11,7 +11,7 @@ class Pea : public QLabel
     int power;
     QPixmap picture;
 
-private slots:
+protected slots:
     void onMove();
 
 public:

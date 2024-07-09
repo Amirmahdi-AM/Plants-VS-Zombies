@@ -2,7 +2,7 @@
 #define PLUMMINE_H
 #include "plants.h"]
 
-class PlumMine : Plants
+class PlumMine : public Plants
 {
     Q_OBJECT
 public:

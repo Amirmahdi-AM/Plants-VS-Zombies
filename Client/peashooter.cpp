@@ -28,4 +28,5 @@ PeaShooter::PeaShooter(int x, int y, QWidget *parent) :Plants(parent) {
     connect(checkTarget, &QTimer::timeout, this, &PeaShooter::onCheckedTargets);
     connect(shooting, &QTimer::timeout, this, &PeaShooter::Fire);
     firingRate = 1000;
+    HP = 200;
 }

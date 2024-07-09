@@ -18,6 +18,7 @@ protected:
     QTimer *attackTimer;
     QTimer *moveTimer;
     QPixmap picture;
+
     double moveX = 5.3;
 
 
@@ -26,6 +27,7 @@ public:
     int getHp();
 protected slots:
     virtual void move() = 0;
+    void onAttack();
 
 public:
     Zombies(QWidget *parent = nullptr);

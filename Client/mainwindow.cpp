@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(Brainfade,&QTimer::timeout,this,&MainWindow::Fade_Item);
     checkCollision = new QTimer(this);
     connect(checkCollision,&QTimer::timeout,this,&MainWindow::onCheckcollision);
-    checkCollision->start(10);
+    checkCollision->start(100);
     ////////////////////////////////////////////////////////////////////////
     /// socket connection
     socket = new QTcpSocket(this);
@@ -460,18 +460,19 @@ void MainWindow::onReadyRead()
         Zombies_set();
     }
     if (fields[0] == "113"){
-        Player.set_name(fields[1]);
+        /*Player.set_name(fields[1]);
         Player.set_username(fields[3]);
         Player.set_password(fields[2]);
         Player.set_phoneNumber(fields[4]);
         Player.set_email(fields[5]);
         Player.winRound = 0;
         Player.Point = 20000;
-        ui->GameControl->setCurrentIndex(6);
+        ui->GameControl->setCurrentIndex(6);*/
         ////////////////////////////////////////
-//        ui->GameControl->setCurrentIndex(9);
-//        P_or_Z = -1;
-//        Zombies_set();
+        ui->GameControl->setCurrentIndex(9);
+        P_or_Z = -1;
+        Zombies_set();
+        currentMap = ui->Zombies_map;
         ////////////////////////////////////////////
         //ui->GameControl->setCurrentIndex(7);
         //P_or_Z = 1;
@@ -1112,9 +1113,16 @@ void MainWindow::onCreateBullets(int x, int y)
 
 void MainWindow::onCheckcollision()
 {
+    for(auto p : Peavec) {
+        if (p->x() > 1500) {
+            Peavec.erase(std::find(Peavec.begin(),Peavec.end(), p));
+            delete p;
+        }
+    }
+
     for(auto PeaBullet:Peavec){
         for(auto Z:RZvec){
-            if(PeaBullet->geometry().intersects(Z->geometry())){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
                 Z->decreaseHP(PeaBullet->getPower());
                 if(Z->getHp()<=0){
                     decreasePlantsTargets(Z->y());
@@ -1126,7 +1134,7 @@ void MainWindow::onCheckcollision()
             }
         }
         for(auto Z:BHZvec){
-            if(PeaBullet->geometry().intersects(Z->geometry())){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
                 Z->decreaseHP(PeaBullet->getPower());
                 if(Z->getHp()<=0){
                     decreasePlantsTargets(Z->y());
@@ -1138,7 +1146,7 @@ void MainWindow::onCheckcollision()
             }
         }
         for(auto Z:LHZvec){
-            if(PeaBullet->geometry().intersects(Z->geometry())){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
                 Z->decreaseHP(PeaBullet->getPower());
                 if(Z->getHp()<=0){
                     decreasePlantsTargets(Z->y());
@@ -1150,7 +1158,7 @@ void MainWindow::onCheckcollision()
             }
         }
         for(auto Z:PHZvec){
-            if(PeaBullet->geometry().intersects(Z->geometry())){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
                 Z->decreaseHP(PeaBullet->getPower());
                 if(Z->getHp()<=0){
                     decreasePlantsTargets(Z->y());
@@ -1162,7 +1170,7 @@ void MainWindow::onCheckcollision()
             }
         }
         for(auto Z:TZvec){
-            if(PeaBullet->geometry().intersects(Z->geometry())){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
                 Z->decreaseHP(PeaBullet->getPower());
                 if(Z->getHp()<=0){
                     decreasePlantsTargets(Z->y());
@@ -1174,7 +1182,7 @@ void MainWindow::onCheckcollision()
             }
         }
         for(auto Z:AZvec){
-            if(PeaBullet->geometry().intersects(Z->geometry())){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
                 Z->decreaseHP(PeaBullet->getPower());
                 if(Z->getHp()<=0){
                     decreasePlantsTargets(Z->y());
@@ -1185,17 +1193,290 @@ void MainWindow::onCheckcollision()
                 delete PeaBullet;
             }
         }
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        for(auto p : PSPvec){
+
+    /*for(auto p : PSPvec){
             for (auto z : RZvec) {
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
+                    if (p->getHP() <= 0) {
+                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : BHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : LHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : PHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : AZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : TZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+        }
+        for(auto p : TPSPvec){
+            for (auto z : RZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : BHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : LHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : PHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : AZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : TZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+        }
+        for(auto p : WPvec){
+            for (auto z : RZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : BHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : LHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : PHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : AZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : TZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
                 }
             }
         }
 
-    }
+        for(auto p : BPvec){
+            for (auto z : RZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : BHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : LHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : PHZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : AZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+            for (auto z : TZvec) {
+                if (p->geometry().intersects(z->geometry())) {
+                    z->offMovement();
+                    z->target = p;
+                    if (p->getHP() <= 0) {
+                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
+                        delete p;
+                        z->onMovemevt();
+                    }
+                }
+            }
+        }*/
+
+
+
+
+
+
+
+
 //    for(auto Boom:Peavec){
 //        for(auto Z:RZvec){
 //            if(PeaBullet->geometry().intersects(Z->geometry())){

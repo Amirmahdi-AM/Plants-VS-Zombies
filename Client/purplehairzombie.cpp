@@ -12,6 +12,8 @@ PurpleHairZombie::PurpleHairZombie(int x, int y, QWidget *parent) : Zombies(pare
     setPixmap(picture);
     setGeometry(x, y, 100, 100);
     show();
+    attackTimer = new QTimer(this);
+    connect(attackTimer, &QTimer::timeout, this, &PurpleHairZombie::onAttack);
 }
 void PurpleHairZombie::move(){
     setGeometry(this->x()-moveX, this->y(), 100, 100);

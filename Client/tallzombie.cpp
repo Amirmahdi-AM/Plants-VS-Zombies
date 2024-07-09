@@ -12,6 +12,8 @@ TallZombie::TallZombie(int x, int y, QWidget *parent) : Zombies(parent)
     setPixmap(picture);
     setGeometry(x, y, 100, 200);
     show();
+    attackTimer = new QTimer(this);
+    connect(attackTimer, &QTimer::timeout, this, &TallZombie::onAttack);
 }
 void TallZombie::move(){
     setGeometry(this->x()-moveX, this->y(), 100, 200);

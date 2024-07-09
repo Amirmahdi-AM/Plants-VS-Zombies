@@ -23,7 +23,8 @@ protected:
     QPixmap picture;
 public:
     Plants(QWidget *parent = nullptr);
-    //virtual void decreaseHP(int power);
+    void decreaseHP(int power);
+    int getHP();
 };
 
 #endif // PLANTS_H

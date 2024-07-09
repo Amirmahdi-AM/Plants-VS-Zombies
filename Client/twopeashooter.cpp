@@ -16,7 +16,7 @@ TwoPeaShooter::TwoPeaShooter(int x, int y, QWidget *parent) : Plants(parent) {
 void TwoPeaShooter::Fire()
 {
     emit createPea(x() + 50, y() + 18);
-    emit createPea(x() + 60, y() + 18);
+    emit createPea(x() + 70, y() + 18);
 }
 
 void TwoPeaShooter::onCheckedTargets()
