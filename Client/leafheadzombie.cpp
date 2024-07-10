@@ -15,6 +15,7 @@ LeafHeadZombie::LeafHeadZombie(int x, int y, QWidget *parent) : Zombies(parent)
     this->target=NULL;
     attackTimer = new QTimer(this);
     connect(attackTimer, &QTimer::timeout, this, &LeafHeadZombie::onAttack);
+    TBA = 1000;
 }
 void LeafHeadZombie::move(){
     setGeometry(this->x()-moveX, this->y(), 100, 100);

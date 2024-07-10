@@ -15,6 +15,7 @@ RegularZombie::RegularZombie(int x, int y, QWidget *parent) : Zombies(parent)
     this->target=NULL;
     attackTimer = new QTimer(this);
     connect(attackTimer, &QTimer::timeout, this, &RegularZombie::onAttack);
+    TBA = 1000;
 }
 void RegularZombie::move(){
     setGeometry(this->x()-moveX, this->y(), 100, 100);

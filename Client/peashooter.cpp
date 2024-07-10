@@ -2,7 +2,7 @@
 
 void PeaShooter::Fire()
 {
-    emit createPea(x() + 50, y() + 18);
+    emit createPea(x() + 50, y() + 18, attackPowe);
 }
 
 void PeaShooter::onCheckedTargets()
@@ -29,4 +29,5 @@ PeaShooter::PeaShooter(int x, int y, QWidget *parent) :Plants(parent) {
     connect(shooting, &QTimer::timeout, this, &PeaShooter::Fire);
     firingRate = 1000;
     HP = 200;
+    attackPowe = 15;
 }

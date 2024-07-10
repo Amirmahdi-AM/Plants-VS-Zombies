@@ -15,6 +15,7 @@ BucketHeadZombie::BucketHeadZombie(int x, int y, QWidget *parent)  : Zombies(par
     this->target=NULL;
     attackTimer = new QTimer(this);
     connect(attackTimer, &QTimer::timeout, this, &BucketHeadZombie::onAttack);
+    TBA = 1000;
 }
 void BucketHeadZombie::move(){
     setGeometry(this->x()-moveX, this->y(), 100, 100);

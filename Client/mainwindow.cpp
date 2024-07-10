@@ -589,26 +589,32 @@ void MainWindow::onReadyRead()
         if (fields[1] == "RZ"){
             RegularZombie* rz = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
             RZvec.push_back(rz);
+            connect(rz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
         }
         if (fields[1] == "BHZ"){
             BucketHeadZombie* bhz = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
             BHZvec.push_back(bhz);
+            connect(bhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
         }
         if (fields[1] == "LHZ"){
             LeafHeadZombie* lhz = new LeafHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
             LHZvec.push_back(lhz);
+            connect(lhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
         }
         if (fields[1] == "TZ"){
             TallZombie* tz = new TallZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
             TZvec.push_back(tz);
+            connect(tz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
         }
         if (fields[1] == "AZ"){
             AstronautZombie* az = new AstronautZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
             AZvec.push_back(az);
+            connect(az, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
         }
         if (fields[1] == "PHZ"){
             PurpleHairZombie* phz = new PurpleHairZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
             PHZvec.push_back(phz);
+            connect(phz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
         }
 
     }
@@ -1105,9 +1111,9 @@ void MainWindow::Drag_Lable(){
     draging_Label->setGeometry(pos.x()-60,pos.y()-60,draging_Label->width(),draging_Label->height());
 }
 
-void MainWindow::onCreateBullets(int x, int y)
+void MainWindow::onCreateBullets(int x, int y, int _power)
 {
-    Pea *bullet = new Pea(x, y, 50,currentMap);
+    Pea *bullet = new Pea(x, y, _power,currentMap);
     Peavec.push_back(bullet);
 }
 
@@ -1198,18 +1204,12 @@ void MainWindow::onCheckcollision()
 
     for(auto p : PSPvec){
             for (auto z : RZvec) {
-                if(z->target!=NULL){
+                if(z->target!= NULL){
                     continue;
                 }
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : BHZvec) {
@@ -1219,12 +1219,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : LHZvec) {
@@ -1234,12 +1228,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : PHZvec) {
@@ -1249,12 +1237,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : AZvec) {
@@ -1264,12 +1246,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : TZvec) {
@@ -1279,12 +1255,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        PSPvec.erase(std::find(PSPvec.begin(),PSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
         }
@@ -1296,12 +1266,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : BHZvec) {
@@ -1311,12 +1275,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : LHZvec) {
@@ -1326,12 +1284,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : PHZvec) {
@@ -1341,12 +1293,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : AZvec) {
@@ -1356,12 +1302,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : TZvec) {
@@ -1371,12 +1311,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        TPSPvec.erase(std::find(TPSPvec.begin(),TPSPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
         }
@@ -1388,12 +1322,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : BHZvec) {
@@ -1403,12 +1331,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : LHZvec) {
@@ -1418,12 +1340,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : PHZvec) {
@@ -1433,13 +1349,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : AZvec) {
@@ -1449,27 +1358,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
-                }
-            }
-            for (auto z : TZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                    if (p->getHP() <= 0) {
-                        WPvec.erase(std::find(WPvec.begin(),WPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
         }
@@ -1482,12 +1370,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : BHZvec) {
@@ -1497,12 +1379,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : LHZvec) {
@@ -1512,12 +1388,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : PHZvec) {
@@ -1527,12 +1397,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : AZvec) {
@@ -1542,12 +1406,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
             for (auto z : TZvec) {
@@ -1557,12 +1415,6 @@ void MainWindow::onCheckcollision()
                 if (p->geometry().intersects(z->geometry())) {
                     z->offMovement();
                     z->target = p;
-                    if (p->getHP() <= 0) {
-                        BPvec.erase(std::find(BPvec.begin(),BPvec.end(),p));
-                        delete p;
-                        z->onMovemevt();
-                        z->target=NULL;
-                    }
                 }
             }
         }
@@ -1648,6 +1500,14 @@ void MainWindow::onCheckcollision()
 //            }
 //        }
 //    }
+}
+
+void MainWindow::onCleanLocation(int x, int y)
+{
+    auto it = std::find(fullLocations.begin(), fullLocations.end(), make_pair(x,y));
+    if (it != fullLocations.end()) {
+        fullLocations.erase(it);
+    }
 }
 
 

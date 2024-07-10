@@ -12,10 +12,11 @@ Boomerang::Boomerang(int x, int y, QWidget *parent) : Plants(parent) {
     connect(shooting, &QTimer::timeout, this, &Boomerang::Fire);
     firingRate = 1000;
     HP = 200;
+    attackPowe = 30;
 }
 void Boomerang::Fire()
 {
-    emit createBullet(x() + 50, y() + 18);
+    emit createBullet(x() + 50, y() + 18, attackPowe);
 }
 
 void Boomerang::onCheckedTargets()

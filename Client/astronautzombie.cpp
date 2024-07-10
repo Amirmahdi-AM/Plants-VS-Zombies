@@ -7,7 +7,7 @@ AstronautZombie::AstronautZombie(int x, int y, QWidget *parent) : Zombies(parent
     connect(moveTimer,&QTimer::timeout,this,&AstronautZombie::move);
     attackPower = 20;
     HP = 500;
-    moveMentDelay = 50;
+    moveMentDelay = 1000;
     moveTimer->start(moveMentDelay);
     picture.load(":/Images/Austronut_Z.png");
     setPixmap(picture);
@@ -16,6 +16,7 @@ AstronautZombie::AstronautZombie(int x, int y, QWidget *parent) : Zombies(parent
     attackTimer = new QTimer(this);
     this->target=NULL;
     connect(attackTimer, &QTimer::timeout, this, &AstronautZombie::onAttack);
+    TBA = 1000;
 }
 void AstronautZombie::move(){
     setGeometry(this->x()-moveX, this->y(), 100, 100);

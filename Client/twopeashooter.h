@@ -7,7 +7,7 @@ class TwoPeaShooter : public Plants
     Q_OBJECT
 
 signals:
-    void createPea(int x, int y);
+    void createPea(int x, int y, int power);
 private slots:
     void Fire();
     void onCheckedTargets();

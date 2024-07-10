@@ -94,9 +94,11 @@ private slots:
 
     void Drag_Lable();
 
-    void onCreateBullets(int x, int y);
+    void onCreateBullets(int x, int y, int power);
 
     void onCheckcollision();
+
+    void onCleanLocation(int x, int y);
 
 signals:
     void brainClicked();

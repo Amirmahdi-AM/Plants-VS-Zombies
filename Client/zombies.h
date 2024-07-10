@@ -19,7 +19,10 @@ protected:
     QTimer *moveTimer;
     QPixmap picture;
 
-    double moveX = 5.3;
+    double moveX = 5;
+
+signals:
+    void cleanLocation(int x, int y);
 
 
 public:

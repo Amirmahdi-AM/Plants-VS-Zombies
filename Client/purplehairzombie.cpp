@@ -6,7 +6,7 @@ PurpleHairZombie::PurpleHairZombie(int x, int y, QWidget *parent) : Zombies(pare
     connect(moveTimer,&QTimer::timeout,this,&PurpleHairZombie::move);
     attackPower = 75;
     HP = 4000;
-    moveMentDelay = 50;
+    moveMentDelay = 100;
     moveTimer->start(moveMentDelay);
     picture.load(":/Images/PurpleHead_Z.png");
     setPixmap(picture);
@@ -15,6 +15,7 @@ PurpleHairZombie::PurpleHairZombie(int x, int y, QWidget *parent) : Zombies(pare
     this->target=NULL;
     attackTimer = new QTimer(this);
     connect(attackTimer, &QTimer::timeout, this, &PurpleHairZombie::onAttack);
+    TBA = 500;
 }
 void PurpleHairZombie::move(){
     setGeometry(this->x()-moveX, this->y(), 100, 100);
