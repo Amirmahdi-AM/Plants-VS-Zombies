@@ -15,7 +15,16 @@
 #include <QDebug>
 #include <QtAlgorithms>
 #include <algorithm>
-
+#include "peashooter.h"
+#include "twopeashooter.h"
+#include "walnut.h"
+#include "boomerang.h"
+#include "regularzombie.h"
+#include "bucketheadzombie.h"
+#include "leafheadzombie.h"
+#include "tallzombie.h"
+#include "astronautzombie.h"
+#include "purplehairzombie.h"
 using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -98,6 +107,26 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::BOOM(int _x, int _y,QString type)
+{
+    if(type=="Mine"){
+        for(auto z: zombies){
+            if(z->y()>=_y-220&&z->y()<=_y+330&&z->x()>=_x-214&&z->x()<=_x+321){
+                z->decreaseHP(500);
+                z->setGeometry(z->x()-100,z->y(),100,100);
+            }
+        }
+    }
+    if(type=="Jalopino"){
+        for(auto z: zombies){
+            if(z->y()==_y){
+                z->decreaseHP(300);
+                z->setGeometry(z->x()-100,z->y(),100,100);
+            }
+        }
+    }
 }
 
 void MainWindow::on_SignUp_clicked()
@@ -235,20 +264,20 @@ void MainWindow::waiting_rotation(){
 void MainWindow::decreasePlantsTargets(int _y)
 {
     for(auto temp : PSPvec){
-        if(temp->y()==_y){
-            temp->target--;
+        PeaShooter* PSP= dynamic_cast< PeaShooter*> (temp);
+        TwoPeaShooter* TPSP= dynamic_cast< TwoPeaShooter*> (temp);
+        Boomerang* BP= dynamic_cast< Boomerang*> (temp);
+        if(PSP){
+            PSP->target++;
+        }
+        if(TPSP){
+            TPSP->target++;
+        }
+        if(BP){
+            BP->target++;
         }
     }
-    for(auto temp : BPvec){
-        if(temp->y()==_y){
-            temp->target--;
-        }
-    }
-    for(auto temp : TPSPvec){
-        if(temp->y()==_y){
-            temp->target--;
-        }
-    }
+
 }
 
 void MainWindow::sun_rotation(){
@@ -538,12 +567,12 @@ void MainWindow::onReadyRead()
                 plants.push_back(w);
             }
             if (fields[1] == "PMP"){
-    //            PlumMine* ps = new PlumMine(fields[2].toInt(),fields[3].toInt(), currentMap);
-    //            PMPvec.push_back(ps);
+
+                BOOM(fields[2].toInt(),fields[3].toInt(),"Mine");
             }
             if (fields[1] == "JP"){
-    //            Jalapeno* j = new Jalapeno(fields[2].toInt(),fields[3].toInt(), currentMap);
-    //            JPvec.push_back(j);
+
+                BOOM(fields[2].toInt(),fields[3].toInt(),"Jalopino");
             }
             if (fields[1] == "BP"){
                 Boomerang* bm = new Boomerang(fields[2].toInt(),fields[3].toInt(), currentMap);
@@ -601,37 +630,38 @@ void MainWindow::onReadyRead()
                         BP->target++;
                     }
                 }
-                if (fields[1] == "RZ"){
-                    RegularZombie* rz = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-                    zombies.push_back(rz);
-                    connect(rz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-                }
-                if (fields[1] == "BHZ"){
-                    BucketHeadZombie* bhz = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-                    zombies.push_back(bhz);
-                    connect(bhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-                }
-                if (fields[1] == "LHZ"){
-                    LeafHeadZombie* lhz = new LeafHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-                    zombies.push_back(lhz);
-                    connect(lhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-                }
-                if (fields[1] == "TZ"){
-                    TallZombie* tz = new TallZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-                    zombies.push_back(tz);
-                    connect(tz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-                }
-                if (fields[1] == "AZ"){
-                    AstronautZombie* az = new AstronautZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-                    zombies.push_back(az);
-                    connect(az, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-                }
-                if (fields[1] == "PHZ"){
-                    PurpleHairZombie* phz = new PurpleHairZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-                    zombies.push_back(phz);
-                    connect(phz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-                }
 
+
+            }
+            if (fields[1] == "RZ"){
+                RegularZombie* rz = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                zombies.push_back(rz);
+                connect(rz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+            }
+            if (fields[1] == "BHZ"){
+                BucketHeadZombie* bhz = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                zombies.push_back(bhz);
+                connect(bhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+            }
+            if (fields[1] == "LHZ"){
+                LeafHeadZombie* lhz = new LeafHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                zombies.push_back(lhz);
+                connect(lhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+            }
+            if (fields[1] == "TZ"){
+                TallZombie* tz = new TallZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                zombies.push_back(tz);
+                connect(tz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+            }
+            if (fields[1] == "AZ"){
+                AstronautZombie* az = new AstronautZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                zombies.push_back(az);
+                connect(az, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+            }
+            if (fields[1] == "PHZ"){
+                PurpleHairZombie* phz = new PurpleHairZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                zombies.push_back(phz);
+                connect(phz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
             }
             /*
 //            for(auto temp : PSPvec){
@@ -965,13 +995,13 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             if (y >= 135 && y < 225)
                 y = 120;
             else if (y >= 225 && y < 325)
-                y = 220;
+                y = 230;
             else if (y >= 325 && y < 425)
-                y = 320;
+                y = 330;
             else if (y >= 425 && y < 525)
-                y = 420;
+                y = 430;
             else if (y >= 525 && y < 625)
-                y = 520;
+                y = 530;
             else if (y >= 625 && y < 725)
                 y = 640;
             else {
@@ -983,7 +1013,9 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             }
             draging_Label->setGeometry(740, 10, 100, 100);
             if (validate) {
-                fullLocations.push_back(make_pair(x,y));
+                if(selection!=5&&selection!=5){
+                 fullLocations.push_back(make_pair(x,y));
+                }
                 QString output = "card,";
                 if (selection == 1){
                     output += "PSP,";
@@ -1063,17 +1095,17 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
                 validate = false;
             }
             if (y >= 135 && y < 225)
-                y = 135;
+                y = 120;
             else if (y >= 225 && y < 325)
-                y = 225;
+                y = 230;
             else if (y >= 325 && y < 425)
-                y = 325;
+                y = 330;
             else if (y >= 425 && y < 525)
-                y = 425;
+                y = 430;
             else if (y >= 525 && y < 625)
-                y = 525;
+                y = 530;
             else if (y >= 625 && y < 725)
-                y = 625;
+                y = 640;
             else {
                 validate = false;
             }
@@ -1165,7 +1197,7 @@ void MainWindow::onCheckcollision()
            Walnut* W = dynamic_cast<Walnut*>(p);
            TallZombie* tz = dynamic_cast<TallZombie*>(z);
            if (W && tz) {
-               tz->setGeometry(W->x() + 100, tz->y(), 100, 100);
+               tz->setGeometry(W->x() - 100, tz->y(), 100, 100);
            }
            else if (p->geometry().intersects(z->geometry())) {
                z->offMovement();

@@ -8,18 +8,8 @@
 #include "person.h"
 #include "QLabel"
 #include "pea.h"
-#include "peashooter.h"
-#include "twopeashooter.h"
-#include "walnut.h"
-#include "plummine.h"
-#include "jalapeno.h"
-#include "boomerang.h"
-#include "regularzombie.h"
-#include "bucketheadzombie.h"
-#include "leafheadzombie.h"
-#include "tallzombie.h"
-#include "astronautzombie.h"
-#include "purplehairzombie.h"
+#include "plants.h"
+#include "zombies.h"
 #include "boomerangpea.h"
 #include <mutex>
 #include <shared_mutex>
@@ -43,6 +33,7 @@ public:
     void Plants_set();
     void Zombies_set();
     ~MainWindow();
+    void BOOM(int _x, int _y,QString type);
 
 public slots:
 
@@ -161,18 +152,6 @@ private:
     QVector<Plants*> plants;
     QVector<Zombies*> zombies;
 
-    QVector<RegularZombie*> RZvec;
-    QVector<BucketHeadZombie*> BHZvec;
-    QVector<LeafHeadZombie*> LHZvec;
-    QVector<PurpleHairZombie*> PHZvec;
-    QVector<TallZombie*> TZvec;
-    QVector<AstronautZombie*> AZvec;
-    QVector<PeaShooter*> PSPvec;
-    QVector<Boomerang*> BPvec;
-    QVector<TwoPeaShooter*> TPSPvec;
-    QVector<Walnut*> WPvec;
-    QVector<PlumMine*> PMPvec;
-    QVector<Jalapeno*> JPvec;
 
     QVector<Pea*> Peavec;
     QVector<BoomerangPea*> BPeavec;
