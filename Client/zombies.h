@@ -34,7 +34,7 @@ protected slots:
 
 public:
     Zombies(QWidget *parent = nullptr);
-    void decreaseHP(int power);
+    virtual void decreaseHP(int power);
     void offMovement();
     void onMovemevt();
 };

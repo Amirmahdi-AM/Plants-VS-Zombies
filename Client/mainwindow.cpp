@@ -58,10 +58,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->server->setAutoFillBackground(true);
     connect(this,&MainWindow::brainClicked, this, &MainWindow::on_Spawned_Item_Lable_clicked);
     connect(this,&MainWindow::sunClicked, this, &MainWindow::on_Spawned_Item_Lable_clicked);
-//    ui->Spawned_brain->setContentsMargins(0, 0, 0, 0);
-//    ui->Spawned_brain->setStyleSheet("margin: 0px;");
-//    ui->Spawned_brain->setAutoFillBackground(true);
-//    ui->Spawned_brain->setAlignment(Qt::AlignCenter);
 
     /////////////////////////////////////////////////////////////////////////
     ///threads connection
@@ -153,19 +149,16 @@ void MainWindow::on_SignupCheck_clicked()
         return;
     }
     QString output="11,";
-    //output+=ui->lineEdit_3->text()+","+ui->lineEdit_4->text()+",";
     QRegularExpression phonenumRegex(R"(\b09\d{9}\b)");
     if (!phonenumRegex.match(ui->lineEdit_5->text()).hasMatch()) {
         QMessageBox::warning(this,"Error", "Invalid phonenumber format\n");
         return;
     }
-    //output+=ui->lineEdit_5->text()+",";
     QRegularExpression emailRegex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
     if (!emailRegex.match(ui->lineEdit_6->text()).hasMatch()) {
         QMessageBox::warning(this,"Error", "Invalid email format\n");
         return;
     }
-    //output+=ui->lineEdit_6->text()+",";
     if(ui->lineEdit_7->text().length()<8){
         QMessageBox::warning(this,"Error", "Password is weak!!\n");
         return;
@@ -174,7 +167,6 @@ void MainWindow::on_SignupCheck_clicked()
         QMessageBox::warning(this,"Error", "Password confirmation failed\n");
         return;
     }
-    //output+=ui->lineEdit_7->text()+"\n";
     output += ui->lineEdit_3->text() + ",";
     output += ui->lineEdit_4->text() + ",";
     output += ui->lineEdit_7->text() + ",";
@@ -263,18 +255,18 @@ void MainWindow::waiting_rotation(){
 
 void MainWindow::decreasePlantsTargets(int _y)
 {
-    for(auto temp : PSPvec){
+    for(auto temp : plants){
         PeaShooter* PSP= dynamic_cast< PeaShooter*> (temp);
         TwoPeaShooter* TPSP= dynamic_cast< TwoPeaShooter*> (temp);
         Boomerang* BP= dynamic_cast< Boomerang*> (temp);
         if(PSP){
-            PSP->target++;
+            PSP->target--;
         }
         if(TPSP){
-            TPSP->target++;
+            TPSP->target--;
         }
         if(BP){
-            BP->target++;
+            BP->target--;
         }
     }
 
@@ -580,40 +572,7 @@ void MainWindow::onReadyRead()
                 bm->target += Targetcounts;
                 connect(bm, &Boomerang::createBBullet, this, &MainWindow::onCreateBBullets);
             }
-            /*
-//            for(auto temp : RZvec){
-//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-//                    Targetcounts++;
-//                }
-//            }
-//            for(auto temp : BHZvec){
-//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-//                    Targetcounts++;
-//                }
-//            }
-//            for(auto temp : LHZvec){
-//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-//                    Targetcounts++;
-//                }
-//            }
-//            for(auto temp : PHZvec){
-//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-//                    Targetcounts++;
-//                }
-//            }
-//            for(auto temp : TZvec){
-//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-//                    Targetcounts++;
-//                }
-//            }
-//            for(auto temp : AZvec){
-//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-//                    Targetcounts++;
-//                }
-//            }
-*/
         }
-
         if(fields[1][fields[1].size() - 1] == 'Z') {
             for(auto temp : plants){
                 if(temp->y()==fields[3].toInt()){
@@ -630,8 +589,6 @@ void MainWindow::onReadyRead()
                         BP->target++;
                     }
                 }
-
-
             }
             if (fields[1] == "RZ"){
                 RegularZombie* rz = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
@@ -663,28 +620,7 @@ void MainWindow::onReadyRead()
                 zombies.push_back(phz);
                 connect(phz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
             }
-            /*
-//            for(auto temp : PSPvec){
-//                if(temp->y()==fields[3].toInt()){
-//                    temp->target++;
-//                }
-//            }
-//            for(auto temp : BPvec){
-//                if(temp->y()==fields[3].toInt()){
-//                    temp->target++;
-//                }
-//            }
-//            for(auto temp : TPSPvec){
-//                if(temp->y()==fields[3].toInt()){
-//                    temp->target++;
-//                }
-//            }
-*/
         }
-
-
-
-
     }
 }
 
@@ -804,10 +740,8 @@ void MainWindow::on_Spawned_Item_Lable_clicked()
     int x = Spawned_ItemPos.x();
     int y = Spawned_ItemPos.y();
     animation->setStartValue(QRect(x, y, 100,100));
-    //QRect(13, 10, 80,74
     animation->setEndValue(QRect(13, 10, 100,100));
     QObject::connect(animation, &QPropertyAnimation::finished, spawnedItemp_Label,[&](){
-        Player.Point += 25;
         if(P_or_Z==-1){
             ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
             if(Player.Point>=100){
@@ -845,8 +779,6 @@ void MainWindow::on_Spawned_Item_Lable_clicked()
             }
         }
         spawnedItemp_Label->hide();
-
-        //&QLabel::hide;
     });
     animation->start();
 
@@ -860,6 +792,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
             if (event->x() >= ui->Spawned_brain->x() &&  event->x() <= ui->Spawned_brain->x() + 80 && event->y() >= ui->Spawned_brain->y() && event->y() <= ui->Spawned_brain->y() + 74){
                 spawnedItemp_Label = ui->Spawned_brain;
                 emit brainClicked();
+                Player.Point += 30;
             }
 
             if (event->x() >= ui->label_29->x() && event->x() <= ui->label_29->x() + ui->label_29->width() && event->y() >= ui->label_29->y() && event->y() <= ui->label_29->y() + ui->label_29->height()&& Player.Point>=800){
@@ -903,6 +836,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
             if (event->x() >= ui->Spawned_sun->x() && event->x() <= ui->Spawned_sun->x() + 80 && event->y() >= ui->Spawned_sun->y() && event->y() <= ui->Spawned_sun->y() + 74){
                 spawnedItemp_Label = ui->Spawned_sun;
                 emit sunClicked();
+                Player.Point += 30;
             }
 
             if (event->x() >= ui->label_24->x() && event->x() <= ui->label_24->x() + ui->label_24->width() && event->y() >= ui->label_24->y() && event->y() <= ui->label_24->y() + ui->label_24->height()&& Player.Point>=50){
@@ -1013,49 +947,43 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             }
             draging_Label->setGeometry(740, 10, 100, 100);
             if (validate) {
-                if(selection!=5&&selection!=5){
+                if(selection != 5 && selection != 4){
                  fullLocations.push_back(make_pair(x,y));
                 }
                 QString output = "card,";
                 if (selection == 1){
                     output += "PSP,";
                     output += QString::number(x)+","+QString::number(y);
-                    //PeaShooter* ps = new PeaShooter(x, y, ui->Plants_map);
                     Player.Point -= 50;
                 }
 
                 if (selection == 2){
                     output += "TPSP,";
                     output += QString::number(x)+","+QString::number(y);
-                    //TwoPeaShooter* tps = new TwoPeaShooter(x, y, ui->Plants_map);
                     Player.Point -= 100;
                 }
 
                 if (selection == 3){
                     output += "WP,";
                     output += QString::number(x)+","+QString::number(y);
-                    //Walnut *w = new Walnut(x, y, ui->Plants_map);
                     Player.Point -= 100;
                 }
 
                 if (selection == 4){
                     output += "PMP,";
                     output += QString::number(x)+","+QString::number(y);
-                    //PlumMine *pm = new PlumMine(x, y, ui->Plants_map);
                     Player.Point -= 175;
                 }
 
                 if (selection == 5){
                     output += "JP,";
                     output += QString::number(x)+","+QString::number(y);
-                    //Jalapeno *j = new Jalapeno(x, y, ui->Plants_map);
                     Player.Point -= 150;
                 }
 
                 if (selection == 6){
                     output += "BP,";
                     output += QString::number(x)+","+QString::number(y);
-                    //Boomerang *b = new Boomerang(x, y, ui->Plants_map);
                     Player.Point -= 125;
                 }
                 socket->write(output.toUtf8());
@@ -1114,42 +1042,36 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
                 if (selection == 6){
                     output += "RZ,";
                     output += QString::number(x)+","+QString::number(y);
-                    //RegularZombie* rz = new RegularZombie(x, y, ui->Zombies_map);
                     Player.Point -= 100;
                 }
 
                 if (selection == 4){
                     output += "BHZ,";
                     output += QString::number(x)+","+QString::number(y);
-                    //BucketHeadZombie* bhz = new BucketHeadZombie(x, y, ui->Zombies_map);
                     Player.Point -= 200;
                 }
 
                 if (selection == 5){
                     output += "LHZ,";
                     output += QString::number(x)+","+QString::number(y);
-                    //LeafHeadZombie *lhz = new LeafHeadZombie(x, y, ui->Zombies_map);
                     Player.Point -= 150;
                 }
 
                 if (selection == 2){
                     output += "TZ,";
                     output += QString::number(x)+","+QString::number(y);
-                    //TallZombie *tz = new TallZombie(x, y, ui->Zombies_map);
                     Player.Point -= 150;
                 }
 
                 if (selection == 3){
                     output += "AZ,";
                     output += QString::number(x)+","+QString::number(y);
-                    //AstronautZombie *az = new AstronautZombie(x, y, ui->Zombies_map);
                     Player.Point -= 200;
                 }
 
                 if (selection == 1){
                     output += "PHZ,";
                     output += QString::number(x)+","+QString::number(y);
-                    //PurpleHairZombie *phz = new PurpleHairZombie(x, y, ui->Zombies_map);
                     Player.Point -= 800;
                 }
                 socket->write(output.toUtf8());
@@ -1205,233 +1127,13 @@ void MainWindow::onCheckcollision()
            }
        }
    }
-/*
-    for(auto p : PSPvec){
-            for (auto z : RZvec) {
-                if(z->target!= NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : BHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : LHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : PHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : AZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : TZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-        }
-        for(auto p : TPSPvec){
-            for (auto z : RZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : BHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : LHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : PHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : AZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : TZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-        }
-        for(auto p : WPvec){
-            for (auto z : RZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : BHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : LHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : PHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : AZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-        }
-
-        for(auto p : BPvec){
-            for (auto z : RZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : BHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : LHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : PHZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : AZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-            for (auto z : TZvec) {
-                if(z->target!=NULL){
-                    continue;
-                }
-                if (p->geometry().intersects(z->geometry())) {
-                    z->offMovement();
-                    z->target = p;
-                }
-            }
-        }
-        */
 }
 
 void MainWindow::onCleanLocation(int x, int y)
 {
     auto it = std::find(fullLocations.begin(), fullLocations.end(), make_pair(x,y));
     if (it != fullLocations.end()) {
-        Locationmute.lock();
         fullLocations.erase(it);
-        Locationmute.unlock();
     }
 
 
@@ -1440,9 +1142,7 @@ void MainWindow::onCleanLocation(int x, int y)
 void MainWindow::onCreateBBullets(int x, int y, int _power)
 {
     BoomerangPea *bullet = new BoomerangPea(x, y, _power,currentMap);
-    PeaBulletmute.lock();
     BPeavec.push_back(bullet);
-    BPeaBulletmute.unlock();
 }
 
 void MainWindow::onBulletcollision()
@@ -1464,85 +1164,10 @@ void MainWindow::onBulletcollision()
                 }
                 Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
                 delete PeaBullet;
+                break;
             }
         }
     }
-    /*
-    for(auto PeaBullet:Peavec){
-        for(auto Z:RZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:BHZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    BHZvec.erase(std::find(BHZvec.begin(),BHZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:LHZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    LHZvec.erase(std::find(LHZvec.begin(),LHZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:PHZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    PHZvec.erase(std::find(PHZvec.begin(),PHZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:TZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    TZvec.erase(std::find(TZvec.begin(),TZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:AZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    AZvec.erase(std::find(AZvec.begin(),AZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-    }
-    */
     ////////////////////////////////////////////////////////////////////
         for(auto bp : BPeavec) {
             if (bp->x() > 1500) {
@@ -1559,75 +1184,9 @@ void MainWindow::onBulletcollision()
                         zombies.erase(std::find(zombies.begin(),zombies.end(),Z));
                         delete Z;
                     }
-                    BPeavec.erase(std::find(BPeavec.begin(),BPeavec.end(),BPeaBullet));
-                    delete BPeaBullet;
                 }
             }
         }
-        /*
-        for(auto BPeaBullet: BPeavec){
-            for(auto Z:RZvec){
-                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                    Z->decreaseHP(BPeaBullet->getPower());
-                    if(Z->getHp()<=0){
-                        decreasePlantsTargets(Z->y());
-                        RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-                        delete Z;
-                    }
-                }
-            }
-            for(auto Z:BHZvec){
-                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                    Z->decreaseHP(BPeaBullet->getPower());
-                    if(Z->getHp()<=0){
-                        decreasePlantsTargets(Z->y());
-                        BHZvec.erase(std::find(BHZvec.begin(),BHZvec.end(),Z));
-                        delete Z;
-                    }
-                }
-            }
-            for(auto Z:LHZvec){
-                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                    Z->decreaseHP(BPeaBullet->getPower());
-                    if(Z->getHp()<=0){
-                        decreasePlantsTargets(Z->y());
-                        LHZvec.erase(std::find(LHZvec.begin(),LHZvec.end(),Z));
-                        delete Z;
-                    }
-                }
-            }
-            for(auto Z:PHZvec){
-                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                    Z->decreaseHP(BPeaBullet->getPower());
-                    if(Z->getHp()<=0){
-                        decreasePlantsTargets(Z->y());
-                        PHZvec.erase(std::find(PHZvec.begin(),PHZvec.end(),Z));
-                        delete Z;
-                    }
-                }
-            }
-            for(auto Z:TZvec){
-                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                    Z->decreaseHP(BPeaBullet->getPower());
-                    if(Z->getHp()<=0){
-                        decreasePlantsTargets(Z->y());
-                        TZvec.erase(std::find(TZvec.begin(),TZvec.end(),Z));
-                        delete Z;
-                    }
-                }
-            }
-            for(auto Z:AZvec){
-                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                    Z->decreaseHP(BPeaBullet->getPower());
-                    if(Z->getHp()<=0){
-                        decreasePlantsTargets(Z->y());
-                        AZvec.erase(std::find(AZvec.begin(),AZvec.end(),Z));
-                        delete Z;
-                    }
-                }
-            }
-
-        }*/
 }
 
 

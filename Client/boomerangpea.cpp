@@ -2,7 +2,7 @@
 
 void BoomerangPea::onMove()
 {
-    setGeometry(x() + 4, y(), 30, 30);
+    setGeometry(x() + 10, y(), 30, 30);
 }
 
 BoomerangPea::BoomerangPea(int x, int y, int _power, QWidget *parent) : QLabel(parent)
@@ -14,7 +14,7 @@ BoomerangPea::BoomerangPea(int x, int y, int _power, QWidget *parent) : QLabel(p
     show();
     move = new QTimer(this);
     connect(move, &QTimer::timeout, this, &BoomerangPea::onMove);
-    move->start(10);
+    move->start(25);
 }
 
 int BoomerangPea::getPower()
