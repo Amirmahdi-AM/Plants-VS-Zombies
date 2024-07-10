@@ -16,7 +16,7 @@ Boomerang::Boomerang(int x, int y, QWidget *parent) : Plants(parent) {
 }
 void Boomerang::Fire()
 {
-    emit createBullet(x() + 50, y() + 18, attackPowe);
+    emit createBBullet(x() + 50, y() + 18, attackPowe);
 }
 
 void Boomerang::onCheckedTargets()

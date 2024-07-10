@@ -7,7 +7,7 @@ class Boomerang : public Plants
     Q_OBJECT
 
 signals:
-    void createBullet(int x, int y, int power);
+    void createBBullet(int x, int y, int power);
 private slots:
     void Fire();
     void onCheckedTargets();

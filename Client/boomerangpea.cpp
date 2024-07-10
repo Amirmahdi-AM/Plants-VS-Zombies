@@ -1,11 +1,11 @@
-#include "pea.h"
+#include "boomerangpea.h"
 
-void Pea::onMove()
+void BoomerangPea::onMove()
 {
     setGeometry(x() + 4, y(), 30, 30);
 }
 
-Pea::Pea(int x, int y, int _power, QWidget *parent) : QLabel(parent)
+BoomerangPea::BoomerangPea(int x, int y, int _power, QWidget *parent) : QLabel(parent)
 {
     picture.load(":/Images/Pea.png");
     setPixmap(picture);
@@ -13,11 +13,11 @@ Pea::Pea(int x, int y, int _power, QWidget *parent) : QLabel(parent)
     power = _power;
     show();
     move = new QTimer(this);
-    connect(move, &QTimer::timeout, this, &Pea::onMove);
+    connect(move, &QTimer::timeout, this, &BoomerangPea::onMove);
     move->start(10);
 }
 
-int Pea::getPower()
+int BoomerangPea::getPower()
 {
     return power;
 }

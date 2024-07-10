@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     astronautzombie.cpp \
     boomerang.cpp \
+    boomerangpea.cpp \
     bucketheadzombie.cpp \
     jalapeno.cpp \
     leafheadzombie.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 HEADERS += \
     astronautzombie.h \
     boomerang.h \
+    boomerangpea.h \
     bucketheadzombie.h \
     jalapeno.h \
     leafheadzombie.h \

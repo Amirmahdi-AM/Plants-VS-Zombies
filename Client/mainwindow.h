@@ -21,6 +21,7 @@
 #include "tallzombie.h"
 #include "astronautzombie.h"
 #include "purplehairzombie.h"
+#include "boomerangpea.h"
 using namespace std;
 
 
@@ -100,6 +101,8 @@ private slots:
 
     void onCleanLocation(int x, int y);
 
+    void onCreateBBullets(int x, int y, int power);
+
 signals:
     void brainClicked();
 
@@ -162,6 +165,7 @@ private:
     QVector<Jalapeno*> JPvec;
 
     QVector<Pea*> Peavec;
+    QVector<BoomerangPea*> BPeavec;
 
 };
 #endif // MAINWINDOW_H
