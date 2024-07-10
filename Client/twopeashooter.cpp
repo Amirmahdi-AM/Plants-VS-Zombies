@@ -12,12 +12,13 @@ TwoPeaShooter::TwoPeaShooter(int x, int y, QWidget *parent) : Plants(parent) {
     connect(shooting, &QTimer::timeout, this, &TwoPeaShooter::Fire);
     firingRate = 1000;
     HP = 200;
-    attackPowe = 40;
+    attackPowe = 20;
 }
 
 void TwoPeaShooter::Fire()
 {
     emit createPea(x() + 50, y() + 18, attackPowe);
+    emit createPea(x() + 30, y() + 18, attackPowe);
 }
 
 void TwoPeaShooter::onCheckedTargets()

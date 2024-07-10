@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QObject>
 #include <QVector>
+#include <mutex>
 
 class Server : public QTcpServer
 {
@@ -29,6 +30,7 @@ private:
     void editPerson(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email);
     bool checkemail_pass(const QString &_phoneNumber, const QString &_email);
     QString findUser_WithEmail(const QString &_phoneNumber, const QString &_email);
+    std::mutex mute;
 
 };
 

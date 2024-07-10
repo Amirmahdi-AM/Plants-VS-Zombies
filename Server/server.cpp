@@ -33,6 +33,7 @@ void Server::incomingConnection(qintptr socketDescriptor)
 
 void Server::onReadyRead(QTcpSocket *clientSocket)
 {
+    mute.lock();
     QByteArray data = clientSocket->readAll();
     QString receivedData(data);
 
@@ -89,7 +90,7 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
             temp->write(receivedData.toUtf8());
         }
     }
-
+    mute.unlock();
 }
 
 void Server::onDisconnected(QTcpSocket *clientSocket)

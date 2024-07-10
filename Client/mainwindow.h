@@ -7,7 +7,6 @@
 #include <list>
 #include "person.h"
 #include "QLabel"
-#include "plants.h"
 #include "pea.h"
 #include "peashooter.h"
 #include "twopeashooter.h"
@@ -22,6 +21,9 @@
 #include "astronautzombie.h"
 #include "purplehairzombie.h"
 #include "boomerangpea.h"
+#include <mutex>
+#include <shared_mutex>
+#include <thread>
 using namespace std;
 
 
@@ -103,6 +105,9 @@ private slots:
 
     void onCreateBBullets(int x, int y, int power);
 
+    void onBulletcollision();
+
+
 signals:
     void brainClicked();
 
@@ -141,6 +146,8 @@ private:
 
     QTimer *connectionTimer;
 
+    QTimer* Bulletcollision;
+
     QWidget* currentMap;
 
     int P_or_Z = 0;
@@ -150,6 +157,9 @@ private:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
     list<pair<int, int>> fullLocations;
+
+    QVector<Plants*> plants;
+    QVector<Zombies*> zombies;
 
     QVector<RegularZombie*> RZvec;
     QVector<BucketHeadZombie*> BHZvec;
@@ -166,6 +176,11 @@ private:
 
     QVector<Pea*> Peavec;
     QVector<BoomerangPea*> BPeavec;
+
+    mutex PeaBulletmute;
+    mutex BPeaBulletmute;
+    mutex Locationmute;
+    shared_mutex resourceMute;
 
 };
 #endif // MAINWINDOW_H

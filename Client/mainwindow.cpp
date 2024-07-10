@@ -79,7 +79,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(Brainfade,&QTimer::timeout,this,&MainWindow::Fade_Item);
     checkCollision = new QTimer(this);
     connect(checkCollision,&QTimer::timeout,this,&MainWindow::onCheckcollision);
-    checkCollision->start(100);
+
+    Bulletcollision = new QTimer(this);
+    connect(Bulletcollision,&QTimer::timeout,this,&MainWindow::onBulletcollision);
+
     ////////////////////////////////////////////////////////////////////////
     /// socket connection
     socket = new QTcpSocket(this);
@@ -451,11 +454,15 @@ void MainWindow::onReadyRead()
     }
     if (fields[0] == "0"){
         P_or_Z = 1;
+        checkCollision->start(200);
+        Bulletcollision->start(50);
         currentMap = ui->Plants_map;
         Plants_set();
     }
     if (fields[0] == "1"){
         P_or_Z = -1;
+        checkCollision->start(200);
+        Bulletcollision->start(50);
         currentMap = ui->Zombies_map;
         Zombies_set();
     }
@@ -505,117 +512,148 @@ void MainWindow::onReadyRead()
         ui->GameControl->setCurrentIndex(1);
     }
     if (fields[0] == "card"){
-        int Targetcounts = 0;
+
         if(fields[1][fields[1].size() - 1] == 'P') {
-            for(auto temp : RZvec){
+            int Targetcounts = 0;
+            for(auto temp : zombies){
+
                 if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
                     Targetcounts++;
                 }
             }
-            for(auto temp : BHZvec){
-                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-                    Targetcounts++;
-                }
+            if (fields[1] == "PSP"){
+                PeaShooter* ps = new PeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
+                plants.push_back(ps);
+                ps->target += Targetcounts;
+                connect(ps, &PeaShooter::createPea, this, &MainWindow::onCreateBullets);
             }
-            for(auto temp : LHZvec){
-                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-                    Targetcounts++;
-                }
+            if (fields[1] == "TPSP"){
+                TwoPeaShooter* tps = new TwoPeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
+                plants.push_back(tps);
+                tps->target += Targetcounts;
+                connect(tps, &TwoPeaShooter::createPea, this, &MainWindow::onCreateBullets);
             }
-            for(auto temp : PHZvec){
-                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-                    Targetcounts++;
-                }
+            if (fields[1] == "WP"){
+                Walnut* w = new Walnut(fields[2].toInt(),fields[3].toInt(), currentMap);
+                plants.push_back(w);
             }
-            for(auto temp : TZvec){
-                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-                    Targetcounts++;
-                }
+            if (fields[1] == "PMP"){
+    //            PlumMine* ps = new PlumMine(fields[2].toInt(),fields[3].toInt(), currentMap);
+    //            PMPvec.push_back(ps);
             }
-            for(auto temp : AZvec){
-                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
-                    Targetcounts++;
-                }
+            if (fields[1] == "JP"){
+    //            Jalapeno* j = new Jalapeno(fields[2].toInt(),fields[3].toInt(), currentMap);
+    //            JPvec.push_back(j);
             }
-        }
-        if(fields[1][fields[1].size() - 1] == 'Z') {
-            for(auto temp : PSPvec){
-                if(temp->y()==fields[3].toInt()){
-                    temp->target++;
-                }
+            if (fields[1] == "BP"){
+                Boomerang* bm = new Boomerang(fields[2].toInt(),fields[3].toInt(), currentMap);
+                plants.push_back(bm);
+                bm->target += Targetcounts;
+                connect(bm, &Boomerang::createBBullet, this, &MainWindow::onCreateBBullets);
             }
-            for(auto temp : BPvec){
-                if(temp->y()==fields[3].toInt()){
-                    temp->target++;
-                }
-            }
-            for(auto temp : TPSPvec){
-                if(temp->y()==fields[3].toInt()){
-                    temp->target++;
-                }
-            }
+            /*
+//            for(auto temp : RZvec){
+//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
+//                    Targetcounts++;
+//                }
+//            }
+//            for(auto temp : BHZvec){
+//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
+//                    Targetcounts++;
+//                }
+//            }
+//            for(auto temp : LHZvec){
+//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
+//                    Targetcounts++;
+//                }
+//            }
+//            for(auto temp : PHZvec){
+//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
+//                    Targetcounts++;
+//                }
+//            }
+//            for(auto temp : TZvec){
+//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
+//                    Targetcounts++;
+//                }
+//            }
+//            for(auto temp : AZvec){
+//                if(temp->y()==fields[3].toInt()&&temp->x()>=fields[2].toInt()){
+//                    Targetcounts++;
+//                }
+//            }
+*/
         }
 
-        if (fields[1] == "PSP"){
-            PeaShooter* ps = new PeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
-            PSPvec.push_back(ps);
-            ps->target += Targetcounts;
-            connect(ps, &PeaShooter::createPea, this, &MainWindow::onCreateBullets);
+        if(fields[1][fields[1].size() - 1] == 'Z') {
+            for(auto temp : plants){
+                if(temp->y()==fields[3].toInt()){
+                    PeaShooter* PSP= dynamic_cast< PeaShooter*> (temp);
+                    TwoPeaShooter* TPSP= dynamic_cast< TwoPeaShooter*> (temp);
+                    Boomerang* BP= dynamic_cast< Boomerang*> (temp);
+                    if(PSP){
+                        PSP->target++;
+                    }
+                    if(TPSP){
+                        TPSP->target++;
+                    }
+                    if(BP){
+                        BP->target++;
+                    }
+                }
+                if (fields[1] == "RZ"){
+                    RegularZombie* rz = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                    zombies.push_back(rz);
+                    connect(rz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+                }
+                if (fields[1] == "BHZ"){
+                    BucketHeadZombie* bhz = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                    zombies.push_back(bhz);
+                    connect(bhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+                }
+                if (fields[1] == "LHZ"){
+                    LeafHeadZombie* lhz = new LeafHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                    zombies.push_back(lhz);
+                    connect(lhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+                }
+                if (fields[1] == "TZ"){
+                    TallZombie* tz = new TallZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                    zombies.push_back(tz);
+                    connect(tz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+                }
+                if (fields[1] == "AZ"){
+                    AstronautZombie* az = new AstronautZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                    zombies.push_back(az);
+                    connect(az, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+                }
+                if (fields[1] == "PHZ"){
+                    PurpleHairZombie* phz = new PurpleHairZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
+                    zombies.push_back(phz);
+                    connect(phz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
+                }
+
+            }
+            /*
+//            for(auto temp : PSPvec){
+//                if(temp->y()==fields[3].toInt()){
+//                    temp->target++;
+//                }
+//            }
+//            for(auto temp : BPvec){
+//                if(temp->y()==fields[3].toInt()){
+//                    temp->target++;
+//                }
+//            }
+//            for(auto temp : TPSPvec){
+//                if(temp->y()==fields[3].toInt()){
+//                    temp->target++;
+//                }
+//            }
+*/
         }
-        if (fields[1] == "TPSP"){
-            TwoPeaShooter* tps = new TwoPeaShooter(fields[2].toInt(),fields[3].toInt(), currentMap);
-            TPSPvec.push_back(tps);
-            tps->target += Targetcounts;
-            connect(tps, &TwoPeaShooter::createPea, this, &MainWindow::onCreateBullets);
-        }
-        if (fields[1] == "WP"){
-            Walnut* w = new Walnut(fields[2].toInt(),fields[3].toInt(), currentMap);
-            WPvec.push_back(w);
-        }
-        if (fields[1] == "PMP"){
-            PlumMine* ps = new PlumMine(fields[2].toInt(),fields[3].toInt(), currentMap);
-            PMPvec.push_back(ps);
-        }
-        if (fields[1] == "JP"){
-            Jalapeno* j = new Jalapeno(fields[2].toInt(),fields[3].toInt(), currentMap);
-            JPvec.push_back(j);
-        }
-        if (fields[1] == "BP"){
-            Boomerang* bm = new Boomerang(fields[2].toInt(),fields[3].toInt(), currentMap);
-            BPvec.push_back(bm);
-            bm->target += Targetcounts;
-            connect(bm, &Boomerang::createBBullet, this, &MainWindow::onCreateBBullets);
-        }
-        if (fields[1] == "RZ"){
-            RegularZombie* rz = new RegularZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-            RZvec.push_back(rz);
-            connect(rz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-        }
-        if (fields[1] == "BHZ"){
-            BucketHeadZombie* bhz = new BucketHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-            BHZvec.push_back(bhz);
-            connect(bhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-        }
-        if (fields[1] == "LHZ"){
-            LeafHeadZombie* lhz = new LeafHeadZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-            LHZvec.push_back(lhz);
-            connect(lhz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-        }
-        if (fields[1] == "TZ"){
-            TallZombie* tz = new TallZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-            TZvec.push_back(tz);
-            connect(tz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-        }
-        if (fields[1] == "AZ"){
-            AstronautZombie* az = new AstronautZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-            AZvec.push_back(az);
-            connect(az, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-        }
-        if (fields[1] == "PHZ"){
-            PurpleHairZombie* phz = new PurpleHairZombie(fields[2].toInt(),fields[3].toInt(), currentMap);
-            PHZvec.push_back(phz);
-            connect(phz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
-        }
+
+
+
 
     }
 }
@@ -675,9 +713,9 @@ void MainWindow::Spawnning_Item(){
        fade->start(3000);
     }
     if(P_or_Z==-1){
-        ui->Spawned_brain->setFixedSize(80,74);
+        ui->Spawned_brain->setFixedSize(75,74);
         ui->Spawned_brain->setStyleSheet("background-image: url(:/Images/Brain.png);");
-        ui->Spawned_brain->setGeometry(-1, -1, 80,74);
+        ui->Spawned_brain->setGeometry(-1, -1, 75,74);
         animation = new QPropertyAnimation(ui->Spawned_brain, "geometry");
         if(!ui->Spawned_brain->isVisible()){
             ui->Spawned_brain->show();
@@ -687,8 +725,8 @@ void MainWindow::Spawnning_Item(){
     animation->setDuration(2000);
     int x = rand() % 1200 + 200;
     int y = rand() % 550 + 200;
-    animation->setStartValue(QRect(x, -1, 80,74));
-    animation->setEndValue(QRect(x, y, 80,74));
+    animation->setStartValue(QRect(x, -1, 75,74));
+    animation->setEndValue(QRect(x, y, 75,74));
     animation->start();
 }
 
@@ -925,17 +963,17 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
                 validate = false;
             }
             if (y >= 135 && y < 225)
-                y = 135;
+                y = 120;
             else if (y >= 225 && y < 325)
-                y = 225;
+                y = 220;
             else if (y >= 325 && y < 425)
-                y = 325;
+                y = 320;
             else if (y >= 425 && y < 525)
-                y = 425;
+                y = 420;
             else if (y >= 525 && y < 625)
-                y = 525;
+                y = 520;
             else if (y >= 625 && y < 725)
-                y = 625;
+                y = 640;
             else {
                 validate = false;
             }
@@ -1119,159 +1157,23 @@ void MainWindow::onCreateBullets(int x, int y, int _power)
 
 void MainWindow::onCheckcollision()
 {
-    for(auto p : Peavec) {
-        if (p->x() > 1500) {
-            Peavec.erase(std::find(Peavec.begin(),Peavec.end(), p));
-            delete p;
-        }
-    }
-
-    for(auto PeaBullet:Peavec){
-        for(auto Z:RZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:BHZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    BHZvec.erase(std::find(BHZvec.begin(),BHZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:LHZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    LHZvec.erase(std::find(LHZvec.begin(),LHZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:PHZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    PHZvec.erase(std::find(PHZvec.begin(),PHZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:TZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    TZvec.erase(std::find(TZvec.begin(),TZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-        for(auto Z:AZvec){
-            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(PeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    AZvec.erase(std::find(AZvec.begin(),AZvec.end(),Z));
-                    delete Z;
-                }
-                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-                delete PeaBullet;
-            }
-        }
-    }
-////////////////////////////////////////////////////////////////////
-    for(auto bp : BPeavec) {
-        if (bp->x() > 1500) {
-            BPeavec.erase(std::find(BPeavec.begin(),BPeavec.end(), bp));
-            delete bp;
-        }
-    }
-
-    for(auto BPeaBullet: BPeavec){
-        for(auto Z:RZvec){
-            if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(BPeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-                    delete Z;
-                }
-            }
-        }
-        for(auto Z:BHZvec){
-            if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(BPeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    BHZvec.erase(std::find(BHZvec.begin(),BHZvec.end(),Z));
-                    delete Z;
-                }
-            }
-        }
-        for(auto Z:LHZvec){
-            if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(BPeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    LHZvec.erase(std::find(LHZvec.begin(),LHZvec.end(),Z));
-                    delete Z;
-                }
-            }
-        }
-        for(auto Z:PHZvec){
-            if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(BPeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    PHZvec.erase(std::find(PHZvec.begin(),PHZvec.end(),Z));
-                    delete Z;
-                }
-            }
-        }
-        for(auto Z:TZvec){
-            if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(BPeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    TZvec.erase(std::find(TZvec.begin(),TZvec.end(),Z));
-                    delete Z;
-                }
-            }
-        }
-        for(auto Z:AZvec){
-            if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
-                Z->decreaseHP(BPeaBullet->getPower());
-                if(Z->getHp()<=0){
-                    decreasePlantsTargets(Z->y());
-                    AZvec.erase(std::find(AZvec.begin(),AZvec.end(),Z));
-                    delete Z;
-                }
-            }
-        }
-    }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+   for( auto z:zombies){
+       if(z->target!= NULL){
+           continue;
+       }
+       for(auto p:plants){
+           Walnut* W = dynamic_cast<Walnut*>(p);
+           TallZombie* tz = dynamic_cast<TallZombie*>(z);
+           if (W && tz) {
+               tz->setGeometry(W->x() + 100, tz->y(), 100, 100);
+           }
+           else if (p->geometry().intersects(z->geometry())) {
+               z->offMovement();
+               z->target = p;
+           }
+       }
+   }
+/*
     for(auto p : PSPvec){
             for (auto z : RZvec) {
                 if(z->target!= NULL){
@@ -1488,102 +1390,212 @@ void MainWindow::onCheckcollision()
                 }
             }
         }
-
-
-
-
-
-
-
-
-//    for(auto Boom:Peavec){
-//        for(auto Z:RZvec){
-//            if(PeaBullet->geometry().intersects(Z->geometry())){
-//                Z->decreaseHP(PeaBullet->getPower());
-//                if(Z->getHp()<=0){
-//                    decreasePlantsTargets(Z->y());
-//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-//                    delete Z;
-//                }
-//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-//                delete PeaBullet;
-//            }
-//        }
-//        for(auto Z:BHZvec){
-//            if(PeaBullet->geometry().intersects(Z->geometry())){
-//                Z->decreaseHP(PeaBullet->getPower());
-//                if(Z->getHp()<=0){
-//                    decreasePlantsTargets(Z->y());
-//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-//                    delete Z;
-//                }
-//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-//                delete PeaBullet;
-//            }
-//        }
-//        for(auto Z:LHZvec){
-//            if(PeaBullet->geometry().intersects(Z->geometry())){
-//                Z->decreaseHP(PeaBullet->getPower());
-//                if(Z->getHp()<=0){
-//                    decreasePlantsTargets(Z->y());
-//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-//                    delete Z;
-//                }
-//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-//                delete PeaBullet;
-//            }
-//        }
-//        for(auto Z:PHZvec){
-//            if(PeaBullet->geometry().intersects(Z->geometry())){
-//                Z->decreaseHP(PeaBullet->getPower());
-//                if(Z->getHp()<=0){
-//                    decreasePlantsTargets(Z->y());
-//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-//                    delete Z;
-//                }
-//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-//                delete PeaBullet;
-//            }
-//        }
-//        for(auto Z:TZvec){
-//            if(PeaBullet->geometry().intersects(Z->geometry())){
-//                Z->decreaseHP(PeaBullet->getPower());
-//                if(Z->getHp()<=0){
-//                    decreasePlantsTargets(Z->y());
-//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-//                    delete Z;
-//                }
-//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-//                delete PeaBullet;
-//            }
-//        }
-//        for(auto Z:AZvec){
-//            if(PeaBullet->geometry().intersects(Z->geometry())){
-//                Z->decreaseHP(PeaBullet->getPower());
-//                if(Z->getHp()<=0){
-//                    decreasePlantsTargets(Z->y());
-//                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
-//                    delete Z;
-//                }
-//                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
-//                delete PeaBullet;
-//            }
-//        }
-//    }
+        */
 }
 
 void MainWindow::onCleanLocation(int x, int y)
 {
     auto it = std::find(fullLocations.begin(), fullLocations.end(), make_pair(x,y));
     if (it != fullLocations.end()) {
+        Locationmute.lock();
         fullLocations.erase(it);
+        Locationmute.unlock();
     }
+
+
 }
 
 void MainWindow::onCreateBBullets(int x, int y, int _power)
 {
     BoomerangPea *bullet = new BoomerangPea(x, y, _power,currentMap);
+    PeaBulletmute.lock();
     BPeavec.push_back(bullet);
+    BPeaBulletmute.unlock();
+}
+
+void MainWindow::onBulletcollision()
+{
+    for(auto p : Peavec) {
+        if (p->x() > 1500) {
+            Peavec.erase(std::find(Peavec.begin(),Peavec.end(), p));
+            delete p;
+        }
+    }
+    for(auto PeaBullet : Peavec) {
+        for(auto Z : zombies) {
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    zombies.erase(std::find(zombies.begin(),zombies.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+    }
+    /*
+    for(auto PeaBullet:Peavec){
+        for(auto Z:RZvec){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:BHZvec){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    BHZvec.erase(std::find(BHZvec.begin(),BHZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:LHZvec){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    LHZvec.erase(std::find(LHZvec.begin(),LHZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:PHZvec){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    PHZvec.erase(std::find(PHZvec.begin(),PHZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:TZvec){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    TZvec.erase(std::find(TZvec.begin(),TZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+        for(auto Z:AZvec){
+            if(PeaBullet && PeaBullet->geometry().intersects(Z->geometry())){
+                Z->decreaseHP(PeaBullet->getPower());
+                if(Z->getHp()<=0){
+                    decreasePlantsTargets(Z->y());
+                    AZvec.erase(std::find(AZvec.begin(),AZvec.end(),Z));
+                    delete Z;
+                }
+                Peavec.erase(std::find(Peavec.begin(),Peavec.end(),PeaBullet));
+                delete PeaBullet;
+            }
+        }
+    }
+    */
+    ////////////////////////////////////////////////////////////////////
+        for(auto bp : BPeavec) {
+            if (bp->x() > 1500) {
+                BPeavec.erase(std::find(BPeavec.begin(),BPeavec.end(), bp));
+                delete bp;
+            }
+        }
+        for(auto BPeaBullet : BPeavec) {
+            for(auto Z : zombies) {
+                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
+                    Z->decreaseHP(BPeaBullet->getPower());
+                    if(Z->getHp()<=0){
+                        decreasePlantsTargets(Z->y());
+                        zombies.erase(std::find(zombies.begin(),zombies.end(),Z));
+                        delete Z;
+                    }
+                    BPeavec.erase(std::find(BPeavec.begin(),BPeavec.end(),BPeaBullet));
+                    delete BPeaBullet;
+                }
+            }
+        }
+        /*
+        for(auto BPeaBullet: BPeavec){
+            for(auto Z:RZvec){
+                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
+                    Z->decreaseHP(BPeaBullet->getPower());
+                    if(Z->getHp()<=0){
+                        decreasePlantsTargets(Z->y());
+                        RZvec.erase(std::find(RZvec.begin(),RZvec.end(),Z));
+                        delete Z;
+                    }
+                }
+            }
+            for(auto Z:BHZvec){
+                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
+                    Z->decreaseHP(BPeaBullet->getPower());
+                    if(Z->getHp()<=0){
+                        decreasePlantsTargets(Z->y());
+                        BHZvec.erase(std::find(BHZvec.begin(),BHZvec.end(),Z));
+                        delete Z;
+                    }
+                }
+            }
+            for(auto Z:LHZvec){
+                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
+                    Z->decreaseHP(BPeaBullet->getPower());
+                    if(Z->getHp()<=0){
+                        decreasePlantsTargets(Z->y());
+                        LHZvec.erase(std::find(LHZvec.begin(),LHZvec.end(),Z));
+                        delete Z;
+                    }
+                }
+            }
+            for(auto Z:PHZvec){
+                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
+                    Z->decreaseHP(BPeaBullet->getPower());
+                    if(Z->getHp()<=0){
+                        decreasePlantsTargets(Z->y());
+                        PHZvec.erase(std::find(PHZvec.begin(),PHZvec.end(),Z));
+                        delete Z;
+                    }
+                }
+            }
+            for(auto Z:TZvec){
+                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
+                    Z->decreaseHP(BPeaBullet->getPower());
+                    if(Z->getHp()<=0){
+                        decreasePlantsTargets(Z->y());
+                        TZvec.erase(std::find(TZvec.begin(),TZvec.end(),Z));
+                        delete Z;
+                    }
+                }
+            }
+            for(auto Z:AZvec){
+                if(BPeaBullet && BPeaBullet->geometry().intersects(Z->geometry())){
+                    Z->decreaseHP(BPeaBullet->getPower());
+                    if(Z->getHp()<=0){
+                        decreasePlantsTargets(Z->y());
+                        AZvec.erase(std::find(AZvec.begin(),AZvec.end(),Z));
+                        delete Z;
+                    }
+                }
+            }
+
+        }*/
 }
 
 

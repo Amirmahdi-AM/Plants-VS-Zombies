@@ -2,7 +2,7 @@
 
 void Pea::onMove()
 {
-    setGeometry(x() + 4, y(), 30, 30);
+    setGeometry(x() + 10, y(), 30, 30);
 }
 
 Pea::Pea(int x, int y, int _power, QWidget *parent) : QLabel(parent)
@@ -14,7 +14,7 @@ Pea::Pea(int x, int y, int _power, QWidget *parent) : QLabel(parent)
     show();
     move = new QTimer(this);
     connect(move, &QTimer::timeout, this, &Pea::onMove);
-    move->start(10);
+    move->start(25);
 }
 
 int Pea::getPower()
