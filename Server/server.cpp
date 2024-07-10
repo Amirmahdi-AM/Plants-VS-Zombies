@@ -90,6 +90,13 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
             temp->write(receivedData.toUtf8());
         }
     }
+    if (fields[0] == "Round1") {
+        for (auto temp : players) {
+            QString output = "NextRound,";
+            output += receivedData;
+            temp->write(output.toUtf8());
+        }
+    }
     mute.unlock();
 }
 

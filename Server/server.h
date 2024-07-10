@@ -31,7 +31,10 @@ private:
     bool checkemail_pass(const QString &_phoneNumber, const QString &_email);
     QString findUser_WithEmail(const QString &_phoneNumber, const QString &_email);
     std::mutex mute;
-
+    QString player1;
+    QString player2;
+    QString frw;
+    QString swr;
 };
 
 #endif // SERVER_H
