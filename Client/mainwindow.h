@@ -99,6 +99,12 @@ private slots:
     void onBulletcollision();
 
 
+    void on_Edit_information_botton_clicked();
+
+    void on_NewInform_Back_clicked();
+
+    void on_NewInform_Ok_clicked();
+
 signals:
     void brainClicked();
 
@@ -113,17 +119,13 @@ private:
 
     QTimer* Rotate2;
 
-    QTimer* Sun_spawn;
+    QTimer* Item_spawn;
 
     QTimer* fade;
 
     QTimer* Sun_Rotate;
 
     QTimer* brain_Rotate;
-
-    QTimer* brain_spawn;
-
-    QTimer* Brainfade;
 
     QTimer* Labeldrag_drop;
 
@@ -132,6 +134,8 @@ private:
     QLabel* draging_Label;
 
     QLabel* spawnedItemp_Label;
+
+    QLabel* TimerLable;
 
     QTcpSocket *socket;
 
@@ -145,6 +149,8 @@ private:
 
     int selection = 0;
 
+    int remainingSeconds = 180;
+
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
     list<pair<int, int>> fullLocations;
@@ -156,10 +162,9 @@ private:
     QVector<Pea*> Peavec;
     QVector<BoomerangPea*> BPeavec;
 
-    mutex PeaBulletmute;
-    mutex BPeaBulletmute;
     mutex Locationmute;
-    shared_mutex resourceMute;
+
+    QTimer* gameTimer;
 
 };
 #endif // MAINWINDOW_H

@@ -11,7 +11,7 @@ class BoomerangPea : public QLabel
     QTimer *move;
     int power;
     QPixmap picture;
-
+    int rotationAngle;
 protected slots:
     void onMove();
 

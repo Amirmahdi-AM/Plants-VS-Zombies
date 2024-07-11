@@ -8,9 +8,12 @@ TallZombie::TallZombie(int x, int y, QWidget *parent) : Zombies(parent)
     HP = 500;
     moveMentDelay = 100;
     moveTimer->start(moveMentDelay);
-    picture.load(":/Images/Tall_Z.png");
-    setPixmap(picture);
-    setGeometry(x, y, 100, 200);
+    //picture.load(":/Images/Tall_Z.png");
+    //setPixmap(picture);
+    animation = new QMovie(":/Images/TallZombie_Eating_Walking.gif");
+    this->setMovie(animation);
+    animation->start();
+    setGeometry(x, y, 100, 100);
     show();
     this->target=NULL;
     attackTimer = new QTimer(this);
@@ -18,5 +21,5 @@ TallZombie::TallZombie(int x, int y, QWidget *parent) : Zombies(parent)
     TBA = 1000;
 }
 void TallZombie::move(){
-    setGeometry(this->x()-moveX, this->y(), 100, 200);
+    setGeometry(this->x()-moveX, this->y(), 100, 100);
 }

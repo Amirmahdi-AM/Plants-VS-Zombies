@@ -21,6 +21,7 @@ public:
     QString get_email() const;
     QString get_phoneNumber() const;
     int winRound;
+    QString CurrentRound;
     int Point;
 };
 

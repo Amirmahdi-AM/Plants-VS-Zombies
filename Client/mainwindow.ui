@@ -28,8 +28,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1541</width>
-      <height>891</height>
+      <width>1561</width>
+      <height>561</height>
      </rect>
     </property>
     <property name="cursor">
@@ -42,7 +42,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>8</number>
+     <number>9</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <property name="cursor">
@@ -1068,8 +1068,8 @@ font: 14pt &quot;SWMono&quot;;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>80</y>
-        <width>1131</width>
+        <y>90</y>
+        <width>1171</width>
         <height>311</height>
        </rect>
       </property>
@@ -1411,6 +1411,55 @@ font: 14pt &quot;SWMono&quot;;</string>
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="label_55">
+      <property name="geometry">
+       <rect>
+        <x>840</x>
+        <y>20</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Shovel.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_56">
+      <property name="geometry">
+       <rect>
+        <x>840</x>
+        <y>20</y>
+        <width>101</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Pictures.qrc">:/Images/Shovel_Card.jpg</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Plant_Timer">
+      <property name="geometry">
+       <rect>
+        <x>1310</x>
+        <y>30</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 24pt &quot;Sans Serif Collection&quot;;
+color: rgb(21, 255, 29);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
      <zorder>Ground</zorder>
      <zorder>label_19</zorder>
      <zorder>label_20</zorder>
@@ -1431,6 +1480,9 @@ font: 14pt &quot;SWMono&quot;;</string>
      <zorder>label_48</zorder>
      <zorder>label_49</zorder>
      <zorder>Plants_point_Label</zorder>
+     <zorder>label_55</zorder>
+     <zorder>label_56</zorder>
+     <zorder>Plant_Timer</zorder>
     </widget>
     <widget class="QWidget" name="Waiting_Page">
      <property name="cursor">
@@ -1509,9 +1561,9 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>80</y>
-        <width>1131</width>
-        <height>311</height>
+        <y>70</y>
+        <width>1491</width>
+        <height>421</height>
        </rect>
       </property>
       <property name="text">
@@ -1782,9 +1834,9 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
       <property name="geometry">
        <rect>
         <x>640</x>
-        <y>-90</y>
+        <y>10</y>
         <width>91</width>
-        <height>211</height>
+        <height>111</height>
        </rect>
       </property>
       <property name="cursor">
@@ -1860,6 +1912,24 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="Zombies_Timer">
+      <property name="geometry">
+       <rect>
+        <x>1340</x>
+        <y>20</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 24pt &quot;Sans Serif Collection&quot;;
+color: rgb(247, 6, 255);
+color: rgb(255, 7, 32);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
      <zorder>Ground_2</zorder>
      <zorder>label_21</zorder>
      <zorder>label_22</zorder>
@@ -1879,14 +1949,15 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
      <zorder>Spawned_brain</zorder>
      <zorder>label_47</zorder>
      <zorder>Zombies_point_Lable</zorder>
+     <zorder>Zombies_Timer</zorder>
     </widget>
     <widget class="QWidget" name="Edit_Information_page">
      <widget class="QLabel" name="label_50">
       <property name="geometry">
        <rect>
-        <x>650</x>
-        <y>50</y>
-        <width>601</width>
+        <x>210</x>
+        <y>190</y>
+        <width>311</width>
         <height>31</height>
        </rect>
       </property>
@@ -1904,97 +1975,203 @@ color: rgb(80, 121, 37);</string>
        <string>Enter your new informations</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_13">
+     <widget class="QPushButton" name="NewInform_Ok">
       <property name="geometry">
        <rect>
-        <x>700</x>
-        <y>150</y>
-        <width>249</width>
-        <height>30</height>
+        <x>460</x>
+        <y>520</y>
+        <width>80</width>
+        <height>22</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sitka Display Semibold</family>
-        <pointsize>16</pointsize>
-        <italic>false</italic>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(112, 112, 112);
-color:rgb(166, 255, 133);
-font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+      <property name="text">
+       <string>Ok</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_14">
+     <widget class="QPushButton" name="NewInform_Back">
       <property name="geometry">
        <rect>
-        <x>700</x>
-        <y>210</y>
-        <width>249</width>
-        <height>30</height>
+        <x>190</x>
+        <y>520</y>
+        <width>80</width>
+        <height>22</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sitka Display Semibold</family>
-        <pointsize>16</pointsize>
-        <italic>false</italic>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(112, 112, 112);
-color:rgb(166, 255, 133);
-font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+      <property name="text">
+       <string>Back</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_15">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>700</x>
-        <y>260</y>
-        <width>249</width>
-        <height>30</height>
+        <x>130</x>
+        <y>270</y>
+        <width>191</width>
+        <height>201</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sitka Display Semibold</family>
-        <pointsize>16</pointsize>
-        <italic>false</italic>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(112, 112, 112);
-color:rgb(166, 255, 133);
-font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <widget class="QLabel" name="label_51">
+         <property name="font">
+          <font>
+           <family>Tw Cen MT Condensed Extra Bold</family>
+           <pointsize>24</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(4, 101, 3);
+color: rgb(80, 121, 37);</string>
+         </property>
+         <property name="text">
+          <string>Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_52">
+         <property name="font">
+          <font>
+           <family>Tw Cen MT Condensed Extra Bold</family>
+           <pointsize>24</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(4, 101, 3);
+color: rgb(80, 121, 37);</string>
+         </property>
+         <property name="text">
+          <string>Phonenumber: </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_53">
+         <property name="font">
+          <font>
+           <family>Tw Cen MT Condensed Extra Bold</family>
+           <pointsize>24</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(4, 101, 3);
+color: rgb(80, 121, 37);</string>
+         </property>
+         <property name="text">
+          <string>Email : </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_54">
+         <property name="font">
+          <font>
+           <family>Tw Cen MT Condensed Extra Bold</family>
+           <pointsize>24</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(4, 101, 3);
+color: rgb(80, 121, 37);</string>
+         </property>
+         <property name="text">
+          <string>Password : </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_16">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>700</x>
-        <y>320</y>
-        <width>249</width>
-        <height>30</height>
+        <x>360</x>
+        <y>250</y>
+        <width>291</width>
+        <height>231</height>
        </rect>
       </property>
-      <property name="font">
-       <font>
-        <family>Sitka Display Semibold</family>
-        <pointsize>16</pointsize>
-        <italic>false</italic>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(112, 112, 112);
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_13">
+         <property name="font">
+          <font>
+           <family>Sitka Display Semibold</family>
+           <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(112, 112, 112);
 color:rgb(166, 255, 133);
 font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
-      </property>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_14">
+         <property name="font">
+          <font>
+           <family>Sitka Display Semibold</family>
+           <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_15">
+         <property name="font">
+          <font>
+           <family>Sitka Display Semibold</family>
+           <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_16">
+         <property name="font">
+          <font>
+           <family>Sitka Display Semibold</family>
+           <pointsize>16</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(112, 112, 112);
+color:rgb(166, 255, 133);
+font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>

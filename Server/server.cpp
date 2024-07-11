@@ -68,6 +68,9 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
     }
     if (fields[0] == "14") {
         editPerson(fields[1], fields[2], fields[3], fields[4], fields[5]);
+        QString respone = "113,";
+        respone += fields[2]+","+fields[3]+","+fields[1]+","+fields[4]+","+fields[5];
+        clientSocket->write(respone.toUtf8());
     }
     if (fields[0] == "15") {//forgot password-check email pass
         if(checkemail_pass(fields[1], fields[2])){

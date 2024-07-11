@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     ////////////////////////////////////////////////////////////////////////
     this->setFixedSize(800,800);
     this->move(400,0);
+    remainingSeconds=180;
     ui->GameControl->setFixedSize(800,800);
     ui->GameControl->setCurrentIndex(5);
     ui->label_35->hide();
@@ -68,8 +69,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     Sun_Rotate = new QTimer();
     connect(Sun_Rotate,&QTimer::timeout,this,&MainWindow::sun_rotation);
-    Sun_spawn = new QTimer();
-    connect(Sun_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_Item);
     fade = new QTimer(this);
     connect(fade,&QTimer::timeout,this,&MainWindow::Fade_Item);
 
@@ -78,16 +77,25 @@ MainWindow::MainWindow(QWidget *parent)
 
     brain_Rotate = new QTimer();
     connect(brain_Rotate,&QTimer::timeout,this,&MainWindow::brain_rotation);
-    brain_spawn = new QTimer();
-    connect(brain_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_Item);
-    Brainfade = new QTimer(this);
-    connect(Brainfade,&QTimer::timeout,this,&MainWindow::Fade_Item);
+    Item_spawn = new QTimer();
+    connect(Item_spawn,&QTimer::timeout,this,&MainWindow::Spawnning_Item);
     checkCollision = new QTimer(this);
     connect(checkCollision,&QTimer::timeout,this,&MainWindow::onCheckcollision);
 
     Bulletcollision = new QTimer(this);
     connect(Bulletcollision,&QTimer::timeout,this,&MainWindow::onBulletcollision);
+    gameTimer = new QTimer(this);
+    QObject::connect(gameTimer, &QTimer::timeout, [&]() {
+        remainingSeconds--;
+        int minutes = remainingSeconds / 60;
+        int seconds = remainingSeconds % 60;
+        TimerLable->setText(QString("%1:%2").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')));
 
+        // Stop the timer when the countdown reaches 0
+        if (remainingSeconds == 0) {
+            gameTimer->stop();
+        }
+    });
     ////////////////////////////////////////////////////////////////////////
     /// socket connection
     socket = new QTcpSocket(this);
@@ -379,7 +387,7 @@ void MainWindow::on_Ok_RPass_clicked()
 
     output+=ui->lineEdit_10->text();
     socket->write(output.toUtf8());
-    //cheking in server if was true.go to set new password page
+    //cheking in server if was true.goes to set new password page
 
 }
 
@@ -429,8 +437,9 @@ void MainWindow::Plants_set(){
     this->setFixedSize(1500,800);
     this->move(15,0);
     ui->GameControl->setFixedSize(1500,800);
+    remainingSeconds=180;
     /////////////////////////////////////////
-    QPixmap GroundPic(":/Images/field.png");
+    QPixmap GroundPic(":/Images/PlantsField.png");
     ui->Ground->setFixedSize(1500,700);
     ui->Ground->setPixmap(GroundPic);
     /////////////////////////////////////////
@@ -438,9 +447,11 @@ void MainWindow::Plants_set(){
     ui->Moving_sun->setFixedSize(90,74);
     ui->Moving_sun->setPixmap(Sun);
     Sun_Rotate->start(10);
-    Sun_spawn->start(6000);
+    Item_spawn->start(6000);
+    gameTimer->start(1000);
     /////////////////////////////////////////
     ui->Plants_point_Label->setText(QString("%1").arg(Player.Point));
+    TimerLable = ui->Plant_Timer;
 }
 
 void MainWindow::Zombies_set(){
@@ -448,8 +459,9 @@ void MainWindow::Zombies_set(){
     this->setFixedSize(1500,800);
     this->move(15,0);
     ui->GameControl->setFixedSize(1500,800);
+    remainingSeconds=180;
     /////////////////////////////////////////
-    QPixmap GroundPic(":/Images/field.png");
+    QPixmap GroundPic(":/Images/ZombiesField.png");
     ui->Ground_2->setFixedSize(1500,700);
     ui->Ground_2->setPixmap(GroundPic);
     /////////////////////////////////////////
@@ -457,10 +469,12 @@ void MainWindow::Zombies_set(){
     ui->Moving_brain->setFixedSize(90,74);
     ui->Moving_brain->setPixmap(brain);
     brain_Rotate->start(10);
-    brain_spawn->start(6000);
+    Item_spawn->start(6000);
+    gameTimer->start(1000);
     /////////////////////////////////////////
     ui->Spawned_brain->setGeometry(-10,-10,80,74);
     ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
+    TimerLable = ui->Zombies_Timer;
 }
 
 void MainWindow::onReadyRead()
@@ -474,6 +488,8 @@ void MainWindow::onReadyRead()
         QMessageBox::critical(this, "Signup", "This username already token!");
     }
     if (fields[0] == "0"){
+        QString output="PlayerUsername,"+Player.get_username();
+        socket->write(output.toUtf8());
         P_or_Z = 1;
         checkCollision->start(200);
         Bulletcollision->start(50);
@@ -481,19 +497,53 @@ void MainWindow::onReadyRead()
         Plants_set();
     }
     if (fields[0] == "1"){
+        QString output="PlayerUsername,"+Player.get_username();
+        socket->write(output.toUtf8());
         P_or_Z = -1;
         checkCollision->start(200);
         Bulletcollision->start(50);
         currentMap = ui->Zombies_map;
         Zombies_set();
     }
+    if(fields[0] == "NextRound"){
+        /*if(fields[2]==Player.get_username()){
+            //you won
+        }
+        else{
+            //fields[2] won
+        }*/
+        Player.Point =0;
+        Player.CurrentRound ="2";
+        Peavec.clear();
+        BPeavec.clear();
+        plants.clear();
+        zombies.clear();
+        fullLocations.clear();
+        spawnedItemp_Label->show();
+        if(P_or_Z==1){
+            P_or_Z = -1;
+            checkCollision->start(200);
+            Bulletcollision->start(50);
+            currentMap = ui->Zombies_map;
+            Zombies_set();
+        }
+        else if(P_or_Z==-1){
+            P_or_Z = 1;
+            checkCollision->start(200);
+            Bulletcollision->start(50);
+            currentMap = ui->Plants_map;
+            Plants_set();
+        }
+ }
+
     if (fields[0] == "113"){
-        Player.set_name(fields[1]);
-        Player.set_username(fields[3]);
+        Player.set_name(fields[3]);
+        Player.set_username(fields[1]);
         Player.set_password(fields[2]);
         Player.set_phoneNumber(fields[4]);
         Player.set_email(fields[5]);
         Player.winRound = 0;
+        Player.CurrentRound= "1";
         Player.Point = 20000;
         ui->GameControl->setCurrentIndex(6);
         ////////////////////////////////////////
@@ -573,6 +623,7 @@ void MainWindow::onReadyRead()
                 connect(bm, &Boomerang::createBBullet, this, &MainWindow::onCreateBBullets);
             }
         }
+
         if(fields[1][fields[1].size() - 1] == 'Z') {
             for(auto temp : plants){
                 if(temp->y()==fields[3].toInt()){
@@ -620,6 +671,16 @@ void MainWindow::onReadyRead()
                 zombies.push_back(phz);
                 connect(phz, &Zombies::cleanLocation, this, &MainWindow::onCleanLocation);
             }
+        }
+
+        if(fields[1] == "Showel"){
+            for(auto temp : plants){
+                if(temp->y()==fields[3].toInt()&&temp->x()==fields[2].toInt()){
+                    temp->setGeometry(-200, -200, 100, 100);
+                    onCleanLocation(fields[2].toInt(),fields[3].toInt());
+                }
+            }
+
         }
     }
 }
@@ -686,7 +747,7 @@ void MainWindow::Spawnning_Item(){
         if(!ui->Spawned_brain->isVisible()){
             ui->Spawned_brain->show();
         }
-        Brainfade->start(3000);
+        fade->start(3000);
     }
     animation->setDuration(2000);
     int x = rand() % 1200 + 200;
@@ -699,15 +760,12 @@ void MainWindow::Spawnning_Item(){
 void MainWindow::Fade_Item(){
     if(P_or_Z==1){
         ui->Spawned_sun->setStyleSheet("background-image: url(:/Images/FadedSun.png);");
-            if (fade->isActive()){
-                fade->stop();
-            }
     }
     if(P_or_Z==-1){
-        ui->Spawned_brain->setStyleSheet("background-image: url(:/Images/FadeBrain.png);");
-            if (Brainfade->isActive()){
-                Brainfade->stop();
-            }
+        ui->Spawned_brain->setStyleSheet("background-image: url(:/Images/FadeBrain.png);");     
+    }
+    if (fade->isActive()){
+        fade->stop();
     }
 }
 
@@ -729,8 +787,8 @@ void MainWindow::on_Start_Game_Botton_clicked()
 
 void MainWindow::on_Spawned_Item_Lable_clicked()
 {
-    if (Brainfade->isActive()){
-        Brainfade->stop();
+    if (fade->isActive()){
+        fade->stop();
     }
 
     spawnedItemp_Label->setWindowFlags(Qt::FramelessWindowHint);
@@ -831,6 +889,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 selection = 6;
                 Labeldrag_drop->start(1);
             }
+
         }
         if (P_or_Z == 1){
             if (event->x() >= ui->Spawned_sun->x() && event->x() <= ui->Spawned_sun->x() + 80 && event->y() >= ui->Spawned_sun->y() && event->y() <= ui->Spawned_sun->y() + 74){
@@ -875,6 +934,13 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
                 selection = 6;
                 Labeldrag_drop->start(1);
             }
+            ///showel
+            if (event->x() >= ui->label_56->x() && event->x() <= ui->label_56->x() + ui->label_56->width() && event->y() >= ui->label_56->y() && event->y() <= ui->label_56->y() + ui->label_56->height()){
+                draging_Label = ui->label_55;
+                draging_Label->show();
+                selection = 7;
+                Labeldrag_drop->start(1);
+            }
         }
     }
     QWidget::mousePressEvent(event);
@@ -908,20 +974,22 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             else if (x >= 699 && x< 806){
                 x = 699;
             }
-            else if (x >= 806 && x< 913){
-                x = 806;
-            }
-            else if (x >= 913 && x< 1020){
-                x = 913;
-            }
-            else if (x >= 1020 && x< 1127){
-                x = 1020;
-            }
-            else if (x >= 1127 && x< 1234){
-                x = 1127;
-            }
-            else if (x >= 1234 && x< 1341){
-                x = 1234;
+            else if(selection == 5 || selection == 4){
+                if (x >= 806 && x< 913){
+                    x = 806;
+                }
+                else if (x >= 913 && x< 1020){
+                    x = 913;
+                }
+                else if (x >= 1020 && x< 1127){
+                    x = 1020;
+                }
+                else if (x >= 1127 && x< 1234){
+                    x = 1127;
+                }
+                else if (x >= 1234 && x< 1341){
+                    x = 1234;
+                }
             }
             else {
                 validate = false;
@@ -941,13 +1009,15 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
             else {
                 validate = false;
             }
-            for (auto temp : fullLocations) {
-                if (temp.first == x && temp.second == y)
-                    validate = false;
+            if(selection!=7){
+                for (auto temp : fullLocations) {
+                    if (temp.first == x && temp.second == y)
+                        validate = false;
+                }
             }
             draging_Label->setGeometry(740, 10, 100, 100);
             if (validate) {
-                if(selection != 5 && selection != 4){
+                if(selection != 5 && selection != 4 && selection != 7){
                  fullLocations.push_back(make_pair(x,y));
                 }
                 QString output = "card,";
@@ -985,6 +1055,10 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
                     output += "BP,";
                     output += QString::number(x)+","+QString::number(y);
                     Player.Point -= 125;
+                }
+                if (selection == 7){
+                    output += "Showel,";
+                    output += QString::number(x)+","+QString::number(y);
                 }
                 socket->write(output.toUtf8());
 
@@ -1116,14 +1190,16 @@ void MainWindow::onCheckcollision()
            continue;
        }
        for(auto p:plants){
-           Walnut* W = dynamic_cast<Walnut*>(p);
-           TallZombie* tz = dynamic_cast<TallZombie*>(z);
-           if (W && tz) {
-               tz->setGeometry(W->x() - 100, tz->y(), 100, 100);
-           }
-           else if (p->geometry().intersects(z->geometry())) {
+           if (p->geometry().intersects(z->geometry())) {
+               Walnut* W = dynamic_cast<Walnut*>(p);
+               TallZombie* tz = dynamic_cast<TallZombie*>(z);
+               if (W && tz) {
+                   tz->setGeometry(tz->x() - 210, tz->y(), 100, 100);
+               }
+               else {
                z->offMovement();
                z->target = p;
+               }
            }
        }
    }
@@ -1131,12 +1207,16 @@ void MainWindow::onCheckcollision()
 
 void MainWindow::onCleanLocation(int x, int y)
 {
+    for(auto temp : plants){
+        if(temp->y()==y&&temp->x()==x){
+            plants.erase(std::find(plants.begin(),plants.end(), temp));
+            break;
+        }
+    }
     auto it = std::find(fullLocations.begin(), fullLocations.end(), make_pair(x,y));
     if (it != fullLocations.end()) {
         fullLocations.erase(it);
     }
-
-
 }
 
 void MainWindow::onCreateBBullets(int x, int y, int _power)
@@ -1147,6 +1227,33 @@ void MainWindow::onCreateBBullets(int x, int y, int _power)
 
 void MainWindow::onBulletcollision()
 {
+    for(auto temp:zombies){
+       if(temp->x()<=100){
+           checkCollision->stop();
+           Bulletcollision->stop();
+           Item_spawn->stop();
+           spawnedItemp_Label->hide();
+           for(auto DZ:zombies){
+              delete DZ;
+           }
+           for(auto DP:plants){
+              delete DP;
+           }
+           for(auto DPea:Peavec){
+              delete DPea;
+           }
+           for(auto DBP:BPeavec){
+              delete DBP;
+           }
+           if(P_or_Z==-1){
+               QString output = "Round"+Player.CurrentRound+",";
+               output+=Player.get_username();
+               output+=",Zombies";
+               socket->write(output.toUtf8());
+
+           }
+       }
+    }
     for(auto p : Peavec) {
         if (p->x() > 1500) {
             Peavec.erase(std::find(Peavec.begin(),Peavec.end(), p));
@@ -1190,7 +1297,58 @@ void MainWindow::onBulletcollision()
 }
 
 
+void MainWindow::on_Edit_information_botton_clicked()
+{
+    ui->GameControl->setCurrentIndex(10);
+    QPixmap NewInform(":/Images/PasswordReset.png");
+
+    QPalette palette;
+    palette.setBrush(QPalette::Window, QBrush(NewInform));
+    ui->Edit_Information_page->setPalette(palette);
+    ui->Edit_Information_page->setAutoFillBackground(true);
+    ui->lineEdit_13->setText(Player.get_name());
+    ui->lineEdit_14->setText(Player.get_phoneNumber());
+    ui->lineEdit_15->setText(Player.get_email());
+}
 
 
+void MainWindow::on_NewInform_Back_clicked()
+{
 
+
+    ui->GameControl->setCurrentIndex(6);
+}
+
+
+void MainWindow::on_NewInform_Ok_clicked()
+{
+    if(ui->lineEdit_13->text().isEmpty()||ui->lineEdit_14->text().isEmpty()||ui->lineEdit_15->text().isEmpty()
+            ||ui->lineEdit_16->text().isEmpty()){
+        QMessageBox::warning(this,"Error", "pleas fill in all the blanks\n");
+        return;
+    }
+    QString output="14,";
+    QRegularExpression phonenumRegex(R"(\b09\d{9}\b)");
+    if (!phonenumRegex.match(ui->lineEdit_14->text()).hasMatch()) {
+        QMessageBox::warning(this,"Error", "Invalid phonenumber format\n");
+        return;
+    }
+    QRegularExpression emailRegex(R"((^[^\s@]+@[^\s@]+\.[^\s@]+$))");
+    if (!emailRegex.match(ui->lineEdit_15->text()).hasMatch()) {
+        QMessageBox::warning(this,"Error", "Invalid email format\n");
+        return;
+    }
+    if(ui->lineEdit_16->text().length()<8){
+        QMessageBox::warning(this,"Error", "Password is weak!!\n");
+        return;
+    }
+    output += ui->lineEdit_13->text() + ",";
+    output += Player.get_username() + ",";
+    output += ui->lineEdit_16->text()+ ",";;
+    output += ui->lineEdit_14->text() + ",";
+    output += ui->lineEdit_15->text() + ",";
+
+
+    socket->write(output.toUtf8());
+}
 

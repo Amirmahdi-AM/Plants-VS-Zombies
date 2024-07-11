@@ -9,7 +9,6 @@
         <file>Images/server_connection.png</file>
         <file>Images/PasswordReset.png</file>
         <file>Images/MenuBG.png</file>
-        <file>Images/field.png</file>
         <file>Images/sun.png</file>
         <file>Images/FadedSun.png</file>
         <file>Images/WaitingBG.jpg</file>
@@ -52,5 +51,12 @@
         <file>Images/two_peashooter_P_card_Faded.png</file>
         <file>Images/Walnut_P_Card_Faded.png</file>
         <file>Images/Pea.png</file>
+        <file>Images/ZombiesField.png</file>
+        <file>Images/PlantsField.png</file>
+        <file>Images/BoomrangBullet.png</file>
+        <file>Images/TallZombie_Eating.gif</file>
+        <file>Images/TallZombie_Eating_Walking.gif</file>
+        <file>Images/Shovel_Card.jpg</file>
+        <file>Images/Shovel.png</file>
     </qresource>
 </RCC>

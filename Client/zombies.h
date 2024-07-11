@@ -17,6 +17,7 @@ protected:
 
     QTimer *attackTimer;
     QTimer *moveTimer;
+    QMovie* animation;
     QPixmap picture;
 
     double moveX = 5;
@@ -26,7 +27,7 @@ signals:
 
 
 public:
-    Plants *target;
+    Plants *target = NULL;
     int getHp();
 protected slots:
     virtual void move() = 0;
@@ -37,6 +38,7 @@ public:
     virtual void decreaseHP(int power);
     void offMovement();
     void onMovemevt();
+
 };
 
 #endif // ZOMBIES_H
