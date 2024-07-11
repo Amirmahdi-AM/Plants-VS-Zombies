@@ -14,8 +14,8 @@ void Zombies::onAttack()
         EatingAnimation->stop();
         this->setMovie(WalkingAnimation);
         WalkingAnimation->start();
-        emit cleanLocation(target->x(), target->y());
         target->setGeometry(-200, -200, 100, 100);
+        emit cleanLocation(target->x(), target->y());
         onMovemevt();
         target = NULL;
     }

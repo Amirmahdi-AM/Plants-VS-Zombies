@@ -50,6 +50,28 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_44->hide();
     ui->label_45->hide();
     ui->label_46->hide();
+
+   // ui->ChatRoom->setGeometry(100,100,600,600);
+    ui->ChatRoom->hide();
+    ui->Chat_Button->hide();
+    QIcon C1Icon(":/Images/C1.png");
+    ui->pushButton->setIcon(C1Icon);
+    ui->pushButton->setIconSize(QSize(54,70));
+    QIcon C2Icon(":/Images/C2.png");
+    ui->pushButton_2->setIcon(C2Icon);
+    ui->pushButton_2->setIconSize(QSize(54,70));
+    QIcon C3Icon(":/Images/C3.png");
+    ui->pushButton_3->setIcon(C3Icon);
+    ui->pushButton_3->setIconSize(QSize(54,70));
+    QIcon C4Icon(":/Images/C4.png");
+    ui->pushButton_4->setIcon(C4Icon);
+    ui->pushButton_4->setIconSize(QSize(54,70));
+    QIcon C5Icon(":/Images/C5.png");
+    ui->pushButton_5->setIcon(C5Icon);
+    ui->pushButton_5->setIconSize(QSize(54,70));
+    QIcon C6Icon(":/Images/C6.png");
+    ui->pushButton_6->setIcon(C6Icon);
+    ui->pushButton_6->setIconSize(QSize(54,70));
     ////////////////////////////////////////////////////////////////////////
     QPixmap server_page(":/Images/server_connection.png");
 
@@ -104,6 +126,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(socket, &QTcpSocket::readyRead, this, &MainWindow::onReadyRead);
     connect(socket, &QTcpSocket::connected, this, &MainWindow::onConnected);
     connect(socket, QOverload<QTcpSocket::SocketError>::of(&QTcpSocket::errorOccurred), this, &MainWindow::onError);
+    connect(socket, &QTcpSocket::disconnected, this, &MainWindow::onDisconnected);
     connect(connectionTimer, &QTimer::timeout, this, &MainWindow::onConnectionTimeout);
     ui->Spawned_brain->setStyleSheet("QPushButton { border: none; }");
     ///////////////////////////////
@@ -454,6 +477,7 @@ void MainWindow::Plants_set(){
     /////////////////////////////////////////
     ui->Plants_point_Label->setText(QString("%1").arg(Player.Point));
     TimerLable = ui->Plant_Timer;
+    ui->Chat_Button->show();
 }
 
 void MainWindow::Zombies_set(){
@@ -477,6 +501,7 @@ void MainWindow::Zombies_set(){
     ui->Spawned_brain->setGeometry(-10,-10,80,74);
     ui->Zombies_point_Lable->setText(QString("%1").arg(Player.Point));
     TimerLable = ui->Zombies_Timer;
+    ui->Chat_Button->show();
 }
 
 void MainWindow::onReadyRead()
@@ -489,7 +514,7 @@ void MainWindow::onReadyRead()
     if (fields[0] == "111"){
         QMessageBox::critical(this, "Signup", "This username already token!");
     }
-    if (fields[0] == "0"){
+    else if (fields[0] == "0"){
         QString output="PlayerUsername,"+Player.get_username();
         socket->write(output.toUtf8());
         P_or_Z = 1;
@@ -498,7 +523,7 @@ void MainWindow::onReadyRead()
         currentMap = ui->Plants_map;
         Plants_set();
     }
-    if (fields[0] == "1"){
+    else if (fields[0] == "1"){
         QString output="PlayerUsername,"+Player.get_username();
         socket->write(output.toUtf8());
         P_or_Z = -1;
@@ -507,7 +532,7 @@ void MainWindow::onReadyRead()
         currentMap = ui->Zombies_map;
         Zombies_set();
     }
-    if(fields[0] == "NextRound"){
+    else if(fields[0] == "NextRound"){
         /*if(fields[2]==Player.get_username()){
             //you won
         }
@@ -538,7 +563,7 @@ void MainWindow::onReadyRead()
         }
  }
 
-    if (fields[0] == "113"){
+    else if (fields[0] == "113"){
         Player.set_name(fields[3]);
         Player.set_username(fields[1]);
         Player.set_password(fields[2]);
@@ -565,10 +590,10 @@ void MainWindow::onReadyRead()
         ui->Menu->setAutoFillBackground(true);
     }
 
-    if (fields[0] == "114"){
+    else if (fields[0] == "114"){
         QMessageBox::critical(this, "Signin", "Incorrect username/password!");
     }
-    if (fields[0] == "1151"){
+    else if (fields[0] == "1151"){
         ui->GameControl->setCurrentIndex(4);
         QPixmap ResetPass(":/Images/PasswordReset.png");
 
@@ -577,14 +602,14 @@ void MainWindow::onReadyRead()
         ui->SetnewPass->setPalette(palette);
         ui->SetnewPass->setAutoFillBackground(true);
     }
-    if (fields[0] == "1152"){
+    else if (fields[0] == "1152"){
         QMessageBox::critical(this, "Reset password", "Incorrect Emial/Phonenumber!");
     }
-    if (fields[0] == "116"){
+    else if (fields[0] == "116"){
         QMessageBox::information(this, "Pass changed", "Password successfully changed");
         ui->GameControl->setCurrentIndex(1);
     }
-    if (fields[0] == "card"){
+    else if (fields[0] == "card"){
 
         if(fields[1][fields[1].size() - 1] == 'P') {
             int Targetcounts = 0;
@@ -685,6 +710,16 @@ void MainWindow::onReadyRead()
 
         }
     }
+    else if (fields[0] == "His") {
+        ui->GameControl->setCurrentIndex(11);
+        QPixmap historyPagepic(":/Images/LoginBG.png");
+        QPalette palette2;
+        palette2.setBrush(QPalette::Window, QBrush(historyPagepic));
+        ui->historyPage->setPalette(palette2);
+        ui->historyPage->setAutoFillBackground(true);
+        ui->listWidget->clear();
+        ui->listWidget->addItem(fields[1]);
+    }
 }
 
 void MainWindow::onConnected() {
@@ -773,7 +808,8 @@ void MainWindow::Fade_Item(){
 
 void MainWindow::on_Start_Game_Botton_clicked()
 {
-    socket->write("13");
+    QString output = "13," + Player.get_username();
+    socket->write(output.toUtf8());
     ui->GameControl->setCurrentIndex(8);
     this->setFixedSize(1500,800);
     this->move(15,0);
@@ -1212,6 +1248,7 @@ void MainWindow::onCleanLocation(int x, int y)
     for(auto temp : plants){
         if(temp->y()==y&&temp->x()==x){
             plants.erase(std::find(plants.begin(),plants.end(), temp));
+            delete temp;
             break;
         }
     }
@@ -1352,5 +1389,37 @@ void MainWindow::on_NewInform_Ok_clicked()
 
 
     socket->write(output.toUtf8());
+}
+
+
+
+void MainWindow::on_historyButton_clicked()
+{
+    QString output = "His," + Player.get_username();
+    socket->write(output.toUtf8());
+}
+
+
+void MainWindow::on_history_Back_clicked()
+{
+    ui->GameControl->setCurrentIndex(6);
+}
+
+
+void MainWindow::on_pushButton_7_clicked()
+{
+    ui->ChatRoom->hide();
+}
+
+
+void MainWindow::on_Chat_Button_clicked()
+{
+    ui->ChatRoom->show();
+}
+
+void MainWindow::onDisconnected()
+{
+    QMessageBox::critical(this, "Connection", "Connection lost!");
+    ui->GameControl->setCurrentIndex(5);
 }
 

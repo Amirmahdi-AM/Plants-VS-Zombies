@@ -69,5 +69,11 @@
         <file>Images/BucketHead_Walking.gif</file>
         <file>Images/PurpleHead_Walking.gif</file>
         <file>Images/RegularZombie_Walking.gif</file>
+        <file>Images/C1.png</file>
+        <file>Images/C2.png</file>
+        <file>Images/C3.png</file>
+        <file>Images/C4.png</file>
+        <file>Images/C5.png</file>
+        <file>Images/C6.png</file>
     </qresource>
 </RCC>

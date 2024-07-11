@@ -60,6 +60,7 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
     }
     else if (fields[0] == "13") {
         players.push_back(clientSocket);
+        playerNames.push_back(fields[1]);
         player1 = fields[1];
         if (players.size() == 2) {
             player2 = fields[1];
@@ -121,7 +122,8 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
         players.clear();
     }
     else if (fields[0] == "His") {
-        clientSocket->write(readHistory(fields[1]).toUtf8());
+        QString output = "His," + readHistory(fields[1]);
+        clientSocket->write(output.toUtf8());
     }
     else if (fields[0] == "Chat") {
         for (auto temp : players) {
@@ -133,9 +135,32 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
 
 void Server::onDisconnected(QTcpSocket *clientSocket)
 {
+    auto it1 = std::find(clients.begin(), clients.end(), clientSocket);
+    if (it1 != clients.end())
+        clients.erase(it1);
+
+    auto it2 = std::find(players.begin(), players.end(), clientSocket);
+    if (it2 != players.end())
+        players.erase(it2);
+
+    int index = -1;
+    for (int i = 0; i < players.size(); i++) {
+        if (players[i] == clientSocket) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index != -1) {
+        QString winner = playerNames[index];
+        firstRoundWinner = winner;
+        firstRoleWinner = "Plants";
+        secondRoundWinner = winner;
+        secondRoleWinner = "Zombies";
+        saveHistory();
+    }
+
     clientSocket->deleteLater();
-    clients.erase(std::find(clients.begin(), clients.end(), clientSocket));
-    players.erase(std::find(players.begin(), players.end(), clientSocket));
 }
 
 bool Server::signUp(const QString &_name, const QString &_username, const QString &_password, const QString &_phoneNumber, const QString &_email) {
@@ -291,7 +316,14 @@ void Server::saveHistory()
         QDateTime currentDateTime = QDateTime::currentDateTime();
         QString dateTimeString = currentDateTime.toString("yyyy-MM-dd HH:mm:ss");
         QTextStream out(&hisFile);
-        out << player1 << "," << player2 << "," << firstRoundWinner << "," << firstRoleWinner << "," << secondRoundWinner << "," << secondRoleWinner << "," << dateTimeString <<"\n";
+        QString matchWinner;
+        if(firstRoundWinner==secondRoundWinner){
+            matchWinner=firstRoundWinner;
+        }
+        else{
+            matchWinner="Tie";
+        }
+        out <<dateTimeString<<"/"<<player1 << "/" << player2 << "/" <<firstRoundWinner <<"/"<< firstRoleWinner << "/" << secondRoundWinner <<"/"<< secondRoleWinner << "/"<<matchWinner<<"\n";
         hisFile.close();
     }
 }
@@ -304,9 +336,9 @@ QString Server::readHistory(QString _username)
         QTextStream in(&hisFile);
         while(!in.atEnd()){
             QString line = in.readLine();
-            QStringList fields = line.split(",");
-            if (fields[0] == _username || fields[1] == _username) {
-                historty += line + "\n";
+            QStringList fields = line.split("/");
+            if (fields[1] == _username || fields[2] == _username) {
+                historty +="|  " + fields[0] + "  |" + "\n" + fields[1] + " vs " + fields[2] + "\n" + "Round 1 : " + fields[3] + " - " + "Role : " + fields[4] + "\n" + "Round 2 : " + fields[5] + " - " + "Role : " + fields[6] + "\n" + "Match winner : " + fields[7] + "\n" + "-----------------------------------------------------------\n";
             }
         }
         hisFile.close();

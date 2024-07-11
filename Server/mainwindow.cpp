@@ -4,6 +4,8 @@
 #include "QDebug"
 #include <QPixmap>
 #include <QPalette>
+#include <QHostAddress>
+#include <QHostInfo>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -45,6 +47,24 @@ void MainWindow::on_connectButton_clicked()
         palette.setBrush(QPalette::Window, QBrush(connected_page));
         ui->page_2->setPalette(palette);
         ui->page_2->setAutoFillBackground(true);
+
+        QString localhostname = QHostInfo::localHostName();
+
+        QString localhostIP;
+
+        QList<QHostAddress> hostList = QHostInfo::fromName(localhostname).addresses();
+
+        foreach (const QHostAddress& address, hostList) {
+
+            if (address.protocol() == QAbstractSocket::IPv4Protocol && address.isLoopback() == false) {
+
+                localhostIP = address.toString();
+
+            }
+
+        }
+
+        ui->connectedLabel_3->setText(localhostIP);
     }
 }
 

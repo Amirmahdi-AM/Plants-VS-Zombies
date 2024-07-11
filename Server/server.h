@@ -39,6 +39,7 @@ private:
     QString secondRoleWinner;
     void saveHistory();
     QString readHistory(QString _username);
+    QVector<QString> playerNames;
 };
 
 #endif // SERVER_H

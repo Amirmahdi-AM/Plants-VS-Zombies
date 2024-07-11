@@ -105,6 +105,16 @@ private slots:
 
     void on_NewInform_Ok_clicked();
 
+    void on_historyButton_clicked();
+
+    void on_history_Back_clicked();
+
+    void on_pushButton_7_clicked();
+
+    void on_Chat_Button_clicked();
+
+    void onDisconnected();
+
 signals:
     void brainClicked();
 
