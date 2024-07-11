@@ -33,8 +33,12 @@ private:
     std::mutex mute;
     QString player1;
     QString player2;
-    QString frw;
-    QString swr;
+    QString firstRoundWinner;
+    QString secondRoundWinner;
+    QString firstRoleWinner;
+    QString secondRoleWinner;
+    void saveHistory();
+    QString readHistory(QString _username);
 };
 
 #endif // SERVER_H

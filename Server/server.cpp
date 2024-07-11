@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <QVector>
+#include <QDateTime>
 
 Server::Server(QObject *parent) : QTcpServer(parent)
 {
@@ -48,7 +49,7 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
         else
             clientSocket->write("111");
     }
-    if (fields[0] == "12") {
+    else if (fields[0] == "12") {
         if(signIn(fields[1], fields[2])) {
             QString respone = "113,";
             respone += Person(fields[1]);
@@ -57,22 +58,24 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
         else
             clientSocket->write("114");
     }
-    if (fields[0] == "13") {
+    else if (fields[0] == "13") {
         players.push_back(clientSocket);
+        player1 = fields[1];
         if (players.size() == 2) {
+            player2 = fields[1];
             int player1 = rand () % 2;
             int player2 = 1 - player1;
             clients[0]->write(QString::number(player1).toUtf8());
             clients[1]->write(QString::number(player2).toUtf8());
         }
     }
-    if (fields[0] == "14") {
+    else if (fields[0] == "14") {
         editPerson(fields[1], fields[2], fields[3], fields[4], fields[5]);
         QString respone = "113,";
         respone += fields[2]+","+fields[3]+","+fields[1]+","+fields[4]+","+fields[5];
         clientSocket->write(respone.toUtf8());
     }
-    if (fields[0] == "15") {//forgot password-check email pass
+    else if (fields[0] == "15") {//forgot password-check email pass
         if(checkemail_pass(fields[1], fields[2])){
             clientSocket->write("1151");
         }
@@ -80,7 +83,7 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
             clientSocket->write("1152");
         }
     }
-    if (fields[0] == "16") {//Resetpass
+    else if (fields[0] == "16") {//Resetpass
         QString line = findUser_WithEmail(fields[1],fields[2]);
         QStringList parts = line.split(",");
         parts[1] = fields[3];
@@ -88,16 +91,41 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
         QString output = "116";
         clientSocket->write(output.toUtf8());
     }
-    if (fields[0] == "card") {//Resetpass
-        for(auto temp : clients){
+    else if (fields[0] == "card") {//Resetpass
+        for(auto temp : players){
             temp->write(receivedData.toUtf8());
         }
     }
-    if (fields[0] == "Round1") {
+    else if (fields[0] == "Round1") {
+        firstRoundWinner = fields[1];
+        firstRoleWinner = fields[2];
         for (auto temp : players) {
             QString output = "NextRound,";
             output += receivedData;
             temp->write(output.toUtf8());
+        }
+    }
+    else if (fields[0] == "Round2") {
+        secondRoundWinner = fields[1];
+        secondRoleWinner = fields[1];
+        for (auto temp : players) {
+            QString output = "EOG";
+            temp->write(output.toUtf8());
+        }
+        player1 = "";
+        player2 = "";
+        firstRoleWinner = "";
+        firstRoundWinner = "";
+        secondRoleWinner = "";
+        secondRoundWinner = "";
+        players.clear();
+    }
+    else if (fields[0] == "His") {
+        clientSocket->write(readHistory(fields[1]).toUtf8());
+    }
+    else if (fields[0] == "Chat") {
+        for (auto temp : players) {
+            temp->write(receivedData.toUtf8());
         }
     }
     mute.unlock();
@@ -252,8 +280,38 @@ QString Server::findUser_WithEmail(const QString &_phoneNumber, const QString &_
             }
         }
         accFile.close();
-        return "";
     }
+    return "";
+}
+
+void Server::saveHistory()
+{
+    QFile hisFile("History.txt");
+    if (hisFile.open(QIODevice::Append | QIODevice::Text)){
+        QDateTime currentDateTime = QDateTime::currentDateTime();
+        QString dateTimeString = currentDateTime.toString("yyyy-MM-dd HH:mm:ss");
+        QTextStream out(&hisFile);
+        out << player1 << "," << player2 << "," << firstRoundWinner << "," << firstRoleWinner << "," << secondRoundWinner << "," << secondRoleWinner << "," << dateTimeString <<"\n";
+        hisFile.close();
+    }
+}
+
+QString Server::readHistory(QString _username)
+{
+    QString historty = "";
+    QFile hisFile("History.txt");
+    if (hisFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QTextStream in(&hisFile);
+        while(!in.atEnd()){
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            if (fields[0] == _username || fields[1] == _username) {
+                historty += line + "\n";
+            }
+        }
+        hisFile.close();
+    }
+    return historty;
 }
 
 
