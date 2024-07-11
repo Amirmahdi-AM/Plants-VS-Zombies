@@ -58,5 +58,16 @@
         <file>Images/TallZombie_Eating_Walking.gif</file>
         <file>Images/Shovel_Card.jpg</file>
         <file>Images/Shovel.png</file>
+        <file>Images/Wallnut_cracked1.png</file>
+        <file>Images/Wallnut_cracked2.png</file>
+        <file>Images/two_peashooter_P_Mpving.gif</file>
+        <file>Images/RegularZombie_Eat.gif</file>
+        <file>Images/Charred_Zombie.png</file>
+        <file>Images/Peashooter_Moving.gif</file>
+        <file>Images/LeafHeadZombie_Walking.gif</file>
+        <file>Images/BucketHead_Eating.gif</file>
+        <file>Images/BucketHead_Walking.gif</file>
+        <file>Images/PurpleHead_Walking.gif</file>
+        <file>Images/RegularZombie_Walking.gif</file>
     </qresource>
 </RCC>

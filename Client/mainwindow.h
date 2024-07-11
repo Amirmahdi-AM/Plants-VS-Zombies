@@ -149,7 +149,7 @@ private:
 
     int selection = 0;
 
-    int remainingSeconds = 180;
+    int remainingSeconds = 210;
 
     void mousePressEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;

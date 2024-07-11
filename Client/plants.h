@@ -21,9 +21,10 @@ protected:
     int firingRate = 0;
     int attackPowe = 0;
     QPixmap picture;
+    QMovie* animation;
 public:
     Plants(QWidget *parent = nullptr);
-    void decreaseHP(int power);
+    virtual void decreaseHP(int power);
     int getHP();
 };
 

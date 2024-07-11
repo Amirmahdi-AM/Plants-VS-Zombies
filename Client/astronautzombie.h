@@ -8,9 +8,10 @@ class AstronautZombie : public Zombies
 public:
     AstronautZombie(int x, int y, QWidget *parent = nullptr);
     void decreaseHP(int power) override;
+    void offMovement()override;
 private slots:
     void move() override;
-
+    void onAttack() override;
 };
 
 #endif // ASTRONAUTZOMBIE_H

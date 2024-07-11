@@ -9,7 +9,6 @@ public:
     TallZombie(int x, int y, QWidget *parent = nullptr);
 private slots:
     void move() override;
-
 };
 
 #endif // TALLZOMBIE_H

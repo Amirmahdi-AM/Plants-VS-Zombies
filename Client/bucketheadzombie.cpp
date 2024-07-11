@@ -1,4 +1,5 @@
 #include "bucketheadzombie.h"
+#include "qmovie.h"
 
 BucketHeadZombie::BucketHeadZombie(int x, int y, QWidget *parent)  : Zombies(parent)
 {
@@ -8,8 +9,12 @@ BucketHeadZombie::BucketHeadZombie(int x, int y, QWidget *parent)  : Zombies(par
     HP = 1950;
     moveMentDelay = 200;
     moveTimer->start(moveMentDelay);
-    picture.load(":/Images/Bucket_Z.png");
-    setPixmap(picture);
+//    picture.load(":/Images/Bucket_Z.png");
+    WalkingAnimation = new QMovie(":/Images/BucketHead_Walking.gif");
+    EatingAnimation = new QMovie(":/Images/BucketHead_Eating.gif");
+    this->setMovie(WalkingAnimation);
+    WalkingAnimation->start();
+    //setPixmap(picture);
     setGeometry(x, y, 100, 100);
     show();
     this->target=NULL;

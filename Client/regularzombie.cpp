@@ -1,4 +1,5 @@
 #include "regularzombie.h"
+#include "qmovie.h"
 
 RegularZombie::RegularZombie(int x, int y, QWidget *parent) : Zombies(parent)
 {
@@ -8,8 +9,12 @@ RegularZombie::RegularZombie(int x, int y, QWidget *parent) : Zombies(parent)
     HP = 500;
     moveMentDelay = 100;
     moveTimer->start(moveMentDelay);
-    picture.load(":/Images/Regular_Z.png");
-    setPixmap(picture);
+//    picture.load(":/Images/Regular_Z.png");
+//    setPixmap(picture);
+    WalkingAnimation = new QMovie(":/Images/RegularZombie_Walking.gif");
+    EatingAnimation = new QMovie(":/Images/RegularZombie_Eat.gif");
+    this->setMovie(WalkingAnimation);
+    WalkingAnimation->start();
     setGeometry(x, y, 100, 100);
     show();
     this->target=NULL;

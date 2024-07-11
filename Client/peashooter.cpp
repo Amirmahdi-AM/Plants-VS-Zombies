@@ -1,4 +1,5 @@
 #include "peashooter.h"
+#include "qmovie.h"
 
 void PeaShooter::Fire()
 {
@@ -18,8 +19,12 @@ void PeaShooter::onCheckedTargets()
 }
 
 PeaShooter::PeaShooter(int x, int y, QWidget *parent) :Plants(parent) {
-    picture.load(":/Images/Peashooter_P.png");
-    setPixmap(picture);
+//    picture.load(":/Images/Peashooter_P.png");
+//    setPixmap(picture);
+    animation = new QMovie(":/Images/Peashooter_Moving.gif");
+    this->setMovie(animation);
+    animation->start();
+
     setGeometry(x, y, 100, 100);
     show();
     checkTarget = new QTimer(this);

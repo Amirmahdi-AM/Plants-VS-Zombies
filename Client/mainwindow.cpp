@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     ////////////////////////////////////////////////////////////////////////
     this->setFixedSize(800,800);
     this->move(400,0);
-    remainingSeconds=180;
+    remainingSeconds=210;
     ui->GameControl->setFixedSize(800,800);
     ui->GameControl->setCurrentIndex(5);
     ui->label_35->hide();
@@ -94,6 +94,8 @@ MainWindow::MainWindow(QWidget *parent)
         // Stop the timer when the countdown reaches 0
         if (remainingSeconds == 0) {
             gameTimer->stop();
+            QString outpute = "Round"+Player.CurrentRound+","+Player.get_username()+",Plants";
+            socket->write(outpute.toUtf8());
         }
     });
     ////////////////////////////////////////////////////////////////////////
@@ -437,7 +439,7 @@ void MainWindow::Plants_set(){
     this->setFixedSize(1500,800);
     this->move(15,0);
     ui->GameControl->setFixedSize(1500,800);
-    remainingSeconds=180;
+    remainingSeconds=210;
     /////////////////////////////////////////
     QPixmap GroundPic(":/Images/PlantsField.png");
     ui->Ground->setFixedSize(1500,700);
@@ -459,7 +461,7 @@ void MainWindow::Zombies_set(){
     this->setFixedSize(1500,800);
     this->move(15,0);
     ui->GameControl->setFixedSize(1500,800);
-    remainingSeconds=180;
+    remainingSeconds=210;
     /////////////////////////////////////////
     QPixmap GroundPic(":/Images/ZombiesField.png");
     ui->Ground_2->setFixedSize(1500,700);

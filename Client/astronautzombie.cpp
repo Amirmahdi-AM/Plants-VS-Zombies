@@ -38,3 +38,20 @@ void AstronautZombie::decreaseHP(int _power)
 void AstronautZombie::move(){
     setGeometry(this->x()-moveX, this->y(), 100, 100);
 }
+
+void AstronautZombie::onAttack()
+{
+    target->decreaseHP(attackPower);
+    if (target->getHP() <= 0) {
+        this->setMovie(WalkingAnimation);
+        emit cleanLocation(target->x(), target->y());
+        target->setGeometry(-200, -200, 100, 100);
+        onMovemevt();
+        target = NULL;
+    }
+}
+void AstronautZombie::offMovement()
+{
+    moveTimer->stop();
+    attackTimer->start(TBA);
+}

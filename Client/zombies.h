@@ -17,7 +17,8 @@ protected:
 
     QTimer *attackTimer;
     QTimer *moveTimer;
-    QMovie* animation;
+    QMovie* WalkingAnimation;
+    QMovie* EatingAnimation;
     QPixmap picture;
 
     double moveX = 5;
@@ -31,12 +32,12 @@ public:
     int getHp();
 protected slots:
     virtual void move() = 0;
-    void onAttack();
+    virtual void onAttack();
 
 public:
     Zombies(QWidget *parent = nullptr);
     virtual void decreaseHP(int power);
-    void offMovement();
+    virtual void offMovement();
     void onMovemevt();
 
 };

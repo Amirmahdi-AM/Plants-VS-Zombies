@@ -1,4 +1,5 @@
 #include "purplehairzombie.h"
+#include "qmovie.h"
 
 PurpleHairZombie::PurpleHairZombie(int x, int y, QWidget *parent) : Zombies(parent)
 {
@@ -8,8 +9,12 @@ PurpleHairZombie::PurpleHairZombie(int x, int y, QWidget *parent) : Zombies(pare
     HP = 4000;
     moveMentDelay = 100;
     moveTimer->start(moveMentDelay);
-    picture.load(":/Images/PurpleHead_Z.png");
-    setPixmap(picture);
+//    picture.load(":/Images/PurpleHead_Z.png");
+//    setPixmap(picture);
+    WalkingAnimation = new QMovie(":/Images/PurpleHead_Walking.gif");
+    EatingAnimation = new QMovie(":/Images/PurpleHead_Walking.gif");
+    this->setMovie(WalkingAnimation);
+    WalkingAnimation->start();
     setGeometry(x, y, 100, 100);
     show();
     this->target=NULL;

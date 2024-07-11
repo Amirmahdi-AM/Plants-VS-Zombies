@@ -1,8 +1,13 @@
 #include "twopeashooter.h"
+#include "qmovie.h"
 
 TwoPeaShooter::TwoPeaShooter(int x, int y, QWidget *parent) : Plants(parent) {
-    picture.load(":/Images/two_peashooter_P.png");
-    setPixmap(picture);
+//    picture.load(":/Images/two_peashooter_P.png");
+//    setPixmap(picture);
+    animation = new QMovie(":/Images/two_peashooter_P_Mpving.gif");
+    this->setMovie(animation);
+    animation->start();
+
     setGeometry(x, y, 100, 100);
     show();
     checkTarget = new QTimer(this);
