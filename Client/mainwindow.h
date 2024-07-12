@@ -109,11 +109,21 @@ private slots:
 
     void on_history_Back_clicked();
 
-    void on_pushButton_7_clicked();
-
     void on_Chat_Button_clicked();
 
     void onDisconnected();
+
+    void on_S1_clicked();
+
+    void on_S2_clicked();
+
+    void on_S3_clicked();
+
+    void on_S4_clicked();
+
+    void on_S5_clicked();
+
+    void on_S6_clicked();
 
 signals:
     void brainClicked();
@@ -141,9 +151,14 @@ private:
 
     QTimer* checkCollision;
 
+    int counter=0;
+    QTimer* ReadyCounter;
+
     QLabel* draging_Label;
 
     QLabel* spawnedItemp_Label;
+
+    QLabel* Massege;
 
     QLabel* TimerLable;
 

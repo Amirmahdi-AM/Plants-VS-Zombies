@@ -17,9 +17,7 @@ protected:
 
     QTimer *attackTimer;
     QTimer *moveTimer;
-    QMovie* WalkingAnimation;
-    QMovie* EatingAnimation;
-    QPixmap picture;
+
 
     double moveX = 5;
 
@@ -39,6 +37,9 @@ public:
     virtual void decreaseHP(int power);
     virtual void offMovement();
     void onMovemevt();
+    QMovie* WalkingAnimation;
+    QMovie* EatingAnimation;
+    QPixmap picture;
 
 };
 

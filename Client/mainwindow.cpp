@@ -50,28 +50,32 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_44->hide();
     ui->label_45->hide();
     ui->label_46->hide();
-
-   // ui->ChatRoom->setGeometry(100,100,600,600);
+    Massege = new QLabel(this);
+    Massege->setGeometry(800,400,54,70);
+    Massege->hide();
     ui->ChatRoom->hide();
     ui->Chat_Button->hide();
     QIcon C1Icon(":/Images/C1.png");
-    ui->pushButton->setIcon(C1Icon);
-    ui->pushButton->setIconSize(QSize(54,70));
+    ui->S1->setIcon(C1Icon);
+    ui->S1->setIconSize(QSize(54,70));
     QIcon C2Icon(":/Images/C2.png");
-    ui->pushButton_2->setIcon(C2Icon);
-    ui->pushButton_2->setIconSize(QSize(54,70));
+    ui->S2->setIcon(C2Icon);
+    ui->S2->setIconSize(QSize(54,70));
     QIcon C3Icon(":/Images/C3.png");
-    ui->pushButton_3->setIcon(C3Icon);
-    ui->pushButton_3->setIconSize(QSize(54,70));
+    ui->S3->setIcon(C3Icon);
+    ui->S3->setIconSize(QSize(54,70));
     QIcon C4Icon(":/Images/C4.png");
-    ui->pushButton_4->setIcon(C4Icon);
-    ui->pushButton_4->setIconSize(QSize(54,70));
+    ui->S4->setIcon(C4Icon);
+    ui->S4->setIconSize(QSize(54,70));
     QIcon C5Icon(":/Images/C5.png");
-    ui->pushButton_5->setIcon(C5Icon);
-    ui->pushButton_5->setIconSize(QSize(54,70));
+    ui->S5->setIcon(C5Icon);
+    ui->S5->setIconSize(QSize(54,70));
     QIcon C6Icon(":/Images/C6.png");
-    ui->pushButton_6->setIcon(C6Icon);
-    ui->pushButton_6->setIconSize(QSize(54,70));
+    ui->S6->setIcon(C6Icon);
+    ui->S6->setIconSize(QSize(54,70));
+    QIcon C7Icon(":/Images/ChatPic.png");
+    ui->Chat_Button->setIcon(C7Icon);
+    ui->Chat_Button->setIconSize(QSize(51,51));
     ////////////////////////////////////////////////////////////////////////
     QPixmap server_page(":/Images/server_connection.png");
 
@@ -120,6 +124,36 @@ MainWindow::MainWindow(QWidget *parent)
             socket->write(outpute.toUtf8());
         }
     });
+    counter = 3;
+    ReadyCounter = new QTimer(this);
+    QObject::connect(ReadyCounter, &QTimer::timeout, [&]() {
+        if(counter==3){
+            ui->Counter_Lable->setText("3");
+            counter--;
+        }
+        else if(counter==2){
+            ui->Counter_Lable->setText("2");
+            counter--;
+        }
+        else if(counter==1){
+            ui->Counter_Lable->setText("1");
+            counter--;
+        }
+        else if(counter==0){
+            ui->Counter_Lable->setText("Go");
+            counter--;
+        }
+        else if(counter==-1){
+            counter=3;
+            ReadyCounter->stop();
+            if(P_or_Z==1){
+                Plants_set();
+            }
+            if(P_or_Z== -1){
+                Zombies_set();
+            }
+        }
+    });
     ////////////////////////////////////////////////////////////////////////
     /// socket connection
     socket = new QTcpSocket(this);
@@ -144,7 +178,12 @@ void MainWindow::BOOM(int _x, int _y,QString type)
         for(auto z: zombies){
             if(z->y()>=_y-220&&z->y()<=_y+330&&z->x()>=_x-214&&z->x()<=_x+321){
                 z->decreaseHP(500);
-                z->setGeometry(z->x()-100,z->y(),100,100);
+                AstronautZombie* AS = dynamic_cast <AstronautZombie*> (z);
+                if(AS==NULL){
+                    z->WalkingAnimation->stop();
+                }
+                z->picture.load(":/Images/Charred_Zombie.png");
+                z->setPixmap(z->picture);
             }
         }
     }
@@ -152,7 +191,12 @@ void MainWindow::BOOM(int _x, int _y,QString type)
         for(auto z: zombies){
             if(z->y()==_y){
                 z->decreaseHP(300);
-                z->setGeometry(z->x()-100,z->y(),100,100);
+                AstronautZombie* AS = dynamic_cast <AstronautZombie*> (z);
+                if(AS==NULL){
+                    z->WalkingAnimation->stop();
+                }
+                z->picture.load(":/Images/Charred_Zombie.png");
+                z->setPixmap(z->picture);
             }
         }
     }
@@ -521,7 +565,14 @@ void MainWindow::onReadyRead()
         checkCollision->start(200);
         Bulletcollision->start(50);
         currentMap = ui->Plants_map;
-        Plants_set();
+        //ui->
+        QPixmap Ready_page(":/Images/PlantsGetReady.jpg");
+        QPalette palette;
+        palette.setBrush(QPalette::Window, QBrush(Ready_page));
+        ui->getReady->setPalette(palette);
+        ui->getReady->setAutoFillBackground(true);
+        ui->GameControl->setCurrentIndex(12);
+        ReadyCounter->start(1000);
     }
     else if (fields[0] == "1"){
         QString output="PlayerUsername,"+Player.get_username();
@@ -530,7 +581,13 @@ void MainWindow::onReadyRead()
         checkCollision->start(200);
         Bulletcollision->start(50);
         currentMap = ui->Zombies_map;
-        Zombies_set();
+        QPixmap Ready_page(":/Images/ZombieGetReady.jpg");
+        QPalette palette;
+        palette.setBrush(QPalette::Window, QBrush(Ready_page));
+        ui->getReady->setPalette(palette);
+        ui->getReady->setAutoFillBackground(true);
+        ui->GameControl->setCurrentIndex(12);
+        ReadyCounter->start(1000);
     }
     else if(fields[0] == "NextRound"){
         /*if(fields[2]==Player.get_username()){
@@ -552,14 +609,26 @@ void MainWindow::onReadyRead()
             checkCollision->start(200);
             Bulletcollision->start(50);
             currentMap = ui->Zombies_map;
-            Zombies_set();
+            QPixmap Ready_page(":/Images/ZombieGetReady.jpg");
+            QPalette palette;
+            palette.setBrush(QPalette::Window, QBrush(Ready_page));
+            ui->getReady->setPalette(palette);
+            ui->getReady->setAutoFillBackground(true);
+            ui->GameControl->setCurrentIndex(12);
+            ReadyCounter->start(1000);
         }
         else if(P_or_Z==-1){
             P_or_Z = 1;
             checkCollision->start(200);
             Bulletcollision->start(50);
             currentMap = ui->Plants_map;
-            Plants_set();
+            QPixmap Ready_page(":/Images/PlantsGetReady.jpg");
+            QPalette palette;
+            palette.setBrush(QPalette::Window, QBrush(Ready_page));
+            ui->getReady->setPalette(palette);
+            ui->getReady->setAutoFillBackground(true);
+            ui->GameControl->setCurrentIndex(12);
+            ReadyCounter->start(1000);
         }
  }
 
@@ -574,15 +643,7 @@ void MainWindow::onReadyRead()
         Player.Point = 20000;
         ui->GameControl->setCurrentIndex(6);
         ////////////////////////////////////////
-//        ui->GameControl->setCurrentIndex(9);
-//        P_or_Z = -1;
-//        Zombies_set();
-//        currentMap = ui->Zombies_map;
-        ////////////////////////////////////////////
-        //ui->GameControl->setCurrentIndex(7);
-        //P_or_Z = 1;
-        //Plants_set();
-        QPixmap MenuBackground(":/Images/MenuBG.png");
+        QPixmap MenuBackground(":/Images/MenuBG.jpg");
 
         QPalette palette;
         palette.setBrush(QPalette::Window, QBrush(MenuBackground));
@@ -720,7 +781,37 @@ void MainWindow::onReadyRead()
         ui->listWidget->clear();
         ui->listWidget->addItem(fields[1]);
     }
+    else if(fields[0] == "Chat"){
+        Massege->setPixmap(QPixmap(fields[1]));
+        if(Massege->isHidden()){
+            Massege->show();
+        }
+        QPropertyAnimation *animation = new QPropertyAnimation(Massege, "geometry");
+        animation->setDuration(2000);
+        QPoint MassegePos = Massege->pos();
+        int x = MassegePos.x();
+        int y = MassegePos.y();
+        animation->setStartValue(QRect(x, y, 54,70));
+        animation->setEndValue(QRect(x, -50, 54,70));
+        QObject::connect(animation, &QPropertyAnimation::finished, Massege,[&](){
+            Massege->hide();
+            Massege->setGeometry(800,400,54,70);
+        });
+        animation->start();
+    }
+    else if(fields[0] == "EOG"){
+        Player.Point =0;
+        Player.CurrentRound ="1";
+        Peavec.clear();
+        BPeavec.clear();
+        plants.clear();
+        zombies.clear();
+        fullLocations.clear();
+        ui->GameControl->setCurrentIndex(6);
+    }
+
 }
+
 
 void MainWindow::onConnected() {
     connectionTimer->stop();
@@ -1271,7 +1362,10 @@ void MainWindow::onBulletcollision()
            checkCollision->stop();
            Bulletcollision->stop();
            Item_spawn->stop();
-           spawnedItemp_Label->hide();
+           if(!spawnedItemp_Label->isHidden()){
+               spawnedItemp_Label->hide();
+           }
+
            for(auto DZ:zombies){
               delete DZ;
            }
@@ -1405,21 +1499,69 @@ void MainWindow::on_history_Back_clicked()
     ui->GameControl->setCurrentIndex(6);
 }
 
-
-void MainWindow::on_pushButton_7_clicked()
-{
-    ui->ChatRoom->hide();
-}
-
-
+int C_O = 0;
 void MainWindow::on_Chat_Button_clicked()
 {
-    ui->ChatRoom->show();
+    if(C_O==0){
+        ui->ChatRoom->show();
+        C_O=1;
+    }
+    else{
+        ui->ChatRoom->hide();
+        C_O=0;
+    }
+
 }
 
 void MainWindow::onDisconnected()
 {
     QMessageBox::critical(this, "Connection", "Connection lost!");
     ui->GameControl->setCurrentIndex(5);
+}
+
+
+void MainWindow::on_S1_clicked()
+{
+    QString Output = "Chat,";
+    Output += ":/Images/C1.png";
+    socket->write(Output.toUtf8());
+}
+
+
+void MainWindow::on_S2_clicked()
+{
+    QString Output = "Chat,";
+    Output += ":/Images/C2.png";
+    socket->write(Output.toUtf8());
+}
+
+
+void MainWindow::on_S3_clicked()
+{
+    QString Output = "Chat,";
+    Output += ":/Images/C3.png";
+    socket->write(Output.toUtf8());
+}
+
+
+void MainWindow::on_S4_clicked()
+{
+    QString Output = "Chat,";
+    Output += ":/Images/C4.png";
+    socket->write(Output.toUtf8());
+}
+
+void MainWindow::on_S5_clicked()
+{
+    QString Output = "Chat,";
+    Output += ":/Images/C5.png";
+    socket->write(Output.toUtf8());
+}
+
+void MainWindow::on_S6_clicked()
+{
+    QString Output = "Chat,";
+    Output += ":/Images/C1.png";
+    socket->write(Output.toUtf8());
 }
 

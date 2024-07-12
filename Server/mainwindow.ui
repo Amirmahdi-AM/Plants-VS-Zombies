@@ -145,7 +145,7 @@ color: rgb(255, 0, 230);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(35, 244, 255);
-</string>
+color: rgb(255, 7, 243);</string>
       </property>
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt; color:#e607db;&quot;&gt;IP:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -160,7 +160,7 @@ color: rgb(255, 0, 230);</string>
      <x>0</x>
      <y>0</y>
      <width>796</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

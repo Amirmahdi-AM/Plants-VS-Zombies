@@ -27,7 +27,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>10</y>
       <width>971</width>
       <height>751</height>
      </rect>
@@ -42,7 +42,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>12</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <property name="cursor">
@@ -113,7 +113,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <fontweight>DemiBold</fontweight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -139,7 +139,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
         <family>Sitka Display Semibold</family>
         <pointsize>16</pointsize>
         <italic>false</italic>
-        <fontweight>DemiBold</fontweight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="styleSheet">
@@ -328,7 +328,7 @@ background-color: rgb(85, 85, 85);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -346,7 +346,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -364,7 +364,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -382,7 +382,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -400,7 +400,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -418,7 +418,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -684,7 +684,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -701,7 +701,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -804,7 +804,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -821,7 +821,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -1003,8 +1003,8 @@ font: 14pt &quot;SWMono&quot;;</string>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>63</y>
+        <x>330</x>
+        <y>210</y>
         <width>396</width>
         <height>202</height>
        </rect>
@@ -1532,7 +1532,7 @@ color: rgb(21, 255, 29);</string>
      <widget class="QLabel" name="label_18">
       <property name="geometry">
        <rect>
-        <x>690</x>
+        <x>720</x>
         <y>710</y>
         <width>121</width>
         <height>31</height>
@@ -1551,8 +1551,8 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
      <widget class="QLabel" name="SunFlow_2">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>690</y>
+        <x>620</x>
+        <y>700</y>
         <width>71</width>
         <height>61</height>
        </rect>
@@ -1564,7 +1564,7 @@ font: 25pt &quot;Gill Sans Ultra Bold Condensed&quot;;
      <widget class="QLabel" name="points_2">
       <property name="geometry">
        <rect>
-        <x>820</x>
+        <x>850</x>
         <y>710</y>
         <width>111</width>
         <height>31</height>
@@ -2123,7 +2123,7 @@ color: rgb(80, 121, 37);</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -2143,7 +2143,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -2163,7 +2163,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -2183,7 +2183,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
            <family>Sitka Display Semibold</family>
            <pointsize>16</pointsize>
            <italic>false</italic>
-           <fontweight>DemiBold</fontweight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
@@ -2224,21 +2224,49 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="getReady">
+     <widget class="QLabel" name="Counter_Lable">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>130</y>
+        <width>291</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Source Code Pro</family>
+        <pointsize>72</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 5, 5);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QPushButton" name="Chat_Button">
     <property name="geometry">
      <rect>
-      <x>1270</x>
-      <y>60</y>
-      <width>83</width>
-      <height>29</height>
+      <x>1220</x>
+      <y>40</y>
+      <width>51</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
-     <string>Chat</string>
+     <string/>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QWidget" name="ChatRoom" native="true">
@@ -2250,7 +2278,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
       <height>211</height>
      </rect>
     </property>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="S1">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -2265,8 +2293,11 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
      <property name="text">
       <string/>
      </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="S2">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -2281,8 +2312,11 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
      <property name="text">
       <string/>
      </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="S3">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -2297,8 +2331,11 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
      <property name="text">
       <string/>
      </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_4">
+    <widget class="QPushButton" name="S4">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -2313,8 +2350,11 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
      <property name="text">
       <string/>
      </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="S5">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -2329,8 +2369,11 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
      <property name="text">
       <string/>
      </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="S6">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -2345,18 +2388,8 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
      <property name="text">
       <string/>
      </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_7">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>170</y>
-       <width>31</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>C</string>
+     <property name="flat">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -2367,7 +2400,7 @@ font: 600 16pt &quot;Sitka Display Semibold&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>1596</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

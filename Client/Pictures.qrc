@@ -8,7 +8,6 @@
         <file>Images/close-eye.png</file>
         <file>Images/server_connection.png</file>
         <file>Images/PasswordReset.png</file>
-        <file>Images/MenuBG.png</file>
         <file>Images/sun.png</file>
         <file>Images/FadedSun.png</file>
         <file>Images/WaitingBG.jpg</file>
@@ -75,5 +74,9 @@
         <file>Images/C4.png</file>
         <file>Images/C5.png</file>
         <file>Images/C6.png</file>
+        <file>Images/ChatPic.png</file>
+        <file>Images/MenuBG.jpg</file>
+        <file>Images/PlantsGetReady.jpg</file>
+        <file>Images/ZombieGetReady.jpg</file>
     </qresource>
 </RCC>
