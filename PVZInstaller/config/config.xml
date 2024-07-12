@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>Plants VS Zombies</Name>
+    <Version>1.0.0</Version>
+    <Title>Plants VS Zombies Installer</Title>
+    <Publisher>Crazy Dave</Publisher>
+    <StartMenuDir>Super App</StartMenuDir>
+    <TargetDir>@HomeDir@/Plants VS Zombies</TargetDir>
+</Installer>

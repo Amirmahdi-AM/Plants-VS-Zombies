@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>PVZ(Server)</Name>
+    <Version>1.0.0</Version>
+    <Title>PVZ(Server) Installer</Title>
+    <Publisher>Crazy Dave</Publisher>
+    <StartMenuDir>Super App</StartMenuDir>
+    <TargetDir>@HomeDir@/PVZ(Server)</TargetDir>
+</Installer>
