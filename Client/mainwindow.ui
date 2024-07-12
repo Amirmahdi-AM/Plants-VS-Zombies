@@ -28,7 +28,7 @@
      <rect>
       <x>0</x>
       <y>10</y>
-      <width>971</width>
+      <width>1541</width>
       <height>751</height>
      </rect>
     </property>
@@ -42,7 +42,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>12</number>
+     <number>7</number>
     </property>
     <widget class="QWidget" name="FLoading">
      <property name="cursor">

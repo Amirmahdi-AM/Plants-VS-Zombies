@@ -511,6 +511,12 @@ void MainWindow::Plants_set(){
     QPixmap GroundPic(":/Images/PlantsField.png");
     ui->Ground->setFixedSize(1500,700);
     ui->Ground->setPixmap(GroundPic);
+    ui->label_24->setPixmap(QPixmap(":/Images/Peashooter_P_Card_Faded.png"));
+    ui->label_30->setPixmap(QPixmap(":/Images/two_peashooter_P_card_Faded.png"));
+    ui->label_31->setPixmap(QPixmap(":/Images/Walnut_P_Card_Faded.png"));
+    ui->label_34->setPixmap(QPixmap(":/Images/Boomerang_P_Card_Faded.png"));
+    ui->label_33->setPixmap(QPixmap(":/Images/Jalapeno_P_Card_Faded.png"));
+    ui->label_32->setPixmap(QPixmap(":/Images/Plum_Mine_P_Card_Faded.png"));
     /////////////////////////////////////////
     QPixmap Sun(":/Images/sun.png");
     ui->Moving_sun->setFixedSize(90,74);
@@ -530,10 +536,17 @@ void MainWindow::Zombies_set(){
     this->move(15,0);
     ui->GameControl->setFixedSize(1500,800);
     remainingSeconds=210;
+
     /////////////////////////////////////////
     QPixmap GroundPic(":/Images/ZombiesField.png");
     ui->Ground_2->setFixedSize(1500,700);
     ui->Ground_2->setPixmap(GroundPic);
+    ui->label_23->setPixmap(QPixmap(":/Images/Regular_Z_Card_Faded.png"));
+    ui->label_25->setPixmap(QPixmap(":/Images/LeafHead_Z_Card_Faded.png"));
+    ui->label_28->setPixmap(QPixmap(":/Images/Tall_Z_Card_Faded.png"));
+    ui->label_27->setPixmap(QPixmap(":/Images/Austronut_Z_Card_Faded.png"));
+    ui->label_26->setPixmap(QPixmap(":/Images/Bucket_Z_Card_Faded.png"));
+    ui->label_29->setPixmap(QPixmap(":/Images/PurpleHead_Z_Card_Faded.png"));
     /////////////////////////////////////////
     QPixmap brain(":/Images/Brain.png");
     ui->Moving_brain->setFixedSize(90,74);
@@ -640,7 +653,7 @@ void MainWindow::onReadyRead()
         Player.set_email(fields[5]);
         Player.winRound = 0;
         Player.CurrentRound= "1";
-        Player.Point = 20000;
+        Player.Point = 0;
         ui->GameControl->setCurrentIndex(6);
         ////////////////////////////////////////
         QPixmap MenuBackground(":/Images/MenuBG.jpg");
@@ -802,6 +815,7 @@ void MainWindow::onReadyRead()
     else if(fields[0] == "EOG"){
         this->setFixedSize(800, 800);
         ui->GameControl->setFixedSize(800, 800);
+        this->move(400,0);
         Player.Point =0;
         Player.CurrentRound ="1";
         Peavec.clear();
@@ -1519,6 +1533,16 @@ void MainWindow::on_Chat_Button_clicked()
 void MainWindow::onDisconnected()
 {
     QMessageBox::critical(this, "Connection", "Connection lost!");
+    this->setFixedSize(800, 800);
+    ui->GameControl->setFixedSize(800, 800);
+    this->move(400,0);
+    Player.Point =0;
+    Player.CurrentRound ="1";
+    Peavec.clear();
+    BPeavec.clear();
+    plants.clear();
+    zombies.clear();
+    fullLocations.clear();
     ui->GameControl->setCurrentIndex(5);
 }
 
