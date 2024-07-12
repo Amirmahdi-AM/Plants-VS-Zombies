@@ -179,7 +179,7 @@ void MainWindow::BOOM(int _x, int _y,QString type)
             if(z->y()>=_y-220&&z->y()<=_y+330&&z->x()>=_x-214&&z->x()<=_x+321){
                 z->decreaseHP(500);
                 AstronautZombie* AS = dynamic_cast <AstronautZombie*> (z);
-                if(AS==NULL){
+                if(!AS){
                     z->WalkingAnimation->stop();
                 }
                 z->picture.load(":/Images/Charred_Zombie.png");
@@ -800,6 +800,8 @@ void MainWindow::onReadyRead()
         animation->start();
     }
     else if(fields[0] == "EOG"){
+        this->setFixedSize(800, 800);
+        ui->GameControl->setFixedSize(800, 800);
         Player.Point =0;
         Player.CurrentRound ="1";
         Peavec.clear();
@@ -1339,7 +1341,7 @@ void MainWindow::onCleanLocation(int x, int y)
     for(auto temp : plants){
         if(temp->y()==y&&temp->x()==x){
             plants.erase(std::find(plants.begin(),plants.end(), temp));
-            delete temp;
+            //delete temp;
             break;
         }
     }
@@ -1358,11 +1360,11 @@ void MainWindow::onCreateBBullets(int x, int y, int _power)
 void MainWindow::onBulletcollision()
 {
     for(auto temp:zombies){
-       if(temp->x()<=100){
+       if(temp->x()<=100) {
            checkCollision->stop();
            Bulletcollision->stop();
            Item_spawn->stop();
-           if(!spawnedItemp_Label->isHidden()){
+           if(spawnedItemp_Label->isVisible()){
                spawnedItemp_Label->hide();
            }
 
@@ -1385,6 +1387,7 @@ void MainWindow::onBulletcollision()
                socket->write(output.toUtf8());
 
            }
+           return;
        }
     }
     for(auto p : Peavec) {

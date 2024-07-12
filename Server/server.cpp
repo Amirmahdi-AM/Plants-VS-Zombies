@@ -108,11 +108,12 @@ void Server::onReadyRead(QTcpSocket *clientSocket)
     }
     else if (fields[0] == "Round2") {
         secondRoundWinner = fields[1];
-        secondRoleWinner = fields[1];
+        secondRoleWinner = fields[2];
         for (auto temp : players) {
             QString output = "EOG";
             temp->write(output.toUtf8());
         }
+        saveHistory();
         player1 = "";
         player2 = "";
         firstRoleWinner = "";

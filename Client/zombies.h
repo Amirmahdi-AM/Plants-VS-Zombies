@@ -36,7 +36,7 @@ public:
     Zombies(QWidget *parent = nullptr);
     virtual void decreaseHP(int power);
     virtual void offMovement();
-    void onMovemevt();
+    virtual void onMovemevt();
     QMovie* WalkingAnimation;
     QMovie* EatingAnimation;
     QPixmap picture;

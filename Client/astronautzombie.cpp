@@ -55,3 +55,9 @@ void AstronautZombie::offMovement()
     moveTimer->stop();
     attackTimer->start(TBA);
 }
+
+void AstronautZombie::onMovemevt()
+{
+    attackTimer->stop();
+    moveTimer->start(moveMentDelay);
+}
